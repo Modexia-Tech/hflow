@@ -48,7 +48,7 @@ What would you like us to help you with today?
     const pinHash = hashPinPhone(ussdPassedInput[2], phoneNumber);
 
     const id = await registerUser(
-      phoneNumber,
+      phoneNumber.replace("+", ""),
       ussdPassedInput[1],
       encryptedKey,
       hederaAccountId,
