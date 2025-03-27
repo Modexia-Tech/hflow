@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { getUser } = require("../database");
+const { getUser, registerUser } = require("../database");
 
 const {
   encryptPrivateKey,
@@ -35,27 +35,27 @@ What would you like us to help you with today? ${phoneNumber}
     response = `CON Confirm your pin:
     `;
   } else if (text.startsWith("1") && ussdPassedInput.length == 4) {
-    if(ussdPassedInput[1]!==ussdPassedInput[2]){
-      res.send("END The pins do not match please try again")
+    if (ussdPassedInput[1] !== ussdPassedInput[2]) {
+      res.send("END The pins do not match please try again");
     }
 
     // daniels magic goes here
     const key = "dummy key";
-    const hederaAccountId = "id"
-    ;
+    const hederaAccountId = "id";
     const encryptedKey = encryptPrivateKey(key, ussdPassedInput[2]);
     const pinHash = hashPinPhone(ussdPassedInput[2], phoneNumber);
 
     const id = await registerUser(
-      ussdPassedInput[],
-      req.body.fullName,
+      phoneNumber,
+      ussdPassedInput[1],
       encryptedKey,
       hederaAccountId,
       pinHash,
     );
-    response = `END successfully created your account of id ${id}\nWelcome to HPESA your number one solution to all your payment needs : )`;
-  }else{
-    response="END Invalid choice please try again"
+    response =
+      `END successfully created your account of id ${id}\nWelcome to HPESA your number one solution to all your payment needs : )`;
+  } else {
+    response = "END Invalid choice please try again";
   }
   res.send(respsonse);
 });
