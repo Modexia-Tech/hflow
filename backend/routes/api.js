@@ -163,51 +163,114 @@ router.post("/makeTransaction", async (req, res) => {
   }
 });
 
-router.post("/fundWallet", async (req, res) => {
+import { Router } from 'express';
+import Joi from 'joi';
+
+const router = Router();
+
+// Validation Schema
+const fundWalletSchema = Joi.object({
+  senderPhone: Joi.string().required(),
+  senderPin: Joi.string().required(),
+  amount: Joi.number().positive().precision(8).required(), // Allows up to 8 decimal places
+});
+
+// Helper Functions
+const validateAmount = (amount) => {
+  const tinybars = amount * 1e8; // Convert HBAR to tinybars
+  return Number.isInteger(tinybars);
+};
+
+// Route Handler
+router.post('/fundWallet', async (req, res) => {
   try {
-    const { error } = newTransactionSchema.validate(req.body);
+    // 1. Validate request
+    const { error } = fundWalletSchema.validate(req.body);
     if (error) {
-      return res.status(400).send({ error: error.details[0].message });
+      return res.status(400).json({ 
+        error: 'Validation failed',
+        details: error.details.map(d => d.message) 
+      });
     }
 
+    // 2. Validate amount precision
+    if (!validateAmount(req.body.amount)) {
+      return res.status(400).json({
+        error: 'Invalid amount precision',
+        message: 'Amount must be convertible to whole tinybars (max 8 decimal places)'
+      });
+    }
+
+    // 3. Get sender and verify account status
     const sender = await getUser(req.body.senderPhone);
     if (!sender) {
-      return res.status(404).send({ error: "Sender not found" });
+      return res.status(404).json({ error: 'Account not found' });
     }
 
     if (sender.failedAttempts >= 3) {
-      return res.status(403).send({ error: "Sender account locked" });
+      return res.status(403).json({ 
+        error: 'Account temporarily locked',
+        message: 'Too many failed attempts. Please contact support.' 
+      });
     }
 
+    // 4. Verify PIN
     if (!verifyPinPhone(req.body.senderPin, req.body.senderPhone, sender.pinHash)) {
-      await updateUser(req.body.senderPhone, {
-        failedAttempts: sender.failedAttempts + 1,
+      await updateUser(req.body.senderPhone, { 
+        failedAttempts: sender.failedAttempts + 1 
       });
-      return res.status(403).send({
-        error: `Invalid pin: remaining attempts ${3 - (sender.failedAttempts + 1)}`,
+      return res.status(403).json({
+        error: 'Authentication failed',
+        remainingAttempts: 2 - sender.failedAttempts
       });
     }
 
-    // Assuming funding logic involves Hedera service
+    // 5. Reset failed attempts on successful auth
+    await updateUser(req.body.senderPhone, { failedAttempts: 0 });
+
+    // 6. Process transaction
     const senderPrivateKey = decryptPrivateKey(sender.encryptedPrivateKey, req.body.senderPin);
+    const amountInTinybars = Math.round(req.body.amount * 1e8); // Convert to whole tinybars
+
     const { status, txId, hashscanUrl, newBalance } = await hederaService.fundWallet(
       senderPrivateKey,
       sender.hederaAccountId,
-      req.body.amount
+      amountInTinybars
     );
 
-    if (status !== "SUCCESS") {
-      return res.status(500).send({ error: "Failed to fund wallet" });
+    if (status !== 'SUCCESS') {
+      return res.status(502).json({ 
+        error: 'Transaction failed',
+        message: 'Network error occurred while processing transaction' 
+      });
     }
 
-    return res.status(200).send({
-      message: "Wallet funded successfully",
+    // 7. Return success response
+    return res.status(200).json({
+      status: 'success',
       transactionId: txId,
       hashscanUrl,
-      newBalance,
+      newBalance: newBalance / 1e8, // Convert back to HBAR
+      timestamp: new Date().toISOString()
     });
-  } catch (err) {
-    res.status(400).send({ error: err.message });
+
+  } catch (error) {
+    console.error('FundWallet Error:', error);
+
+    // Handle specific Hedera errors
+    if (error.message.includes('tinybars contains decimals')) {
+      return res.status(400).json({
+        error: 'Invalid amount',
+        message: 'Transaction amount must be in whole tinybars'
+      });
+    }
+
+    return res.status(500).json({
+      error: 'Internal server error',
+      message: 'Unable to process wallet funding'
+    });
   }
 });
+
+export default router;
 module.exports = router;
