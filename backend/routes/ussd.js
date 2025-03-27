@@ -41,17 +41,18 @@ What would you like us to help you with today?
       return res.send("END The pins do not match please try again");
     }
 
-    // daniels magic goes here
-    const key = "dummy key";
-    const hederaAccountId = "id";
-    const encryptedKey = encryptPrivateKey(key, ussdPassedInput[2]);
+   
+    const {
+          accountId,
+           privateKey
+        }= await hederaService.createWallet(ussdPassedInput[2]);
     const pinHash = hashPinPhone(ussdPassedInput[2], phoneNumber);
 
     const id = await registerUser(
       phoneNumber.replace("+", ""),
       ussdPassedInput[1],
-      encryptedKey,
-      hederaAccountId,
+      privateKey,
+      accountId,
       pinHash,
     );
     response =
