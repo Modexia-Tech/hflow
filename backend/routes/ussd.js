@@ -16,7 +16,7 @@ router.post("/", async (req, res) => {
     ...req.body,
   };
 
-  console.log("####################", req.body);
+  console.log("####################", req.body, req.query, req);
   const user = await getUser(phoneNumber);
   let response = "";
   const ussdPassedInput = text.split("*");
