@@ -1,0 +1,23 @@
+{
+  "name": "contract",
+  "version": "1.0.0",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Modexia-Tech/Mo_Cash.git"
+  },
+  "author": "modaniels",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Modexia-Tech/Mo_Cash/issues"
+  },
+  "homepage": "https://github.com/Modexia-Tech/Mo_Cash#readme",
+  "description": "",
+  "dependencies": {
+    "@hashgraph/sdk": "^2.61.0",
+    "dotenv": "^16.4.7"
+  }
+}
