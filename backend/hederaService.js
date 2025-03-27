@@ -29,7 +29,7 @@ const {encryptPrivateKey}=require("./utils/encryption.js");
       
       const tx = await new AccountCreateTransaction()
         .setKey(newKey.publicKey)
-        .setInitialBalance(Hbar.from(1)) // Fund with 1 HBAR initially
+        .setInitialBalance(Hbar.from(100)) // Fund with 1 HBAR initially
         .execute(this.client);
   
       const receipt = await tx.getReceipt(this.client);

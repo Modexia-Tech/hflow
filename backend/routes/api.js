@@ -112,33 +112,45 @@ router.post("/makeTransaction", async (req, res) => {
     }
 
     // get balance from hedera (daniels magic goes here)
+    // const balance = await hederaService.getBalance(sender.hederaAccountId);
 
+    // For the sake of this example, let's assume the balance is 100 HBAR\
     const senderBalance = 100;
     if (senderBalance < req.body.amount) {
       return res
         .status(400)
         .send({ error: `Insufficient balance of sh${senderBalance}` });
-    }
 
+        
+    }
+      
     // hedera transaction goes here
     const senderHederaAccountId = sender.hederaAccountId;
     const receiverHederaAccountId = receiver.hederaAccountId;
-    const senderPrivateKey = decryptPrivateKey(
-      sender.encryptedPrivateKey,
-      req.body.senderPin
+   
+
+    const senderPrivateKey = decryptPrivateKey(sender.encryptedPrivateKey, req.body.senderPin);
+    const {status ,txId,hashscanUrl,newBalance} = await hederaService.sendHBAR(
+      senderPrivateKey,
+      senderHederaAccountId,
+      receiverHederaAccountId,
+      req.body.amount
+
+
+
     );
     // deduct from sender
     // add to receiver
 
     // update transaction history
 
-    const txHash = "dummy hash";
     const transactionId = await addTransaction(
       req.body.senderPhone,
       req.body.receiverPhone,
       req.body.amount,
-      txHash,
-      "success"
+      txId,
+      status,
+
     );
     if (!transactionId) {
       return res.status(500).send({ error: "Failed to log transaction" });
@@ -146,6 +158,54 @@ router.post("/makeTransaction", async (req, res) => {
     return res
       .status(200)
       .send({ message: `Transaction successful of id: ${transactionId}` });
+  } catch (err) {
+    res.status(400).send({ error: err.message });
+  }
+});
+
+router.post("/fundWallet", async (req, res) => {
+  try {
+    const { error } = newTransactionSchema.validate(req.body);
+    if (error) {
+      return res.status(400).send({ error: error.details[0].message });
+    }
+
+    const sender = await getUser(req.body.senderPhone);
+    if (!sender) {
+      return res.status(404).send({ error: "Sender not found" });
+    }
+
+    if (sender.failedAttempts >= 3) {
+      return res.status(403).send({ error: "Sender account locked" });
+    }
+
+    if (!verifyPinPhone(req.body.senderPin, req.body.senderPhone, sender.pinHash)) {
+      await updateUser(req.body.senderPhone, {
+        failedAttempts: sender.failedAttempts + 1,
+      });
+      return res.status(403).send({
+        error: `Invalid pin: remaining attempts ${3 - (sender.failedAttempts + 1)}`,
+      });
+    }
+
+    // Assuming funding logic involves Hedera service
+    const senderPrivateKey = decryptPrivateKey(sender.encryptedPrivateKey, req.body.senderPin);
+    const { status, txId, hashscanUrl, newBalance } = await hederaService.fundWallet(
+      senderPrivateKey,
+      sender.hederaAccountId,
+      req.body.amount
+    );
+
+    if (status !== "SUCCESS") {
+      return res.status(500).send({ error: "Failed to fund wallet" });
+    }
+
+    return res.status(200).send({
+      message: "Wallet funded successfully",
+      transactionId: txId,
+      hashscanUrl,
+      newBalance,
+    });
   } catch (err) {
     res.status(400).send({ error: err.message });
   }
