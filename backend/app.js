@@ -12,7 +12,9 @@ app.use(cors());
 app.use("/ussd", ussdRouter);
 app.use("/api", apiRouter);
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.raw({ type: "application/octet-stream" })); // Parse raw body
+app.use(bodyParser.text({ type: "text/plain" })); // Parse text body
 
 app.listen(5000, () => {
   console.log("[INFO]: Server has started at https://localhost:5000");
