@@ -8,7 +8,13 @@ const {
   verifyPinPhone,
 } = require("../utils/encryption");
 router.post("/", async (req, res) => {
-  const { sessionId, serviceCode, phoneNumber, text } = req.body;
+  const { sessionId, serviceCode, phoneNumber, text } = {
+    sessionId: 8,
+    serviceCode: 7,
+    phoneNumber: "",
+    text: "",
+    ...req.body,
+  };
 
   console.log("####################", req.body);
   const user = await getUser(phoneNumber);
