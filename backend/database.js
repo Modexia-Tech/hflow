@@ -7,7 +7,7 @@ const db = new sqlite3.Database(
   (err) => {
     if (err) console.error("[ERROR]: Database error:", err);
     else console.log("[INFO]: Connected to SQLite database");
-  },
+  }
 );
 
 const initDB = () => {
@@ -15,9 +15,10 @@ const initDB = () => {
     `
     CREATE TABLE IF NOT EXISTS users (
       phone TEXT PRIMARY KEY,
-      encryptedKey TEXT NOT NULL,
+      fullName TEXT NOT NULL,
+      encryptedPrivateKey TEXT NOT NULL,
       hederaAccountId TEXT NOT NULL,
-      encryptedPin TEXT NOT NULL,
+      pinHash TEXT NOT NULL,
       failedAttempts INTEGER DEFAULT 0,
       createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     );
@@ -39,21 +40,27 @@ const initDB = () => {
       } else {
         console.log("[INFO]: Initialized db successfully");
       }
-    },
+    }
   );
 };
 
 // Insert user (registration)
-const registerUser = (phone, encryptedKey, hederaAccountId, encryptedPin) => {
+const registerUser = (
+  phone,
+  fullName,
+  encryptedPrivateKey,
+  hederaAccountId,
+  pinHash
+) => {
   return new Promise((resolve, reject) => {
     db.run(
-      `INSERT INTO users (phone, encryptedKey, hederaAccountId,encryptedPin) 
-       VALUES (?, ?, ?,?)`,
-      [phone, encryptedKey, hederaAccountId, encryptedPin],
+      `INSERT INTO users (phone,fullName, encryptedPrivateKey, hederaAccountId,pinHash) 
+       VALUES (?,?, ?, ?,?)`,
+      [phone, fullName, encryptedPrivateKey, hederaAccountId, pinHash],
       function (err) {
         if (err) reject(err);
         else resolve(this.lastID);
-      },
+      }
     );
   });
 };
@@ -61,30 +68,56 @@ const registerUser = (phone, encryptedKey, hederaAccountId, encryptedPin) => {
 // Get user by phone
 const getUser = (phone) => {
   return new Promise((resolve, reject) => {
-    db.get(
-      `SELECT * FROM users WHERE phone = ?`,
-      [phone],
-      (err, row) => {
+    db.get(`SELECT * FROM users WHERE phone = ?`, [phone], (err, row) => {
+      if (err) reject(err);
+      else resolve(row);
+    });
+  });
+};
+
+// Update user by phone
+const updateUser = (phone, updatedFields) => {
+  const fields = Object.keys(updatedFields);
+  const values = Object.values(updatedFields);
+
+  if (fields.length === 0) {
+    return Promise.reject(new Error("No fields to update"));
+  }
+
+  const setClause = fields.map((field) => `${field} = ?`).join(", ");
+
+  return new Promise((resolve, reject) => {
+    db.run(
+      `UPDATE users SET ${setClause} WHERE phone = ?`,
+      [...values, phone],
+      function (err) {
         if (err) reject(err);
-        else resolve(row);
-      },
+        else resolve(this.changes);
+      }
     );
   });
 };
 
 // Log transaction
-const addTransaction = (
-  senderPhone,
-  receiverPhone,
-  amount,
-  txHash,
-  status,
-) => {
-  db.run(
-    `INSERT INTO transactions 
-     (senderPhone, receiverPhone, amount, txHash, status)
-     VALUES (?, ?, ?, ?, ?)`,
-    [senderPhone, receiverPhone, amount, txHash, status],
-  );
+const addTransaction = (senderPhone, receiverPhone, amount, txHash, status) => {
+  return new Promise((resolve, reject) => {
+    db.run(
+      `INSERT INTO transactions 
+       (senderPhone, receiverPhone, amount, txHash, status)
+       VALUES (?, ?, ?, ?, ?)`,
+      [senderPhone, receiverPhone, amount, txHash, status],
+      function (err) {
+        if (err) reject(err);
+        else resolve(this.lastID);
+      }
+    );
+  });
 };
-module.exports = { db, initDB, addTransaction, getUser, registerUser };
+module.exports = {
+  db,
+  initDB,
+  addTransaction,
+  getUser,
+  registerUser,
+  updateUser,
+};
