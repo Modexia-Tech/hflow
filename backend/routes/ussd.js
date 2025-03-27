@@ -15,7 +15,7 @@ router.post("/", async (req, res) => {
 
   const user = await getUser(phoneNumber);
   let response = "";
-  const ussdPassedInput = text.split("*") || [];
+  const ussdPassedInput = text.split("*");
   if (text == "") {
     response = `CON Hy from the Hpesa team.
 What would you like us to help you with today? ${phoneNumber}
@@ -36,7 +36,7 @@ What would you like us to help you with today? ${phoneNumber}
     `;
   } else if (text.startsWith("1") && ussdPassedInput.length == 4) {
     if (ussdPassedInput[1] !== ussdPassedInput[2]) {
-      res.send("END The pins do not match please try again");
+      return res.send("END The pins do not match please try again");
     }
 
     // daniels magic goes here
@@ -57,7 +57,7 @@ What would you like us to help you with today? ${phoneNumber}
   } else {
     response = "END Invalid choice please try again";
   }
-  res.send(respsonse);
+  res.send(response);
 });
 
 module.exports = router;
