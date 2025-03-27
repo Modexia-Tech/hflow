@@ -9,21 +9,19 @@ const {
 } = require("../utils/encryption");
 router.post("/", async (req, res) => {
   const { sessionId, serviceCode, phoneNumber, text } = {
-    sessionId: 8,
-    serviceCode: 7,
+    sessionId: "",
+    serviceCode: "",
     phoneNumber: "",
     text: "",
     ...req.body,
   };
 
-  console.log("####################", req.body, req.query, req);
   const user = await getUser(phoneNumber);
   let response = "";
   const ussdPassedInput = text.split("*");
   if (text == "") {
     response = `CON Hy from the Hpesa team.
-What would you like us to help you with today? ${phoneNumber}
-
+What would you like us to help you with today?
 1. Create an account
 2. My Account
 3. My phone number
@@ -39,7 +37,7 @@ What would you like us to help you with today? ${phoneNumber}
     response = `CON Confirm your pin:
     `;
   } else if (text.startsWith("1") && ussdPassedInput.length == 4) {
-    if (ussdPassedInput[1] !== ussdPassedInput[2]) {
+    if (ussdPassedInput[2] !== ussdPassedInput[3]) {
       return res.send("END The pins do not match please try again");
     }
 
