@@ -6,6 +6,7 @@ const {
   addTransaction,
   updateUser,
 } = require("../database");
+const hederaService= require("../hederaService");
 
 const { newUserSchema } = require("../schemas/user");
 const { newTransactionSchema } = require("../schemas/transaction");
@@ -55,31 +56,18 @@ router.post("/registerUser", async (req, res) => {
     if (error) {
       return res.status(400).send({ error: error.details[0].message });
     }
-    // TODO: DANIEL make sure napata hizi vitu hivi lol
-    // hedera user creation will happen here expect to be returned private key and account id
 
-    // Step 1: Generate unique private key
-    //  const privateKey = PrivateKey.generate(); // 🔑 Unique per user
-    //  const publicKey = privateKey.publicKey;
-
-    // Step 2: Create Hedera account
-    //  const tx = await new AccountCreateTransaction()
-    //    .setKey(publicKey)
-    //    .setInitialBalance(new Hbar(10)) // Fund with 10 HBAR (testnet)
-    //    .execute(hederaClient);
-
-    //  const accountId = (await tx.getReceipt(hederaClient)).accountId;
-
-    const key = "dummy key";
-    const hederaAccountId = "id";
-    const encryptedKey = encryptPrivateKey(key, req.body.pin);
+    const {
+      accountId,
+       privateKey
+    }= await hederaService.createWallet(req.body.pin);
     const pinHash = hashPinPhone(req.body.pin, req.body.phone);
-
+    
     const id = await registerUser(
       req.body.phone,
       req.body.fullName,
-      encryptedKey,
-      hederaAccountId,
+      privateKey,
+      accountId,
       pinHash
     );
     res.status(201).send(`successfully created user of id: ${id}`);

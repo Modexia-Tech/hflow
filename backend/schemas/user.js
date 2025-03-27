@@ -2,7 +2,7 @@ const Joi = require("joi");
 
 const newUserSchema = Joi.object({
   phone: Joi.string()
-    .regex(/^2547\d{8}$/)
+    .regex(/^254\d{9}$/)
     .required(),
   fullName: Joi.string().required(),
   pin: Joi.string().length(4).required(),

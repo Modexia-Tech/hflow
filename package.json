@@ -1,0 +1,28 @@
+{
+  "name": "hpesa",
+  "version": "1.0.0",
+  "description": "The future of mobile banking powered by hedera hashgraph",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Modexia-Tech/hpesa.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Modexia-Tech/hpesa/issues"
+  },
+  "homepage": "https://github.com/Modexia-Tech/hpesa#readme",
+
+
+
+"workspaces": ["backend", "Contract"],
+"private": true
+}

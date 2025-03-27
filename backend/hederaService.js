@@ -34,7 +34,7 @@ const {encryptPrivateKey}=require("./utils/encryption.js");
   
       const receipt = await tx.getReceipt(this.client);
       const accountId = receipt.accountId.toString();
-  
+ 
       return {
         accountId,
         privateKey: encryptPrivateKey(newKey.toString(),pin),
