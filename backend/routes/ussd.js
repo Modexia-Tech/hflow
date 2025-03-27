@@ -11,7 +11,7 @@ router.post("/", async (req, res) => {
   const sessionId = req.body.sessionId;
   const serviceCode = req.body.serviceCode;
   const phoneNumber = req.body.phoneNumber;
-  let text = req.body.text || "default";
+  let text = req.body.text || "";
 
   const user = await getUser(phoneNumber);
   let response = "";
