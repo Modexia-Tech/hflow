@@ -8,6 +8,7 @@ const {
     AccountBalanceQuery,
     Status
   } = require("@hashgraph/sdk");
+const {encryptPrivateKey}=require("./utils/encryption.js");
   
   class HederaService {
     constructor() {
@@ -23,7 +24,7 @@ const {
      * Creates a new Hedera wallet
      * @returns {Promise<{accountId: string, privateKey: string, publicKey: string}>}
      */
-    async createWallet() {
+    async createWallet(pin) {
       const newKey = PrivateKey.generateED25519();
       
       const tx = await new AccountCreateTransaction()
@@ -36,8 +37,7 @@ const {
   
       return {
         accountId,
-        privateKey: newKey.toString(),
-        publicKey: newKey.publicKey.toString()
+        privateKey: encryptPrivateKey(newKey.toString(),pin),
       };
     }
   

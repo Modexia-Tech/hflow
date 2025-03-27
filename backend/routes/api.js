@@ -16,6 +16,7 @@ const {
   hashPinPhone,
   verifyPinPhone,
 } = require("../utils/encryption");
+const { } = require("../hederaService.js")
 const SECRET_KEY = process.env.SECRET_KEY;
 
 const verifyToken = (req, res, next) => {
@@ -108,9 +109,8 @@ router.post("/makeTransaction", async (req, res) => {
         failedAttempts: sender.failedAttempts + 1,
       });
       return res.status(403).send({
-        error: `Invalid pin: remaining attempts ${
-          3 - (sender.failedAttempts + 1)
-        }`,
+        error: `Invalid pin: remaining attempts ${3 - (sender.failedAttempts + 1)
+          }`,
       });
     }
 
