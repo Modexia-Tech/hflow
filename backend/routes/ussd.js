@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const { getUser, registerUser } = require("../database");
+const hederaService = require("../hederaService");
 
 const {
   encryptPrivateKey,
