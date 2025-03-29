@@ -132,7 +132,7 @@ What would you like us to help you with today?
         .sendHBAR(
           senderPrivateKey,
           sender.hederaAccountId,
-          receiver.phone,
+          receiver.hederaAccountId,
           number(ussdPassedInput[2]),
         );
 
