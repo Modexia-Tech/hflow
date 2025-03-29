@@ -100,19 +100,19 @@ router.post("/makeTransaction", async (req, res) => {
       sender.encryptedPrivateKey,
       req.body.senderPin,
     );
-    const { status, txId, hashscanUrl, newBalance } = hederaService.sendHBAR(
-      senderPrivateKey,
-      sender.hederaAccountId,
-      receiver.hederaAccountId,
-      req.body.amount,
-    );
-
+    const { status, txId, hashscanUrl, newBalance } = await hederaService
+      .sendHBAR(
+        senderPrivateKey,
+        sender.hederaAccountId,
+        receiver.hederaAccountId,
+        req.body.amount,
+      );
     const transactionId = await addTransaction(
       req.body.senderPhone,
       req.body.receiverPhone,
       req.body.amount,
       txId,
-      status,
+      status.toLowerCase(),
     );
     if (!transactionId) {
       return res.status(500).send({ error: "Failed to log transaction" });
