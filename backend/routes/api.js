@@ -44,6 +44,23 @@ router.post("/registerUser", async (req, res) => {
   }
 });
 
+router.post("/userAccountBalance", async (req, res) => {
+  try {
+    const { error } = userActionSchema.validate(req.body);
+
+    if (error) {
+      return res.status(400).send({ error: error.details[0].message });
+    }
+    const user = await getUser(req.body.phone);
+
+    const balance = await hederaService.getBalance(user.hederaAccountId);
+
+    return res.status(200).send(balance);
+  } catch (error) {
+    return res.status(500).send({ error: error.message });
+  }
+});
+
 router.post("/makeTransaction", async (req, res) => {
   try {
     const { error } = newTransactionSchema.validate(req.body);
@@ -54,7 +71,6 @@ router.post("/makeTransaction", async (req, res) => {
     if (!sender) {
       return res.status(404).send({ error: "Sender not found" });
     }
-    // allow transaction only if the pin is correct
     if (sender.failedAttempts >= 3) {
       return res.status(403).send({ error: "Sender account locked" });
     }
@@ -80,28 +96,16 @@ router.post("/makeTransaction", async (req, res) => {
       return res.status(400).send({ error: "Cannot send to self" });
     }
 
-    // get balance from hedera (daniels magic goes here)
-    // const balance = await hederaService.getBalance(sender.hederaAccountId);
-
-    // For the sake of this example, let's assume the balance is 100 HBAR\
-    const senderBalance = 100;
-    if (senderBalance < req.body.amount) {
-      return res
-        .status(400)
-        .send({ error: `Insufficient balance of sh${senderBalance}` });
-    }
-
-    // hedera transaction goes here
-    const senderHederaAccountId = sender.hederaAccountId;
-    const receiverHederaAccountId = receiver.hederaAccountId;
     const senderPrivateKey = decryptPrivateKey(
       sender.encryptedPrivateKey,
       req.body.senderPin,
     );
-    // deduct from sender
-    // add to receiver
-
-    // update transaction history
+    const { status, txId, hashscanUrl, newBalance } = hederaService.sendHBAR(
+      senderPrivateKey,
+      sender.hederaAccountId,
+      receiver.hederaAccountId,
+      req.body.amount,
+    );
 
     const transactionId = await addTransaction(
       req.body.senderPhone,
@@ -115,7 +119,11 @@ router.post("/makeTransaction", async (req, res) => {
     }
     return res
       .status(200)
-      .send({ message: `Transaction successful of id: ${transactionId}` });
+      .send({
+        message: `Transaction successful of id: ${txId}`,
+        newBalance,
+        hashscanUrl,
+      });
   } catch (err) {
     res.status(400).send({ error: err.message });
   }
@@ -129,21 +137,18 @@ router.post("/fundWallet", async (req, res) => {
       return res.status(400).json({ error: error.details[0].message });
     }
 
-    // 3. Get sender and verify account status
-    const sender = await getUser(req.body.receiverPhone);
-    if (!sender) {
+    const receiver = await getUser(req.body.receiverPhone);
+    if (!receiver) {
       return res.status(404).json({ error: "Account not found" });
     }
 
-    const amountInTinybars = Math.round(req.body.amount * 1e8); // Convert to whole tinybars
-
     const result = await hederaService
       .fundWallet(
-        sender.hederaAccountId,
-        amountInTinybars,
+        receiver.hederaAccountId,
+        req.body.amount,
       );
 
-    return res.status(200).json(`The result is ${result}`);
+    return res.status(200).json(result);
   } catch (error) {
     console.error("FundWallet Error:", error);
     return res.status(500).json({

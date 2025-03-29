@@ -6,7 +6,6 @@ const {
   TransferTransaction,
   Hbar,
   AccountBalanceQuery,
-  Status,
 } = require("@hashgraph/sdk");
 const { encryptPrivateKey } = require("./utils/encryption.js");
 
@@ -31,7 +30,7 @@ class HederaService {
 
     const tx = await new AccountCreateTransaction()
       .setKey(newKey.publicKey)
-      .setInitialBalance(Hbar.from(100)) // Fund with 1 HBAR initially
+      .setInitialBalance(Hbar.from(100))
       .execute(this.client);
 
     const receipt = await tx.getReceipt(this.client);
