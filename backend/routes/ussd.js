@@ -117,11 +117,11 @@ What would you like us to help you with today?
 
       const receiver = await getUser(ussdPassedInput[1]);
       if (!receiver) {
-        return res.status(404).send({ error: "Receiver not found" });
+        return res.status(404).send("END Receiver not found");
       }
 
       if (sender.phone === receiver.phone) {
-        return res.status(400).send("You cannot send money to yourself");
+        return res.status(400).send("END You cannot send money to yourself");
       }
 
       const senderPrivateKey = decryptPrivateKey(
@@ -132,8 +132,8 @@ What would you like us to help you with today?
         .sendHBAR(
           senderPrivateKey,
           sender.hederaAccountId,
-          receiver.hederaAccountId,
-          req.body.amount,
+          receiver.phone,
+          number(ussdPassedInput[2]),
         );
 
       const transactionId = await addTransaction(
@@ -143,7 +143,8 @@ What would you like us to help you with today?
         txId,
         status.toLowerCase(),
       );
-      response = `END Transaction successful of id: ${txId}`;
+      response =
+        `END Transaction successful of id: ${txId} new balance: ${newBalance} HBAR`;
       break;
     default:
       response = "END Invalid choice please try again";
