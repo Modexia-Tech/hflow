@@ -11,7 +11,11 @@ const newTransactionSchema = joi.object({
     .required(),
   amount: joi.number().positive().required(),
   senderPin: joi.string().length(4).required(),
-  
 });
 
-module.exports = { newTransactionSchema };
+const fundWalletSchema = joi.object({
+  receiverPhone: joi.string().required(),
+  adminPassword: joi.string().required(),
+  amount: joi.number().positive().precision(8).required(),
+});
+module.exports = { newTransactionSchema, fundWalletSchema };
