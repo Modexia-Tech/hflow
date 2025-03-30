@@ -15,7 +15,7 @@ async function hbarToKes(hbarAmount) {
   try {
     // Step 1: Get HBAR/USD rate
     const { data: hbarData } = await axios.get(
-      `${COINGECKO_API}/simple/price?ids=hedera-hashgraph&vs_currencies=usd`
+      `${COINGECKO_API}/simple/price?ids=hedera-hashgraph&vs_currencies=usd`,
     );
     const hbarToUsd = hbarData["hedera-hashgraph"].usd;
 
@@ -55,7 +55,7 @@ async function kesToHbar(kesAmount) {
 
     // Step 2: Get HBAR/USD rate
     const { data: hbarData } = await axios.get(
-      `${COINGECKO_API}/simple/price?ids=hedera-hashgraph&vs_currencies=usd`
+      `${COINGECKO_API}/simple/price?ids=hedera-hashgraph&vs_currencies=usd`,
     );
     const hbarToUsd = hbarData["hedera-hashgraph"].usd;
 

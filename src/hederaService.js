@@ -121,4 +121,3 @@ class HederaService {
 }
 
 module.exports = new HederaService();
-

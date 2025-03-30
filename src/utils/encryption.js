@@ -32,7 +32,7 @@ function verifyPinPhone(submittedPin, submittedPhone, storedHash) {
   const newHash = CryptoJS.PBKDF2(
     `${submittedPin}$${submittedPhone}$${SECRET_SALT}`,
     salt,
-    { keySize: 512 / 32, iterations: 10000 }
+    { keySize: 512 / 32, iterations: 10000 },
   ).toString();
 
   return newHash === originalHash;
