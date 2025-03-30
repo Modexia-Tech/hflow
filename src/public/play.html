@@ -1,218 +1,311 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HPesa API Playground</title>
     <!-- Flowbite CSS -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css"
+      rel="stylesheet"
+    />
     <!-- Highlight.js for code formatting -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/github.min.css">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/github.min.css"
+    >
     <style>
-        .tab-content {
-            display: none;
-        }
-        .tab-content.active {
-            display: block;
-        }
-        .nav-tab {
-            cursor: pointer;
-        }
-        .nav-tab.active {
-            border-bottom: 2px solid #6366f1;
-            color: #6366f1;
-        }
-        .response-area {
-            min-height: 200px;
-        }
-        .playground-container {
-            height: calc(100vh - 80px);
-        }
-        .hljs {
-            background: #f8fafc !important;
-            border-radius: 0.5rem;
-        }
+      .tab-content {
+        display: none;
+      }
+      .tab-content.active {
+        display: block;
+      }
+      .nav-tab {
+        cursor: pointer;
+      }
+      .nav-tab.active {
+        border-bottom: 2px solid #6366f1;
+        color: #6366f1;
+      }
+      .response-area {
+        min-height: 200px;
+      }
+      .playground-container {
+        height: calc(100vh - 80px);
+      }
+      .hljs {
+        background: #f8fafc !important;
+        border-radius: 0.5rem;
+      }
     </style>
-</head>
-<body class="bg-gray-50">
+  </head>
+  <body class="bg-gray-50">
     <!-- Navigation -->
-    <nav class="bg-white border-gray-200 fixed w-full z-20 top-0 start-0 border-b">
-        <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-            <a href="#" class="flex items-center space-x-3 rtl:space-x-reverse">
-                <span class="self-center text-2xl font-bold whitespace-nowrap text-indigo-600">HPESA API Playground</span>
-            </a>
-            <div class="flex items-center space-x-4">
-                <button id="runBtn" class="text-white bg-indigo-600 hover:bg-indigo-700 focus:ring-4 focus:outline-none focus:ring-indigo-300 font-medium rounded-lg text-sm px-4 py-2 text-center">
-                    Run <i class="fas fa-play ml-1"></i>
-                </button>
-                <button id="resetBtn" class="text-gray-700 bg-white border border-gray-300 hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 font-medium rounded-lg text-sm px-4 py-2 text-center">
-                    Reset <i class="fas fa-redo ml-1"></i>
-                </button>
-            </div>
+    <nav
+      class="bg-white border-gray-200 fixed w-full z-20 top-0 start-0 border-b"
+    >
+      <div
+        class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4"
+      >
+        <a href="#" class="flex items-center space-x-3 rtl:space-x-reverse">
+          <span
+            class="self-center text-2xl font-bold whitespace-nowrap text-indigo-600"
+          >HPESA API Playground</span>
+        </a>
+        <div class="flex items-center space-x-4">
+          <button
+            id="runBtn"
+            class="text-white bg-indigo-600 hover:bg-indigo-700 focus:ring-4 focus:outline-none focus:ring-indigo-300 font-medium rounded-lg text-sm px-4 py-2 text-center"
+          >
+            Run <i class="fas fa-play ml-1"></i>
+          </button>
+          <button
+            id="resetBtn"
+            class="text-gray-700 bg-white border border-gray-300 hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 font-medium rounded-lg text-sm px-4 py-2 text-center"
+          >
+            Reset <i class="fas fa-redo ml-1"></i>
+          </button>
         </div>
+      </div>
     </nav>
 
     <!-- Main Playground Area -->
     <div class="playground-container pt-20 flex flex-col md:flex-row">
-        <!-- Left Panel - Request Configuration -->
-        <div class="w-full md:w-1/2 p-6 overflow-y-auto">
-            <div class="mb-6">
-                <h2 class="text-xl font-bold text-gray-900 mb-4">API Endpoint</h2>
-                <div class="flex">
-                    <select id="methodSelect" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-l-lg focus:ring-indigo-500 focus:border-indigo-500 p-2.5">
-                        <option value="GET">GET</option>
-                        <option value="POST">POST</option>
-                        <option value="PUT">PUT</option>
-                        <option value="DELETE">DELETE</option>
-                    </select>
-                    <input type="text" id="endpointInput" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-r-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5" value="/api/v1/transactions" placeholder="Enter endpoint">
-                </div>
+      <!-- Left Panel - Request Configuration -->
+      <div class="w-full md:w-1/2 p-6 overflow-y-auto">
+        <div class="mb-6">
+          <h2 class="text-xl font-bold text-gray-900 mb-4">API Endpoint</h2>
+          <div class="flex">
+            <select
+              id="methodSelect"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-l-lg focus:ring-indigo-500 focus:border-indigo-500 p-2.5"
+            >
+              <option value="GET">GET</option>
+              <option value="POST">POST</option>
+              <option value="PUT">PUT</option>
+              <option value="DELETE">DELETE</option>
+            </select>
+            <input
+              type="text"
+              id="endpointInput"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-r-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5"
+              value="/api/v1/transactions"
+              placeholder="Enter endpoint"
+            >
+          </div>
+        </div>
+
+        <!-- Tabs Navigation -->
+        <ul class="flex border-b border-gray-200 mb-4">
+          <li class="nav-tab mr-2 active" data-tab="params">
+            <span class="inline-block p-2 font-medium">Params</span>
+          </li>
+          <li class="nav-tab mr-2" data-tab="headers">
+            <span class="inline-block p-2 font-medium">Headers</span>
+          </li>
+          <li class="nav-tab" data-tab="body">
+            <span class="inline-block p-2 font-medium">Body</span>
+          </li>
+        </ul>
+
+        <!-- Params Tab -->
+        <div id="params" class="tab-content active">
+          <div class="space-y-4" id="paramsContainer">
+            <div class="flex items-center space-x-4 param-row">
+              <input
+                type="text"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-1/3 p-2.5"
+                placeholder="Key"
+              >
+              <input
+                type="text"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-1/3 p-2.5"
+                placeholder="Value"
+              >
+              <button class="remove-param text-red-600 hover:text-red-800">
+                <i class="fas fa-times"></i>
+              </button>
             </div>
+          </div>
+          <button
+            id="addParamBtn"
+            class="mt-4 text-indigo-600 hover:text-indigo-800 text-sm font-medium"
+          >
+            <i class="fas fa-plus mr-1"></i> Add Parameter
+          </button>
+        </div>
 
-            <!-- Tabs Navigation -->
-            <ul class="flex border-b border-gray-200 mb-4">
-                <li class="nav-tab mr-2 active" data-tab="params">
-                    <span class="inline-block p-2 font-medium">Params</span>
-                </li>
-                <li class="nav-tab mr-2" data-tab="headers">
-                    <span class="inline-block p-2 font-medium">Headers</span>
-                </li>
-                <li class="nav-tab" data-tab="body">
-                    <span class="inline-block p-2 font-medium">Body</span>
-                </li>
-            </ul>
-
-            <!-- Params Tab -->
-            <div id="params" class="tab-content active">
-                <div class="space-y-4" id="paramsContainer">
-                    <div class="flex items-center space-x-4 param-row">
-                        <input type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-1/3 p-2.5" placeholder="Key">
-                        <input type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-1/3 p-2.5" placeholder="Value">
-                        <button class="remove-param text-red-600 hover:text-red-800">
-                            <i class="fas fa-times"></i>
-                        </button>
-                    </div>
-                </div>
-                <button id="addParamBtn" class="mt-4 text-indigo-600 hover:text-indigo-800 text-sm font-medium">
-                    <i class="fas fa-plus mr-1"></i> Add Parameter
-                </button>
+        <!-- Headers Tab -->
+        <div id="headers" class="tab-content">
+          <div class="space-y-4" id="headersContainer">
+            <div class="flex items-center space-x-4 header-row">
+              <input
+                type="text"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-1/3 p-2.5"
+                placeholder="Header"
+                value="Authorization"
+              >
+              <input
+                type="text"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-1/3 p-2.5"
+                placeholder="Value"
+                value="Bearer YOUR_TOKEN"
+              >
+              <button class="remove-header text-red-600 hover:text-red-800">
+                <i class="fas fa-times"></i>
+              </button>
             </div>
-
-            <!-- Headers Tab -->
-            <div id="headers" class="tab-content">
-                <div class="space-y-4" id="headersContainer">
-                    <div class="flex items-center space-x-4 header-row">
-                        <input type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-1/3 p-2.5" placeholder="Header" value="Authorization">
-                        <input type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-1/3 p-2.5" placeholder="Value" value="Bearer YOUR_TOKEN">
-                        <button class="remove-header text-red-600 hover:text-red-800">
-                            <i class="fas fa-times"></i>
-                        </button>
-                    </div>
-                    <div class="flex items-center space-x-4 header-row">
-                        <input type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-1/3 p-2.5" placeholder="Header" value="Content-Type">
-                        <input type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-1/3 p-2.5" placeholder="Value" value="application/json">
-                        <button class="remove-header text-red-600 hover:text-red-800">
-                            <i class="fas fa-times"></i>
-                        </button>
-                    </div>
-                </div>
-                <button id="addHeaderBtn" class="mt-4 text-indigo-600 hover:text-indigo-800 text-sm font-medium">
-                    <i class="fas fa-plus mr-1"></i> Add Header
-                </button>
+            <div class="flex items-center space-x-4 header-row">
+              <input
+                type="text"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-1/3 p-2.5"
+                placeholder="Header"
+                value="Content-Type"
+              >
+              <input
+                type="text"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-1/3 p-2.5"
+                placeholder="Value"
+                value="application/json"
+              >
+              <button class="remove-header text-red-600 hover:text-red-800">
+                <i class="fas fa-times"></i>
+              </button>
             </div>
+          </div>
+          <button
+            id="addHeaderBtn"
+            class="mt-4 text-indigo-600 hover:text-indigo-800 text-sm font-medium"
+          >
+            <i class="fas fa-plus mr-1"></i> Add Header
+          </button>
+        </div>
 
-            <!-- Body Tab -->
-            <div id="body" class="tab-content">
-                <div class="mb-2 flex justify-between">
-                    <label class="block text-sm font-medium text-gray-900">Request Body (JSON)</label>
-                    <button id="formatJsonBtn" class="text-indigo-600 hover:text-indigo-800 text-sm font-medium">
-                        <i class="fas fa-align-left mr-1"></i> Format
-                    </button>
-                </div>
-                <textarea id="requestBody" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 h-64 font-mono" placeholder='{
+        <!-- Body Tab -->
+        <div id="body" class="tab-content">
+          <div class="mb-2 flex justify-between">
+            <label class="block text-sm font-medium text-gray-900"
+            >Request Body (JSON)</label>
+            <button
+              id="formatJsonBtn"
+              class="text-indigo-600 hover:text-indigo-800 text-sm font-medium"
+            >
+              <i class="fas fa-align-left mr-1"></i> Format
+            </button>
+          </div>
+          <textarea
+            id="requestBody"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 h-64 font-mono"
+            placeholder='{
   "amount": 100,
   "recipient": "0.0.1234"
-}'>{
+}'
+          >
+{
   "amount": 100,
   "recipient": "0.0.1234"
 }</textarea>
-            </div>
+        </div>
+      </div>
+
+      <!-- Right Panel - Response -->
+      <div class="w-full md:w-1/2 bg-gray-100 p-6 overflow-y-auto">
+        <h2 class="text-xl font-bold text-gray-900 mb-4">Response</h2>
+
+        <!-- Response Status -->
+        <div class="flex items-center mb-4">
+          <div
+            id="responseStatus"
+            class="px-3 py-1 text-xs font-medium rounded-full bg-gray-200 text-gray-800 mr-2"
+          >
+            Not executed
+          </div>
+          <div id="responseTime" class="text-sm text-gray-500">
+            -
+          </div>
         </div>
 
-        <!-- Right Panel - Response -->
-        <div class="w-full md:w-1/2 bg-gray-100 p-6 overflow-y-auto">
-            <h2 class="text-xl font-bold text-gray-900 mb-4">Response</h2>
-            
-            <!-- Response Status -->
-            <div class="flex items-center mb-4">
-                <div id="responseStatus" class="px-3 py-1 text-xs font-medium rounded-full bg-gray-200 text-gray-800 mr-2">
-                    Not executed
-                </div>
-                <div id="responseTime" class="text-sm text-gray-500">
-                    -
-                </div>
-            </div>
-            
-            <!-- Response Tabs -->
-            <ul class="flex border-b border-gray-300 mb-4">
-                <li class="response-tab mr-2 active" data-response-tab="body">
-                    <span class="inline-block p-2 font-medium">Body</span>
-                </li>
-                <li class="response-tab mr-2" data-response-tab="headers">
-                    <span class="inline-block p-2 font-medium">Headers</span>
-                </li>
-            </ul>
-            
-            <!-- Response Body -->
-            <div id="responseBody" class="tab-content active response-area bg-white p-4 rounded-lg">
-                <pre><code class="language-json">{
+        <!-- Response Tabs -->
+        <ul class="flex border-b border-gray-300 mb-4">
+          <li class="response-tab mr-2 active" data-response-tab="body">
+            <span class="inline-block p-2 font-medium">Body</span>
+          </li>
+          <li class="response-tab mr-2" data-response-tab="headers">
+            <span class="inline-block p-2 font-medium">Headers</span>
+          </li>
+        </ul>
+
+        <!-- Response Body -->
+        <div
+          id="responseBody"
+          class="tab-content active response-area bg-white p-4 rounded-lg"
+        >
+          <pre
+          >
+<code class="language-json">{
   "status": "Response will appear here",
   "data": {}
-}</code></pre>
-            </div>
-            
-            <!-- Response Headers -->
-            <div id="responseHeaders" class="tab-content response-area bg-white p-4 rounded-lg">
-                <pre><code class="language-json">{
-  "headers": "Will appear here"
-}</code></pre>
-            </div>
+}</code></pre
+          >
         </div>
+
+        <!-- Response Headers -->
+        <div
+          id="responseHeaders"
+          class="tab-content response-area bg-white p-4 rounded-lg"
+        >
+          <pre
+          >
+<code class="language-json">{
+  "headers": "Will appear here"
+}</code></pre
+          >
+        </div>
+      </div>
     </div>
 
     <!-- Flowbite JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"
+    ></script>
     <!-- Highlight.js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"
+    ></script>
     <!-- Font Awesome -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js"
+    ></script>
     <!-- jQuery (for easy DOM manipulation) -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+    ></script>
+
     <script>
-        $(document).ready(function() {
-            // Initialize syntax highlighting
-            hljs.highlightAll();
-            
-            // Tab switching
-            $('.nav-tab').click(function() {
-                $('.nav-tab').removeClass('active');
-                $(this).addClass('active');
-                $('.tab-content').removeClass('active');
-                $('#' + $(this).data('tab')).addClass('active');
-            });
-            
-            // Response tab switching
-            $('.response-tab').click(function() {
-                $('.response-tab').removeClass('active');
-                $(this).addClass('active');
-                $('.tab-content.response-area').removeClass('active');
-                $('#' + $(this).data('response-tab')).addClass('active');
-            });
-            
-            // Add parameter row
-            $('#addParamBtn').click(function() {
-                $('#paramsContainer').append(`
+      $(document).ready(function () {
+        // Initialize syntax highlighting
+        hljs.highlightAll();
+
+        // Tab switching
+        $(".nav-tab").click(function () {
+          $(".nav-tab").removeClass("active");
+          $(this).addClass("active");
+          $(".tab-content").removeClass("active");
+          $("#" + $(this).data("tab")).addClass("active");
+        });
+
+        // Response tab switching
+        $(".response-tab").click(function () {
+          $(".response-tab").removeClass("active");
+          $(this).addClass("active");
+          $(".tab-content.response-area").removeClass("active");
+          $("#" + $(this).data("response-tab")).addClass("active");
+        });
+
+        // Add parameter row
+        $("#addParamBtn").click(function () {
+          $("#paramsContainer").append(`
                     <div class="flex items-center space-x-4 param-row">
                         <input type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-1/3 p-2.5" placeholder="Key">
                         <input type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-1/3 p-2.5" placeholder="Value">
@@ -221,11 +314,11 @@
                         </button>
                     </div>
                 `);
-            });
-            
-            // Add header row
-            $('#addHeaderBtn').click(function() {
-                $('#headersContainer').append(`
+        });
+
+        // Add header row
+        $("#addHeaderBtn").click(function () {
+          $("#headersContainer").append(`
                     <div class="flex items-center space-x-4 header-row">
                         <input type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-1/3 p-2.5" placeholder="Header">
                         <input type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-1/3 p-2.5" placeholder="Value">
@@ -234,69 +327,81 @@
                         </button>
                     </div>
                 `);
-            });
-            
-            // Remove parameter row
-            $(document).on('click', '.remove-param', function() {
-                $(this).closest('.param-row').remove();
-            });
-            
-            // Remove header row
-            $(document).on('click', '.remove-header', function() {
-                $(this).closest('.header-row').remove();
-            });
-            
-            // Format JSON button
-            $('#formatJsonBtn').click(function() {
-                try {
-                    const json = JSON.parse($('#requestBody').val());
-                    $('#requestBody').val(JSON.stringify(json, null, 2));
-                } catch (e) {
-                    alert('Invalid JSON: ' + e.message);
-                }
-            });
-            
-            // Run button - just UI for now
-            $('#runBtn').click(function() {
-                // Visual feedback
-                $('#responseStatus').text('Executing...').removeClass('bg-red-100 text-red-800 bg-green-100 text-green-800').addClass('bg-yellow-100 text-yellow-800');
-                
-                // Simulate API call delay
-                setTimeout(function() {
-                    // This is where you'd hook up real API calls
-                    $('#responseStatus').text('200 OK').removeClass('bg-yellow-100 text-yellow-800 bg-red-100 text-red-800').addClass('bg-green-100 text-green-800');
-                    $('#responseTime').text('125ms');
-                    
-                    // Update response body with sample data
-                    $('#responseBody pre code').text(JSON.stringify({
-                        status: "success",
-                        data: {
-                            transactionId: "0.0.1234@1713634567.123",
-                            amount: 100,
-                            recipient: "0.0.1234",
-                            timestamp: new Date().toISOString(),
-                            fee: 0.0001
-                        }
-                    }, null, 2));
-                    
-                    // Update response headers with sample data
-                    $('#responseHeaders pre code').text(JSON.stringify({
-                        "content-type": "application/json",
-                        "date": new Date().toGMTString(),
-                        "x-request-id": "a1b2c3d4e5f6"
-                    }, null, 2));
-                    
-                    // Re-highlight syntax
-                    hljs.highlightAll();
-                }, 800);
-            });
-            
-            // Reset button
-            $('#resetBtn').click(function() {
-                // Reset form
-                $('#endpointInput').val('/api/v1/transactions');
-                $('#methodSelect').val('GET');
-                $('#paramsContainer').html(`
+        });
+
+        // Remove parameter row
+        $(document).on("click", ".remove-param", function () {
+          $(this).closest(".param-row").remove();
+        });
+
+        // Remove header row
+        $(document).on("click", ".remove-header", function () {
+          $(this).closest(".header-row").remove();
+        });
+
+        // Format JSON button
+        $("#formatJsonBtn").click(function () {
+          try {
+            const json = JSON.parse($("#requestBody").val());
+            $("#requestBody").val(JSON.stringify(json, null, 2));
+          } catch (e) {
+            alert("Invalid JSON: " + e.message);
+          }
+        });
+
+        // Run button - just UI for now
+        $("#runBtn").click(function () {
+          // Visual feedback
+          $("#responseStatus").text("Executing...").removeClass(
+            "bg-red-100 text-red-800 bg-green-100 text-green-800",
+          ).addClass("bg-yellow-100 text-yellow-800");
+
+          // Simulate API call delay
+          setTimeout(function () {
+            // This is where you'd hook up real API calls
+            $("#responseStatus").text("200 OK").removeClass(
+              "bg-yellow-100 text-yellow-800 bg-red-100 text-red-800",
+            ).addClass("bg-green-100 text-green-800");
+            $("#responseTime").text("125ms");
+
+            // Update response body with sample data
+            $("#responseBody pre code").text(JSON.stringify(
+              {
+                status: "success",
+                data: {
+                  transactionId: "0.0.1234@1713634567.123",
+                  amount: 100,
+                  recipient: "0.0.1234",
+                  timestamp: new Date().toISOString(),
+                  fee: 0.0001,
+                },
+              },
+              null,
+              2,
+            ));
+
+            // Update response headers with sample data
+            $("#responseHeaders pre code").text(JSON.stringify(
+              {
+                "content-type": "application/json",
+                "date": new Date().toGMTString(),
+                "x-request-id": "a1b2c3d4e5f6",
+              },
+              null,
+              2,
+            ));
+
+            // Re-highlight syntax
+            hljs.highlightAll();
+          }, 800);
+        });
+
+        // Reset button
+        $("#resetBtn").click(function () {
+          // Reset form
+          $("#endpointInput").val("/api/v1/transactions");
+          $("#methodSelect").val("GET");
+          $("#paramsContainer").html(`
                     <div class="flex items-center space-x-4 param-row">
                         <input type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-1/3 p-2.5" placeholder="Key">
                         <input type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-1/3 p-2.5" placeholder="Value">
@@ -305,7 +410,7 @@
                         </button>
                     </div>
                 `);
-                $('#headersContainer').html(`
+          $("#headersContainer").html(`
                     <div class="flex items-center space-x-4 header-row">
                         <input type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-1/3 p-2.5" placeholder="Header" value="Authorization">
                         <input type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-1/3 p-2.5" placeholder="Value" value="Bearer YOUR_TOKEN">
@@ -321,18 +426,26 @@
                         </button>
                     </div>
                 `);
-                $('#requestBody').val('{\n  "amount": 100,\n  "recipient": "0.0.1234"\n}');
-                
-                // Reset response
-                $('#responseStatus').text('Not executed').removeClass('bg-yellow-100 text-yellow-800 bg-green-100 text-green-800 bg-red-100 text-red-800').addClass('bg-gray-200 text-gray-800');
-                $('#responseTime').text('-');
-                $('#responseBody pre code').text('{\n  "status": "Response will appear here",\n  "data": {}\n}');
-                $('#responseHeaders pre code').text('{\n  "headers": "Will appear here"\n}');
-                
-                // Re-highlight syntax
-                hljs.highlightAll();
-            });
+          $("#requestBody").val(
+            '{\n  "amount": 100,\n  "recipient": "0.0.1234"\n}',
+          );
+
+          // Reset response
+          $("#responseStatus").text("Not executed").removeClass(
+            "bg-yellow-100 text-yellow-800 bg-green-100 text-green-800 bg-red-100 text-red-800",
+          ).addClass("bg-gray-200 text-gray-800");
+          $("#responseTime").text("-");
+          $("#responseBody pre code").text(
+            '{\n  "status": "Response will appear here",\n  "data": {}\n}',
+          );
+          $("#responseHeaders pre code").text(
+            '{\n  "headers": "Will appear here"\n}',
+          );
+
+          // Re-highlight syntax
+          hljs.highlightAll();
         });
+      });
     </script>
-</body>
+  </body>
 </html>

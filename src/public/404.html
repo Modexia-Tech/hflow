@@ -1,87 +1,139 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Page Not Found | HPesa</title>
     <!-- Flowbite CSS -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css"
+      rel="stylesheet"
+    />
     <!-- Custom CSS -->
     <style>
-        body {
-            background-color: #f8fafc;
-            font-family: 'Inter', sans-serif;
+      body {
+        background-color: #f8fafc;
+        font-family: "Inter", sans-serif;
+      }
+      .hpesa-gradient {
+        background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+      }
+      .animation-float {
+        animation: float 6s ease-in-out infinite;
+      }
+      @keyframes float {
+        0%, 100% {
+          transform: translateY(0);
         }
-        .hpesa-gradient {
-            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+        50% {
+          transform: translateY(-20px);
         }
-        .animation-float {
-            animation: float 6s ease-in-out infinite;
-        }
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
-        }
+      }
     </style>
-</head>
-<body class="flex items-center justify-center min-h-screen">
+  </head>
+  <body class="flex items-center justify-center min-h-screen">
     <div class="container mx-auto px-4 py-16 text-center">
-        <div class="max-w-2xl mx-auto">
-            <!-- Animated 404 Graphic -->
-            <div class="animation-float mb-8">
-                <svg class="w-48 h-48 mx-auto" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="100" cy="100" r="90" fill="#EFF6FF"/>
-                    <path d="M100 50V150" stroke="#3B82F6" stroke-width="8" stroke-linecap="round"/>
-                    <path d="M50 100H150" stroke="#3B82F6" stroke-width="8" stroke-linecap="round"/>
-                    <circle cx="100" cy="100" r="30" fill="#8B5CF6"/>
-                    <text x="100" y="110" font-family="Arial" font-size="24" font-weight="bold" fill="white" text-anchor="middle">404</text>
-                </svg>
-            </div>
-            
-            <!-- Message -->
-            <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4">Page Not Found</h1>
-            <p class="text-lg text-gray-600 mb-8">
-                Oops! The page you're looking for doesn't exist or has been moved.
-                <br>
-                Try returning to our homepage or contact support if the problem persists.
-            </p>
-            
-            <!-- Actions -->
-            <div class="flex flex-col sm:flex-row justify-center gap-4">
-                <a href="/" class="hpesa-gradient text-white font-medium rounded-lg px-6 py-3 text-center hover:opacity-90 transition">
-                    Return Home
-                </a>
-                <a href="/contact" class="bg-white border border-gray-300 text-gray-700 font-medium rounded-lg px-6 py-3 hover:bg-gray-50 transition">
-                    Contact Support
-                </a>
-            </div>
-            
-            <!-- USSD Reminder -->
-            <div class="mt-12 p-4 bg-blue-50 rounded-lg inline-block">
-                <p class="text-gray-700">
-                    <span class="font-semibold">Remember:</span> You can always access HPesa via USSD by dialing 
-                    <span class="font-mono bg-gray-100 px-2 py-1 rounded">*384*2005#</span>
-                </p>
-            </div>
+      <div class="max-w-2xl mx-auto">
+        <!-- Animated 404 Graphic -->
+        <div class="animation-float mb-8">
+          <svg
+            class="w-48 h-48 mx-auto"
+            viewBox="0 0 200 200"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <circle cx="100" cy="100" r="90" fill="#EFF6FF" />
+            <path
+              d="M100 50V150"
+              stroke="#3B82F6"
+              stroke-width="8"
+              stroke-linecap="round"
+            />
+            <path
+              d="M50 100H150"
+              stroke="#3B82F6"
+              stroke-width="8"
+              stroke-linecap="round"
+            />
+            <circle cx="100" cy="100" r="30" fill="#8B5CF6" />
+            <text
+              x="100"
+              y="110"
+              font-family="Arial"
+              font-size="24"
+              font-weight="bold"
+              fill="white"
+              text-anchor="middle"
+            >
+              404
+            </text>
+          </svg>
         </div>
+
+        <!-- Message -->
+        <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
+          Page Not Found
+        </h1>
+        <p class="text-lg text-gray-600 mb-8">
+          Oops! The page you're looking for doesn't exist or has been moved.
+          <br>
+          Try returning to our homepage or contact support if the problem
+          persists.
+        </p>
+
+        <!-- Actions -->
+        <div class="flex flex-col sm:flex-row justify-center gap-4">
+          <a
+            href="/"
+            class="hpesa-gradient text-white font-medium rounded-lg px-6 py-3 text-center hover:opacity-90 transition"
+          >
+            Return Home
+          </a>
+          <a
+            href="/contact"
+            class="bg-white border border-gray-300 text-gray-700 font-medium rounded-lg px-6 py-3 hover:bg-gray-50 transition"
+          >
+            Contact Support
+          </a>
+        </div>
+
+        <!-- USSD Reminder -->
+        <div class="mt-12 p-4 bg-blue-50 rounded-lg inline-block">
+          <p class="text-gray-700">
+            <span class="font-semibold">Remember:</span> You can always access
+            HPesa via USSD by dialing
+            <span class="font-mono bg-gray-100 px-2 py-1 rounded"
+            >*384*2005#</span>
+          </p>
+        </div>
+      </div>
     </div>
 
     <!-- Flowbite JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"
+    ></script>
     <!-- Custom JS -->
     <script>
-        // Add animation to buttons on hover
-        document.querySelectorAll('a').forEach(link => {
-            link.addEventListener('mouseenter', () => {
-                link.classList.add('transition', 'transform', 'hover:-translate-y-1');
-            });
-            link.addEventListener('mouseleave', () => {
-                link.classList.remove('transform', 'hover:-translate-y-1');
-            });
+      // Add animation to buttons on hover
+      document.querySelectorAll("a").forEach((link) => {
+        link.addEventListener("mouseenter", () => {
+          link.classList.add(
+            "transition",
+            "transform",
+            "hover:-translate-y-1",
+          );
         });
+        link.addEventListener("mouseleave", () => {
+          link.classList.remove("transform", "hover:-translate-y-1");
+        });
+      });
 
-        // Log 404 errors (optional)
-        console.warn('404 Page Not Found - Path:', window.location.pathname);
+      // Log 404 errors (optional)
+      console.warn(
+        "404 Page Not Found - Path:",
+        window.location.pathname,
+      );
     </script>
-</body>
+  </body>
 </html>

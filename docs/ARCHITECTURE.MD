@@ -1,5 +1,6 @@
-# HPesa Architecture Overview  
-*A USSD-first Hedera wallet bridging mobile money and blockchain*
+# HPesa Architecture Overview
+
+_A USSD-first Hedera wallet bridging mobile money and blockchain_
 
 ```mermaid
 flowchart TD
@@ -15,12 +16,13 @@ flowchart TD
 
 ## **1. Core Components**
 
-### **1.1 USSD Gateway**  
-- **Provider**: Africa's Talking/Twilio  
-- **Role**:  
-  - Handles USSD sessions via `*123#` shortcode.  
-  - Forwards payloads to HPesa backend.  
-- **Flow**:  
+### **1.1 USSD Gateway**
+
+- **Provider**: Africa's Talking/Twilio
+- **Role**:
+  - Handles USSD sessions via `*123#` shortcode.
+  - Forwards payloads to HPesa backend.
+- **Flow**:
   ```mermaid
   sequenceDiagram
       User->>+Africa's Talking: Dial *123#
@@ -31,26 +33,31 @@ flowchart TD
 
 ---
 
-### **1.2 Backend Services**  
-#### **Express.js Server**  
-- **Routes**:  
-  - `POST /ussd/start` → Initiate session  
-  - `POST /ussd/continue` → Handle menu navigation  
-  - `GET /api/balance` → Fetch HBAR/KES balance  
+### **1.2 Backend Services**
 
-#### **Key Modules**:  
-| Module           | Purpose                          | Tech                |  
-|------------------|----------------------------------|---------------------|  
-| `ussdRouter`     | Menu navigation logic            | Node.js, State machine |  
-| `hederaService`  | HBAR transactions                | Hedera SDK          |  
-| `authService`    | PIN encryption/validation        | CryptoJS, PBKDF2    |  
-| `mpesaBridge`    | Convert HBAR↔KES↔M-Pesa         | REST API            |  
+#### **Express.js Server**
+
+- **Routes**:
+  - `POST /ussd/start` → Initiate session
+  - `POST /ussd/continue` → Handle menu navigation
+  - `GET /api/balance` → Fetch HBAR/KES balance
+
+#### **Key Modules**:
+
+| Module          | Purpose                   | Tech                   |
+| --------------- | ------------------------- | ---------------------- |
+| `ussdRouter`    | Menu navigation logic     | Node.js, State machine |
+| `hederaService` | HBAR transactions         | Hedera SDK             |
+| `authService`   | PIN encryption/validation | CryptoJS, PBKDF2       |
+| `mpesaBridge`   | Convert HBAR↔KES↔M-Pesa   | REST API               |
 
 ---
 
-### **1.3 Data Layer**  
-#### **SQLite (Development)**  
-- **Schema**:  
+### **1.3 Data Layer**
+
+#### **SQLite (Development)**
+
+- **Schema**:
   ```sql
   CREATE TABLE users (
     phone TEXT PRIMARY KEY,
@@ -59,33 +66,37 @@ flowchart TD
     pinHash TEXT             -- PBKDF2 hashed
   );
   ```
-- **Why SQLite?**  
-  - Zero-config, file-based.  
-  - Supports 50K+ TXs/day (upgrade to PostgreSQL later).  
+- **Why SQLite?**
+  - Zero-config, file-based.
+  - Supports 50K+ TXs/day (upgrade to PostgreSQL later).
 
-#### **PostgreSQL (Production)**  
-- **Extensions**:  
-  - `pgcrypto` for secure PIN hashing.  
-  - TimescaleDB for analytics.  
+#### **PostgreSQL (Production)**
+
+- **Extensions**:
+  - `pgcrypto` for secure PIN hashing.
+  - TimescaleDB for analytics.
 
 ---
 
-### **1.4 Hedera Integration**  
-#### **Transactions**  
-- **Send HBAR**:  
+### **1.4 Hedera Integration**
+
+#### **Transactions**
+
+- **Send HBAR**:
   ```javascript
   new TransferTransaction()
     .addHbarTransfer(sender, -10)
     .addHbarTransfer(receiver, 10)
     .execute(client);
   ```
-- **Key Management**:  
-  - Each user’s private key is **encrypted with their PIN** (AES-256).  
-  - Decrypted ephemerally during TX signing.  
+- **Key Management**:
+  - Each user’s private key is **encrypted with their PIN** (AES-256).
+  - Decrypted ephemerally during TX signing.
 
-#### **Mirror Node**  
-- **Uses**:  
-  - Verify TXs via REST API:  
+#### **Mirror Node**
+
+- **Uses**:
+  - Verify TXs via REST API:
     ```http
     GET /api/v1/transactions/0.0.1234@123456789
     ```
@@ -94,7 +105,8 @@ flowchart TD
 
 ## **2. Workflows**
 
-### **2.1 User Registration**  
+### **2.1 User Registration**
+
 ```mermaid
 flowchart LR
     A[User dials *123#] --> B[Enter phone/PIN]
@@ -104,7 +116,8 @@ flowchart LR
     E --> F[Return Hedera ID]
 ```
 
-### **2.2 Send HBAR**  
+### **2.2 Send HBAR**
+
 ```mermaid
 flowchart LR
     A[User selects 'Send HBAR'] --> B[Enter recipient/amount]
@@ -116,42 +129,48 @@ flowchart LR
 
 ---
 
-## **3. Security**  
+## **3. Security**
 
-### **3.1 Data Protection**  
-| Layer               | Measures                              |  
-|---------------------|---------------------------------------|  
-| **USSD**            | TLS 1.3, rate-limiting                |  
-| **Database**        | AES-256 encryption at rest            |  
-| **PINs**            | PBKDF2 hashing (100K iterations)      |  
+### **3.1 Data Protection**
 
-### **3.2 Key Management**  
-- **Private Keys**:  
-  - Never stored raw; encrypted with PIN + salt.  
-  - Wiped from memory after TX signing.  
+| Layer        | Measures                         |
+| ------------ | -------------------------------- |
+| **USSD**     | TLS 1.3, rate-limiting           |
+| **Database** | AES-256 encryption at rest       |
+| **PINs**     | PBKDF2 hashing (100K iterations) |
 
----
+### **3.2 Key Management**
 
-## **4. Scalability**  
-
-### **4.1 Horizontal Scaling**  
-- **Load Balancer**: Distribute USSD traffic across backend instances.  
-- **Redis**: Cache exchange rates (HBAR↔KES).  
-
-### **4.2 Hedera Optimization**  
-- **Hedera Consensus Nodes**: Auto-rotate nodes to avoid throttling.  
+- **Private Keys**:
+  - Never stored raw; encrypted with PIN + salt.
+  - Wiped from memory after TX signing.
 
 ---
 
-## **5. Deployment**  
+## **4. Scalability**
 
-### **5.1 Infrastructure**  
-| Environment  | Tech Stack           |  
-|--------------|----------------------|  
-| Development  | Docker, SQLite       |  
-| Production   | AWS ECS, PostgreSQL  |  
+### **4.1 Horizontal Scaling**
 
-### **5.2 CI/CD**  
+- **Load Balancer**: Distribute USSD traffic across backend instances.
+- **Redis**: Cache exchange rates (HBAR↔KES).
+
+### **4.2 Hedera Optimization**
+
+- **Hedera Consensus Nodes**: Auto-rotate nodes to avoid throttling.
+
+---
+
+## **5. Deployment**
+
+### **5.1 Infrastructure**
+
+| Environment | Tech Stack          |
+| ----------- | ------------------- |
+| Development | Docker, SQLite      |
+| Production  | AWS ECS, PostgreSQL |
+
+### **5.2 CI/CD**
+
 ```mermaid
 flowchart LR
     A[GitHub] -->|on push| B[Run tests]
@@ -161,13 +180,14 @@ flowchart LR
 
 ---
 
-## **6. Monitoring**  
-- **Logs**: ELK Stack (Elasticsearch, Logstash, Kibana).  
-- **Alerts**: Prometheus + Grafana (track failed TXs).  
+## **6. Monitoring**
+
+- **Logs**: ELK Stack (Elasticsearch, Logstash, Kibana).
+- **Alerts**: Prometheus + Grafana (track failed TXs).
 
 ---
 
-📄 **License**: Apache 2.0  
-📧 **Contact**: architects@hpesa.com  
+📄 **License**: Apache 2.0\
+📧 **Contact**: architects@hpesa.com
 
 ---

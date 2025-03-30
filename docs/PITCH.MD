@@ -1,16 +1,21 @@
-# 🚀 HPesa: The "M-Pesa of Crypto"  
-*Bank Africa’s Unbanked—No Smartphone Needed*  
+# 🚀 HPesa: The "M-Pesa of Crypto"
 
-### **💡 The Problem**  
-- 600M Africans own **feature phones** but lack access to crypto.  
-- M-Pesa charges **5–10% fees** for cross-border transfers.  
-- Existing wallets require **smartphones + internet** (only 50% penetration in Africa).  
+_Bank Africa’s Unbanked—No Smartphone Needed_
 
-### **🎯 Our Solution**  
-HPesa lets users:  
-1. **Buy/Send HBAR** via USSD (`*123#`).  
-2. **Cash out to M-Pesa** at 1/10th the cost.  
-3. **Trade tokenized stocks** (e.g., Safaricom shares) on Hedera.  
+### **💡 The Problem**
+
+- 600M Africans own **feature phones** but lack access to crypto.
+- M-Pesa charges **5–10% fees** for cross-border transfers.
+- Existing wallets require **smartphones + internet** (only 50% penetration in
+  Africa).
+
+### **🎯 Our Solution**
+
+HPesa lets users:
+
+1. **Buy/Send HBAR** via USSD (`*123#`).
+2. **Cash out to M-Pesa** at 1/10th the cost.
+3. **Trade tokenized stocks** (e.g., Safaricom shares) on Hedera.
 
 ```mermaid
 flowchart LR
@@ -19,51 +24,59 @@ flowchart LR
     C --> D[Recipient cashes out via M-Pesa]
 ```
 
-### **🔥 Why This Rocks**  
-- **For Users**:  
-  - "Finally, my Nokia 3310 can HODL HBAR!" 📞→💰  
-  - **Zero learning curve** (same UX as M-Pesa).  
-- **For Investors**:  
-  - **$22B market**: M-Pesa’s 61M daily transactions.  
-  - **94% margins**: Hedera’s $0.0001 fees vs. M-Pesa’s 5%.  
+### **🔥 Why This Rocks**
 
-### **📈 Traction**  
-| Metric          | Today (Beta) | Year 1      |  
-|-----------------|--------------|-------------|  
-| Users           | 1,000        | 500,000     |  
-| Avg. TX Fee     | $0.01        | $0.005      |  
-| Revenue         | $5K/month    | $2M/month   |  
+- **For Users**:
+  - "Finally, my Nokia 3310 can HODL HBAR!" 📞→💰
+  - **Zero learning curve** (same UX as M-Pesa).
+- **For Investors**:
+  - **$22B market**: M-Pesa’s 61M daily transactions.
+  - **94% margins**: Hedera’s $0.0001 fees vs. M-Pesa’s 5%.
 
-### **🤝 Ask**  
-**$1.5M Seed Round** to:  
-- Secure telco partnerships (Safaricom, MTN).  
-- Scale to 5M users.  
-- Add **AI fraud detection**.  
+### **📈 Traction**
 
-### **🎤 One-Liner**  
-*"We’re the ‘Nokia of DeFi’—bringing crypto to the 4B people stuck in 2005."*  
+| Metric      | Today (Beta) | Year 1    |
+| ----------- | ------------ | --------- |
+| Users       | 1,000        | 500,000   |
+| Avg. TX Fee | $0.01        | $0.005    |
+| Revenue     | $5K/month    | $2M/month |
 
----
+### **🤝 Ask**
 
-### **🙋‍♂️ Why Back Us?**  
-1. **Dream Team**: Ex-M-Pesa + Hedera devs.  
-2. **Regulatory Moats**: First licensed USSD crypto wallet in Kenya.  
-3. **Exit Potential**: Acquisition target for Chipper Cash/Block.  
+**$1.5M Seed Round** to:
+
+- Secure telco partnerships (Safaricom, MTN).
+- Scale to 5M users.
+- Add **AI fraud detection**.
+
+### **🎤 One-Liner**
+
+_"We’re the ‘Nokia of DeFi’—bringing crypto to the 4B people stuck in 2005."_
 
 ---
 
-💬 **Q&A Prompt**: *"How fast can you replace M-Pesa as Africa’s wallet?"*  
+### **🙋‍♂️ Why Back Us?**
 
-📅 **Next Milestone**: 100K users by Q3 2025.  
-
-📧 **Contact**: invest@hpesa.com | [Demo](https://demo.hpesa.com)  
+1. **Dream Team**: Ex-M-Pesa + Hedera devs.
+2. **Regulatory Moats**: First licensed USSD crypto wallet in Kenya.
+3. **Exit Potential**: Acquisition target for Chipper Cash/Block.
 
 ---
 
-**TL;DR**:  
-- **What**: Crypto via USSD.  
-- **Market**: 600M feature phone users.  
-- **Secret Sauce**: Hedera’s 3-second TXs + M-Pesa’s UX.  
-- **Ask**: $1.5M for 15% equity.  
+💬 **Q&A Prompt**: _"How fast can you replace M-Pesa as Africa’s wallet?"_
 
-*P.S. Our first test user? A grandma who now calls HBAR "Hakuna Pesa Issues Again"* 🦁
+📅 **Next Milestone**: 100K users by Q3 2025.
+
+📧 **Contact**: invest@hpesa.com | [Demo](https://demo.hpesa.com)
+
+---
+
+**TL;DR**:
+
+- **What**: Crypto via USSD.
+- **Market**: 600M feature phone users.
+- **Secret Sauce**: Hedera’s 3-second TXs + M-Pesa’s UX.
+- **Ask**: $1.5M for 15% equity.
+
+_P.S. Our first test user? A grandma who now calls HBAR "Hakuna Pesa Issues
+Again"_ 🦁

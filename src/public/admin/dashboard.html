@@ -1,522 +1,944 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard | HPesa</title>
     <!-- Flowbite CSS -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css"
+      rel="stylesheet"
+    />
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    >
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        .admin-sidebar {
-            background: linear-gradient(195deg, #1a237e 0%, #4f46e5 100%);
-        }
-        .admin-card {
-            transition: all 0.3s ease;
-            border-left: 4px solid transparent;
-        }
-        .admin-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-        .active-admin-nav {
-            background-color: rgba(255, 255, 255, 0.1);
-            border-left: 4px solid white;
-        }
-        .badge {
-            font-size: 0.75rem;
-            padding: 0.25rem 0.5rem;
-        }
-        .transaction-status-completed {
-            background-color: #d1fae5;
-            color: #065f46;
-        }
-        .transaction-status-pending {
-            background-color: #fef3c7;
-            color: #92400e;
-        }
-        .transaction-status-failed {
-            background-color: #fee2e2;
-            color: #991b1b;
-        }
-        .user-status-active {
-            background-color: #d1fae5;
-            color: #065f46;
-        }
-        .user-status-suspended {
-            background-color: #fee2e2;
-            color: #991b1b;
-        }
+      .admin-sidebar {
+        background: linear-gradient(195deg, #1a237e 0%, #4f46e5 100%);
+      }
+      .admin-card {
+        transition: all 0.3s ease;
+        border-left: 4px solid transparent;
+      }
+      .admin-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+      .active-admin-nav {
+        background-color: rgba(255, 255, 255, 0.1);
+        border-left: 4px solid white;
+      }
+      .badge {
+        font-size: 0.75rem;
+        padding: 0.25rem 0.5rem;
+      }
+      .transaction-status-completed {
+        background-color: #d1fae5;
+        color: #065f46;
+      }
+      .transaction-status-pending {
+        background-color: #fef3c7;
+        color: #92400e;
+      }
+      .transaction-status-failed {
+        background-color: #fee2e2;
+        color: #991b1b;
+      }
+      .user-status-active {
+        background-color: #d1fae5;
+        color: #065f46;
+      }
+      .user-status-suspended {
+        background-color: #fee2e2;
+        color: #991b1b;
+      }
     </style>
-</head>
-<body class="bg-gray-100">
+  </head>
+  <body class="bg-gray-100">
     <!-- Admin Layout -->
     <div class="flex h-screen overflow-hidden">
-        <!-- Sidebar -->
-        <div class="admin-sidebar text-white w-64 flex-shrink-0 hidden md:block">
-            <div class="p-4 flex items-center space-x-3 border-b border-indigo-500">
-                <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center text-indigo-600 font-bold">
-                    A
+      <!-- Sidebar -->
+      <div class="admin-sidebar text-white w-64 flex-shrink-0 hidden md:block">
+        <div class="p-4 flex items-center space-x-3 border-b border-indigo-500">
+          <div
+            class="w-10 h-10 bg-white rounded-full flex items-center justify-center text-indigo-600 font-bold"
+          >
+            A
+          </div>
+          <div>
+            <p class="font-bold">Admin User</p>
+            <p class="text-xs text-indigo-200">Super Admin</p>
+          </div>
+        </div>
+        <nav class="p-4 space-y-1">
+          <a
+            href="#"
+            class="flex items-center space-x-3 p-3 rounded-lg active-admin-nav"
+          >
+            <i class="fas fa-tachometer-alt w-5"></i>
+            <span>Dashboard</span>
+          </a>
+          <a
+            href="#"
+            class="flex items-center space-x-3 p-3 rounded-lg hover:bg-white hover:bg-opacity-10"
+          >
+            <i class="fas fa-users w-5"></i>
+            <span>User Management</span>
+          </a>
+          <a
+            href="#"
+            class="flex items-center space-x-3 p-3 rounded-lg hover:bg-white hover:bg-opacity-10"
+          >
+            <i class="fas fa-exchange-alt w-5"></i>
+            <span>Transactions</span>
+          </a>
+          <a
+            href="#"
+            class="flex items-center space-x-3 p-3 rounded-lg hover:bg-white hover:bg-opacity-10"
+          >
+            <i class="fas fa-chart-bar w-5"></i>
+            <span>Analytics</span>
+          </a>
+          <a
+            href="#"
+            class="flex items-center space-x-3 p-3 rounded-lg hover:bg-white hover:bg-opacity-10"
+          >
+            <i class="fas fa-cog w-5"></i>
+            <span>System Settings</span>
+          </a>
+          <a
+            href="#"
+            class="flex items-center space-x-3 p-3 rounded-lg hover:bg-white hover:bg-opacity-10"
+          >
+            <i class="fas fa-shield-alt w-5"></i>
+            <span>Security</span>
+          </a>
+          <a
+            href="#"
+            class="flex items-center space-x-3 p-3 rounded-lg hover:bg-white hover:bg-opacity-10"
+          >
+            <i class="fas fa-file-alt w-5"></i>
+            <span>Reports</span>
+          </a>
+          <a
+            href="#"
+            class="flex items-center space-x-3 p-3 rounded-lg hover:bg-white hover:bg-opacity-10"
+          >
+            <i class="fas fa-bell w-5"></i>
+            <span>Notifications</span>
+            <span
+              class="bg-red-500 text-white rounded-full px-2 py-0.5 text-xs ml-auto"
+            >3</span>
+          </a>
+        </nav>
+        <div
+          class="absolute bottom-0 left-0 right-0 p-4 border-t border-indigo-500"
+        >
+          <button
+            class="w-full flex items-center space-x-3 p-3 rounded-lg hover:bg-white hover:bg-opacity-10"
+          >
+            <i class="fas fa-sign-out-alt w-5"></i>
+            <span>Log Out</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Main Content -->
+      <div class="flex-1 flex flex-col overflow-hidden">
+        <!-- Top Navigation -->
+        <header class="bg-white shadow-sm z-10">
+          <div class="flex items-center justify-between p-4">
+            <div class="flex items-center md:hidden">
+              <button id="mobileMenuBtn" class="mr-4">
+                <i class="fas fa-bars text-gray-600 text-xl"></i>
+              </button>
+              <h1 class="text-xl font-bold text-indigo-600">HPesa Admin</h1>
+            </div>
+            <div class="flex items-center space-x-4">
+              <div class="relative">
+                <i
+                  class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+                ></i>
+                <input
+                  type="text"
+                  placeholder="Search..."
+                  class="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
+                >
+              </div>
+              <button class="relative">
+                <i class="fas fa-bell text-gray-600 text-xl"></i>
+                <span
+                  class="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full"
+                ></span>
+              </button>
+              <div class="flex items-center space-x-2">
+                <div
+                  class="w-8 h-8 bg-indigo-600 rounded-full flex items-center justify-center text-white font-bold md:hidden"
+                >
+                  A
                 </div>
+                <div class="hidden md:block">
+                  <p class="text-sm font-medium">Admin User</p>
+                  <p class="text-xs text-gray-500">Super Admin</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <!-- Main Content Area -->
+        <main class="flex-1 overflow-y-auto p-6 bg-gray-50">
+          <!-- Stats Cards -->
+          <div
+            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6"
+          >
+            <!-- Total Users -->
+            <div
+              class="admin-card bg-white rounded-lg p-6 shadow-sm border-l-blue-500"
+            >
+              <div class="flex justify-between items-start">
                 <div>
-                    <p class="font-bold">Admin User</p>
-                    <p class="text-xs text-indigo-200">Super Admin</p>
+                  <p class="text-sm font-medium text-gray-500">Total Users</p>
+                  <p class="text-2xl font-bold mt-1">24,568</p>
+                  <p class="text-xs text-gray-500 mt-1">
+                    <span class="text-green-500">+12.5%</span> from last month
+                  </p>
                 </div>
+                <div class="bg-blue-100 p-3 rounded-lg">
+                  <i class="fas fa-users text-blue-600"></i>
+                </div>
+              </div>
             </div>
-            <nav class="p-4 space-y-1">
-                <a href="#" class="flex items-center space-x-3 p-3 rounded-lg active-admin-nav">
-                    <i class="fas fa-tachometer-alt w-5"></i>
-                    <span>Dashboard</span>
-                </a>
-                <a href="#" class="flex items-center space-x-3 p-3 rounded-lg hover:bg-white hover:bg-opacity-10">
-                    <i class="fas fa-users w-5"></i>
-                    <span>User Management</span>
-                </a>
-                <a href="#" class="flex items-center space-x-3 p-3 rounded-lg hover:bg-white hover:bg-opacity-10">
-                    <i class="fas fa-exchange-alt w-5"></i>
-                    <span>Transactions</span>
-                </a>
-                <a href="#" class="flex items-center space-x-3 p-3 rounded-lg hover:bg-white hover:bg-opacity-10">
-                    <i class="fas fa-chart-bar w-5"></i>
-                    <span>Analytics</span>
-                </a>
-                <a href="#" class="flex items-center space-x-3 p-3 rounded-lg hover:bg-white hover:bg-opacity-10">
-                    <i class="fas fa-cog w-5"></i>
-                    <span>System Settings</span>
-                </a>
-                <a href="#" class="flex items-center space-x-3 p-3 rounded-lg hover:bg-white hover:bg-opacity-10">
-                    <i class="fas fa-shield-alt w-5"></i>
-                    <span>Security</span>
-                </a>
-                <a href="#" class="flex items-center space-x-3 p-3 rounded-lg hover:bg-white hover:bg-opacity-10">
-                    <i class="fas fa-file-alt w-5"></i>
-                    <span>Reports</span>
-                </a>
-                <a href="#" class="flex items-center space-x-3 p-3 rounded-lg hover:bg-white hover:bg-opacity-10">
-                    <i class="fas fa-bell w-5"></i>
-                    <span>Notifications</span>
-                    <span class="bg-red-500 text-white rounded-full px-2 py-0.5 text-xs ml-auto">3</span>
-                </a>
-            </nav>
-            <div class="absolute bottom-0 left-0 right-0 p-4 border-t border-indigo-500">
-                <button class="w-full flex items-center space-x-3 p-3 rounded-lg hover:bg-white hover:bg-opacity-10">
-                    <i class="fas fa-sign-out-alt w-5"></i>
-                    <span>Log Out</span>
-                </button>
+
+            <!-- Active Transactions -->
+            <div
+              class="admin-card bg-white rounded-lg p-6 shadow-sm border-l-green-500"
+            >
+              <div class="flex justify-between items-start">
+                <div>
+                  <p class="text-sm font-medium text-gray-500">
+                    Active Transactions
+                  </p>
+                  <p class="text-2xl font-bold mt-1">1,245</p>
+                  <p class="text-xs text-gray-500 mt-1">
+                    <span class="text-green-500">+8.3%</span> from yesterday
+                  </p>
+                </div>
+                <div class="bg-green-100 p-3 rounded-lg">
+                  <i class="fas fa-exchange-alt text-green-600"></i>
+                </div>
+              </div>
             </div>
-        </div>
 
-        <!-- Main Content -->
-        <div class="flex-1 flex flex-col overflow-hidden">
-            <!-- Top Navigation -->
-            <header class="bg-white shadow-sm z-10">
-                <div class="flex items-center justify-between p-4">
-                    <div class="flex items-center md:hidden">
-                        <button id="mobileMenuBtn" class="mr-4">
-                            <i class="fas fa-bars text-gray-600 text-xl"></i>
-                        </button>
-                        <h1 class="text-xl font-bold text-indigo-600">HPesa Admin</h1>
-                    </div>
-                    <div class="flex items-center space-x-4">
-                        <div class="relative">
-                            <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
-                            <input type="text" placeholder="Search..." class="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500">
-                        </div>
-                        <button class="relative">
-                            <i class="fas fa-bell text-gray-600 text-xl"></i>
-                            <span class="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full"></span>
-                        </button>
-                        <div class="flex items-center space-x-2">
-                            <div class="w-8 h-8 bg-indigo-600 rounded-full flex items-center justify-center text-white font-bold md:hidden">
-                                A
-                            </div>
-                            <div class="hidden md:block">
-                                <p class="text-sm font-medium">Admin User</p>
-                                <p class="text-xs text-gray-500">Super Admin</p>
-                            </div>
-                        </div>
-                    </div>
+            <!-- HBAR Volume -->
+            <div
+              class="admin-card bg-white rounded-lg p-6 shadow-sm border-l-purple-500"
+            >
+              <div class="flex justify-between items-start">
+                <div>
+                  <p class="text-sm font-medium text-gray-500">
+                    HBAR Volume (24h)
+                  </p>
+                  <p class="text-2xl font-bold mt-1">2.4M</p>
+                  <p class="text-xs text-gray-500 mt-1">
+                    <span class="text-green-500">+5.2%</span> from yesterday
+                  </p>
                 </div>
-            </header>
-
-            <!-- Main Content Area -->
-            <main class="flex-1 overflow-y-auto p-6 bg-gray-50">
-                <!-- Stats Cards -->
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
-                    <!-- Total Users -->
-                    <div class="admin-card bg-white rounded-lg p-6 shadow-sm border-l-blue-500">
-                        <div class="flex justify-between items-start">
-                            <div>
-                                <p class="text-sm font-medium text-gray-500">Total Users</p>
-                                <p class="text-2xl font-bold mt-1">24,568</p>
-                                <p class="text-xs text-gray-500 mt-1"><span class="text-green-500">+12.5%</span> from last month</p>
-                            </div>
-                            <div class="bg-blue-100 p-3 rounded-lg">
-                                <i class="fas fa-users text-blue-600"></i>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Active Transactions -->
-                    <div class="admin-card bg-white rounded-lg p-6 shadow-sm border-l-green-500">
-                        <div class="flex justify-between items-start">
-                            <div>
-                                <p class="text-sm font-medium text-gray-500">Active Transactions</p>
-                                <p class="text-2xl font-bold mt-1">1,245</p>
-                                <p class="text-xs text-gray-500 mt-1"><span class="text-green-500">+8.3%</span> from yesterday</p>
-                            </div>
-                            <div class="bg-green-100 p-3 rounded-lg">
-                                <i class="fas fa-exchange-alt text-green-600"></i>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- HBAR Volume -->
-                    <div class="admin-card bg-white rounded-lg p-6 shadow-sm border-l-purple-500">
-                        <div class="flex justify-between items-start">
-                            <div>
-                                <p class="text-sm font-medium text-gray-500">HBAR Volume (24h)</p>
-                                <p class="text-2xl font-bold mt-1">2.4M</p>
-                                <p class="text-xs text-gray-500 mt-1"><span class="text-green-500">+5.2%</span> from yesterday</p>
-                            </div>
-                            <div class="bg-purple-100 p-3 rounded-lg">
-                                <i class="fas fa-chart-line text-purple-600"></i>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- System Health -->
-                    <div class="admin-card bg-white rounded-lg p-6 shadow-sm border-l-yellow-500">
-                        <div class="flex justify-between items-start">
-                            <div>
-                                <p class="text-sm font-medium text-gray-500">System Health</p>
-                                <p class="text-2xl font-bold mt-1">98.7%</p>
-                                <p class="text-xs text-gray-500 mt-1">Uptime last 30 days</p>
-                            </div>
-                            <div class="bg-yellow-100 p-3 rounded-lg">
-                                <i class="fas fa-heartbeat text-yellow-600"></i>
-                            </div>
-                        </div>
-                    </div>
+                <div class="bg-purple-100 p-3 rounded-lg">
+                  <i class="fas fa-chart-line text-purple-600"></i>
                 </div>
+              </div>
+            </div>
 
-                <!-- Charts Row -->
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-                    <!-- Transaction Volume Chart -->
-                    <div class="admin-card bg-white rounded-lg p-6 shadow-sm">
-                        <div class="flex justify-between items-center mb-4">
-                            <h3 class="font-bold">Transaction Volume (7 Days)</h3>
-                            <select class="bg-gray-100 border border-gray-300 text-gray-700 py-1 px-3 rounded-lg focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 text-sm">
-                                <option>Last 7 Days</option>
-                                <option>Last 30 Days</option>
-                                <option>This Year</option>
-                            </select>
-                        </div>
-                        <div class="h-64">
-                            <canvas id="transactionChart"></canvas>
-                        </div>
-                    </div>
-
-                    <!-- User Growth Chart -->
-                    <div class="admin-card bg-white rounded-lg p-6 shadow-sm">
-                        <div class="flex justify-between items-center mb-4">
-                            <h3 class="font-bold">User Growth (30 Days)</h3>
-                            <select class="bg-gray-100 border border-gray-300 text-gray-700 py-1 px-3 rounded-lg focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 text-sm">
-                                <option>Last 30 Days</option>
-                                <option>Last 90 Days</option>
-                                <option>This Year</option>
-                            </select>
-                        </div>
-                        <div class="h-64">
-                            <canvas id="userGrowthChart"></canvas>
-                        </div>
-                    </div>
+            <!-- System Health -->
+            <div
+              class="admin-card bg-white rounded-lg p-6 shadow-sm border-l-yellow-500"
+            >
+              <div class="flex justify-between items-start">
+                <div>
+                  <p class="text-sm font-medium text-gray-500">System Health</p>
+                  <p class="text-2xl font-bold mt-1">98.7%</p>
+                  <p class="text-xs text-gray-500 mt-1">Uptime last 30 days</p>
                 </div>
-
-                <!-- Recent Transactions -->
-                <div class="admin-card bg-white rounded-lg shadow-sm mb-6">
-                    <div class="p-4 border-b flex justify-between items-center">
-                        <h3 class="font-bold">Recent Transactions</h3>
-                        <button class="text-indigo-600 hover:text-indigo-800 text-sm font-medium">View All</button>
-                    </div>
-                    <div class="overflow-x-auto">
-                        <table class="min-w-full divide-y divide-gray-200">
-                            <thead class="bg-gray-50">
-                                <tr>
-                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
-                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
-                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">User</th>
-                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
-                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
-                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody class="bg-white divide-y divide-gray-200">
-                                <tr class="hover:bg-gray-50">
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">#TX-78945</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">HBAR Transfer</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">user@example.com</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">500 HBAR</td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <span class="px-2 py-1 text-xs rounded-full transaction-status-completed">Completed</span>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">2024-03-30 10:45</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                        <button class="text-indigo-600 hover:text-indigo-900 mr-3"><i class="fas fa-eye"></i></button>
-                                        <button class="text-gray-600 hover:text-gray-900"><i class="fas fa-ellipsis-v"></i></button>
-                                    </td>
-                                </tr>
-                                <tr class="hover:bg-gray-50">
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">#TX-78944</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">KES to HBAR</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">user2@example.com</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">1,000 KES</td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <span class="px-2 py-1 text-xs rounded-full transaction-status-completed">Completed</span>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">2024-03-30 09:30</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                        <button class="text-indigo-600 hover:text-indigo-900 mr-3"><i class="fas fa-eye"></i></button>
-                                        <button class="text-gray-600 hover:text-gray-900"><i class="fas fa-ellipsis-v"></i></button>
-                                    </td>
-                                </tr>
-                                <tr class="hover:bg-gray-50">
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">#TX-78943</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">HBAR to KES</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">user3@example.com</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">200 HBAR</td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <span class="px-2 py-1 text-xs rounded-full transaction-status-pending">Pending</span>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">2024-03-29 16:20</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                        <button class="text-indigo-600 hover:text-indigo-900 mr-3"><i class="fas fa-eye"></i></button>
-                                        <button class="text-gray-600 hover:text-gray-900"><i class="fas fa-ellipsis-v"></i></button>
-                                    </td>
-                                </tr>
-                                <tr class="hover:bg-gray-50">
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">#TX-78942</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">HBAR Transfer</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">user4@example.com</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">1,500 HBAR</td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <span class="px-2 py-1 text-xs rounded-full transaction-status-failed">Failed</span>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">2024-03-29 14:10</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                        <button class="text-indigo-600 hover:text-indigo-900 mr-3"><i class="fas fa-eye"></i></button>
-                                        <button class="text-gray-600 hover:text-gray-900"><i class="fas fa-ellipsis-v"></i></button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                <div class="bg-yellow-100 p-3 rounded-lg">
+                  <i class="fas fa-heartbeat text-yellow-600"></i>
                 </div>
+              </div>
+            </div>
+          </div>
 
-                <!-- Recent Users -->
-                <div class="admin-card bg-white rounded-lg shadow-sm">
-                    <div class="p-4 border-b flex justify-between items-center">
-                        <h3 class="font-bold">Recent Users</h3>
-                        <button class="text-indigo-600 hover:text-indigo-800 text-sm font-medium">View All</button>
-                    </div>
-                    <div class="overflow-x-auto">
-                        <table class="min-w-full divide-y divide-gray-200">
-                            <thead class="bg-gray-50">
-                                <tr>
-                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">User ID</th>
-                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
-                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Phone</th>
-                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Hedera ID</th>
-                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Joined</th>
-                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody class="bg-white divide-y divide-gray-200">
-                                <tr class="hover:bg-gray-50">
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">#USR-12456</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">John Doe</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">+254712345678</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">0.0.1234</td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <span class="px-2 py-1 text-xs rounded-full user-status-active">Active</span>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">2024-03-15</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                        <button class="text-indigo-600 hover:text-indigo-900 mr-3"><i class="fas fa-eye"></i></button>
-                                        <button class="text-yellow-600 hover:text-yellow-900 mr-3"><i class="fas fa-edit"></i></button>
-                                        <button class="text-gray-600 hover:text-gray-900"><i class="fas fa-ellipsis-v"></i></button>
-                                    </td>
-                                </tr>
-                                <tr class="hover:bg-gray-50">
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">#USR-12455</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Jane Smith</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">+254712345677</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">0.0.1235</td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <span class="px-2 py-1 text-xs rounded-full user-status-active">Active</span>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">2024-03-14</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                        <button class="text-indigo-600 hover:text-indigo-900 mr-3"><i class="fas fa-eye"></i></button>
-                                        <button class="text-yellow-600 hover:text-yellow-900 mr-3"><i class="fas fa-edit"></i></button>
-                                        <button class="text-gray-600 hover:text-gray-900"><i class="fas fa-ellipsis-v"></i></button>
-                                    </td>
-                                </tr>
-                                <tr class="hover:bg-gray-50">
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">#USR-12454</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Robert Johnson</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">+254712345676</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">0.0.1236</td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <span class="px-2 py-1 text-xs rounded-full user-status-suspended">Suspended</span>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">2024-03-10</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                        <button class="text-indigo-600 hover:text-indigo-900 mr-3"><i class="fas fa-eye"></i></button>
-                                        <button class="text-yellow-600 hover:text-yellow-900 mr-3"><i class="fas fa-edit"></i></button>
-                                        <button class="text-gray-600 hover:text-gray-900"><i class="fas fa-ellipsis-v"></i></button>
-                                    </td>
-                                </tr>
-                                <tr class="hover:bg-gray-50">
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">#USR-12453</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Sarah Williams</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">+254712345675</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">0.0.1237</td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <span class="px-2 py-1 text-xs rounded-full user-status-active">Active</span>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">2024-03-08</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                        <button class="text-indigo-600 hover:text-indigo-900 mr-3"><i class="fas fa-eye"></i></button>
-                                        <button class="text-yellow-600 hover:text-yellow-900 mr-3"><i class="fas fa-edit"></i></button>
-                                        <button class="text-gray-600 hover:text-gray-900"><i class="fas fa-ellipsis-v"></i></button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </main>
-        </div>
+          <!-- Charts Row -->
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+            <!-- Transaction Volume Chart -->
+            <div class="admin-card bg-white rounded-lg p-6 shadow-sm">
+              <div class="flex justify-between items-center mb-4">
+                <h3 class="font-bold">Transaction Volume (7 Days)</h3>
+                <select
+                  class="bg-gray-100 border border-gray-300 text-gray-700 py-1 px-3 rounded-lg focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 text-sm"
+                >
+                  <option>Last 7 Days</option>
+                  <option>Last 30 Days</option>
+                  <option>This Year</option>
+                </select>
+              </div>
+              <div class="h-64">
+                <canvas id="transactionChart"></canvas>
+              </div>
+            </div>
+
+            <!-- User Growth Chart -->
+            <div class="admin-card bg-white rounded-lg p-6 shadow-sm">
+              <div class="flex justify-between items-center mb-4">
+                <h3 class="font-bold">User Growth (30 Days)</h3>
+                <select
+                  class="bg-gray-100 border border-gray-300 text-gray-700 py-1 px-3 rounded-lg focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 text-sm"
+                >
+                  <option>Last 30 Days</option>
+                  <option>Last 90 Days</option>
+                  <option>This Year</option>
+                </select>
+              </div>
+              <div class="h-64">
+                <canvas id="userGrowthChart"></canvas>
+              </div>
+            </div>
+          </div>
+
+          <!-- Recent Transactions -->
+          <div class="admin-card bg-white rounded-lg shadow-sm mb-6">
+            <div class="p-4 border-b flex justify-between items-center">
+              <h3 class="font-bold">Recent Transactions</h3>
+              <button
+                class="text-indigo-600 hover:text-indigo-800 text-sm font-medium"
+              >
+                View All
+              </button>
+            </div>
+            <div class="overflow-x-auto">
+              <table class="min-w-full divide-y divide-gray-200">
+                <thead class="bg-gray-50">
+                  <tr>
+                    <th
+                      scope="col"
+                      class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    >
+                      ID
+                    </th>
+                    <th
+                      scope="col"
+                      class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    >
+                      Type
+                    </th>
+                    <th
+                      scope="col"
+                      class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    >
+                      User
+                    </th>
+                    <th
+                      scope="col"
+                      class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    >
+                      Amount
+                    </th>
+                    <th
+                      scope="col"
+                      class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    >
+                      Status
+                    </th>
+                    <th
+                      scope="col"
+                      class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    >
+                      Date
+                    </th>
+                    <th
+                      scope="col"
+                      class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    >
+                      Actions
+                    </th>
+                  </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200">
+                  <tr class="hover:bg-gray-50">
+                    <td
+                      class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
+                    >
+                      #TX-78945
+                    </td>
+                    <td
+                      class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                    >
+                      HBAR Transfer
+                    </td>
+                    <td
+                      class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                    >
+                      user@example.com
+                    </td>
+                    <td
+                      class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                    >
+                      500 HBAR
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                      <span
+                        class="px-2 py-1 text-xs rounded-full transaction-status-completed"
+                      >Completed</span>
+                    </td>
+                    <td
+                      class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                    >
+                      2024-03-30 10:45
+                    </td>
+                    <td
+                      class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                    >
+                      <button
+                        class="text-indigo-600 hover:text-indigo-900 mr-3"
+                      >
+                        <i class="fas fa-eye"></i>
+                      </button>
+                      <button class="text-gray-600 hover:text-gray-900">
+                        <i class="fas fa-ellipsis-v"></i>
+                      </button>
+                    </td>
+                  </tr>
+                  <tr class="hover:bg-gray-50">
+                    <td
+                      class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
+                    >
+                      #TX-78944
+                    </td>
+                    <td
+                      class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                    >
+                      KES to HBAR
+                    </td>
+                    <td
+                      class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                    >
+                      user2@example.com
+                    </td>
+                    <td
+                      class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                    >
+                      1,000 KES
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                      <span
+                        class="px-2 py-1 text-xs rounded-full transaction-status-completed"
+                      >Completed</span>
+                    </td>
+                    <td
+                      class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                    >
+                      2024-03-30 09:30
+                    </td>
+                    <td
+                      class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                    >
+                      <button
+                        class="text-indigo-600 hover:text-indigo-900 mr-3"
+                      >
+                        <i class="fas fa-eye"></i>
+                      </button>
+                      <button class="text-gray-600 hover:text-gray-900">
+                        <i class="fas fa-ellipsis-v"></i>
+                      </button>
+                    </td>
+                  </tr>
+                  <tr class="hover:bg-gray-50">
+                    <td
+                      class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
+                    >
+                      #TX-78943
+                    </td>
+                    <td
+                      class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                    >
+                      HBAR to KES
+                    </td>
+                    <td
+                      class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                    >
+                      user3@example.com
+                    </td>
+                    <td
+                      class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                    >
+                      200 HBAR
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                      <span
+                        class="px-2 py-1 text-xs rounded-full transaction-status-pending"
+                      >Pending</span>
+                    </td>
+                    <td
+                      class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                    >
+                      2024-03-29 16:20
+                    </td>
+                    <td
+                      class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                    >
+                      <button
+                        class="text-indigo-600 hover:text-indigo-900 mr-3"
+                      >
+                        <i class="fas fa-eye"></i>
+                      </button>
+                      <button class="text-gray-600 hover:text-gray-900">
+                        <i class="fas fa-ellipsis-v"></i>
+                      </button>
+                    </td>
+                  </tr>
+                  <tr class="hover:bg-gray-50">
+                    <td
+                      class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
+                    >
+                      #TX-78942
+                    </td>
+                    <td
+                      class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                    >
+                      HBAR Transfer
+                    </td>
+                    <td
+                      class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                    >
+                      user4@example.com
+                    </td>
+                    <td
+                      class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                    >
+                      1,500 HBAR
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                      <span
+                        class="px-2 py-1 text-xs rounded-full transaction-status-failed"
+                      >Failed</span>
+                    </td>
+                    <td
+                      class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                    >
+                      2024-03-29 14:10
+                    </td>
+                    <td
+                      class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                    >
+                      <button
+                        class="text-indigo-600 hover:text-indigo-900 mr-3"
+                      >
+                        <i class="fas fa-eye"></i>
+                      </button>
+                      <button class="text-gray-600 hover:text-gray-900">
+                        <i class="fas fa-ellipsis-v"></i>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Recent Users -->
+          <div class="admin-card bg-white rounded-lg shadow-sm">
+            <div class="p-4 border-b flex justify-between items-center">
+              <h3 class="font-bold">Recent Users</h3>
+              <button
+                class="text-indigo-600 hover:text-indigo-800 text-sm font-medium"
+              >
+                View All
+              </button>
+            </div>
+            <div class="overflow-x-auto">
+              <table class="min-w-full divide-y divide-gray-200">
+                <thead class="bg-gray-50">
+                  <tr>
+                    <th
+                      scope="col"
+                      class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    >
+                      User ID
+                    </th>
+                    <th
+                      scope="col"
+                      class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    >
+                      Name
+                    </th>
+                    <th
+                      scope="col"
+                      class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    >
+                      Phone
+                    </th>
+                    <th
+                      scope="col"
+                      class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    >
+                      Hedera ID
+                    </th>
+                    <th
+                      scope="col"
+                      class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    >
+                      Status
+                    </th>
+                    <th
+                      scope="col"
+                      class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    >
+                      Joined
+                    </th>
+                    <th
+                      scope="col"
+                      class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    >
+                      Actions
+                    </th>
+                  </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200">
+                  <tr class="hover:bg-gray-50">
+                    <td
+                      class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
+                    >
+                      #USR-12456
+                    </td>
+                    <td
+                      class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                    >
+                      John Doe
+                    </td>
+                    <td
+                      class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                    >
+                      +254712345678
+                    </td>
+                    <td
+                      class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                    >
+                      0.0.1234
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                      <span
+                        class="px-2 py-1 text-xs rounded-full user-status-active"
+                      >Active</span>
+                    </td>
+                    <td
+                      class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                    >
+                      2024-03-15
+                    </td>
+                    <td
+                      class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                    >
+                      <button
+                        class="text-indigo-600 hover:text-indigo-900 mr-3"
+                      >
+                        <i class="fas fa-eye"></i>
+                      </button>
+                      <button
+                        class="text-yellow-600 hover:text-yellow-900 mr-3"
+                      >
+                        <i class="fas fa-edit"></i>
+                      </button>
+                      <button class="text-gray-600 hover:text-gray-900">
+                        <i class="fas fa-ellipsis-v"></i>
+                      </button>
+                    </td>
+                  </tr>
+                  <tr class="hover:bg-gray-50">
+                    <td
+                      class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
+                    >
+                      #USR-12455
+                    </td>
+                    <td
+                      class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                    >
+                      Jane Smith
+                    </td>
+                    <td
+                      class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                    >
+                      +254712345677
+                    </td>
+                    <td
+                      class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                    >
+                      0.0.1235
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                      <span
+                        class="px-2 py-1 text-xs rounded-full user-status-active"
+                      >Active</span>
+                    </td>
+                    <td
+                      class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                    >
+                      2024-03-14
+                    </td>
+                    <td
+                      class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                    >
+                      <button
+                        class="text-indigo-600 hover:text-indigo-900 mr-3"
+                      >
+                        <i class="fas fa-eye"></i>
+                      </button>
+                      <button
+                        class="text-yellow-600 hover:text-yellow-900 mr-3"
+                      >
+                        <i class="fas fa-edit"></i>
+                      </button>
+                      <button class="text-gray-600 hover:text-gray-900">
+                        <i class="fas fa-ellipsis-v"></i>
+                      </button>
+                    </td>
+                  </tr>
+                  <tr class="hover:bg-gray-50">
+                    <td
+                      class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
+                    >
+                      #USR-12454
+                    </td>
+                    <td
+                      class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                    >
+                      Robert Johnson
+                    </td>
+                    <td
+                      class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                    >
+                      +254712345676
+                    </td>
+                    <td
+                      class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                    >
+                      0.0.1236
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                      <span
+                        class="px-2 py-1 text-xs rounded-full user-status-suspended"
+                      >Suspended</span>
+                    </td>
+                    <td
+                      class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                    >
+                      2024-03-10
+                    </td>
+                    <td
+                      class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                    >
+                      <button
+                        class="text-indigo-600 hover:text-indigo-900 mr-3"
+                      >
+                        <i class="fas fa-eye"></i>
+                      </button>
+                      <button
+                        class="text-yellow-600 hover:text-yellow-900 mr-3"
+                      >
+                        <i class="fas fa-edit"></i>
+                      </button>
+                      <button class="text-gray-600 hover:text-gray-900">
+                        <i class="fas fa-ellipsis-v"></i>
+                      </button>
+                    </td>
+                  </tr>
+                  <tr class="hover:bg-gray-50">
+                    <td
+                      class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
+                    >
+                      #USR-12453
+                    </td>
+                    <td
+                      class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                    >
+                      Sarah Williams
+                    </td>
+                    <td
+                      class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                    >
+                      +254712345675
+                    </td>
+                    <td
+                      class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                    >
+                      0.0.1237
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                      <span
+                        class="px-2 py-1 text-xs rounded-full user-status-active"
+                      >Active</span>
+                    </td>
+                    <td
+                      class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                    >
+                      2024-03-08
+                    </td>
+                    <td
+                      class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                    >
+                      <button
+                        class="text-indigo-600 hover:text-indigo-900 mr-3"
+                      >
+                        <i class="fas fa-eye"></i>
+                      </button>
+                      <button
+                        class="text-yellow-600 hover:text-yellow-900 mr-3"
+                      >
+                        <i class="fas fa-edit"></i>
+                      </button>
+                      <button class="text-gray-600 hover:text-gray-900">
+                        <i class="fas fa-ellipsis-v"></i>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </main>
+      </div>
     </div>
 
     <!-- Flowbite JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"
+    ></script>
     <!-- Font Awesome -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js"></script>
-    
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js"
+    ></script>
+
     <script>
-        // Mobile menu toggle
-        document.getElementById('mobileMenuBtn').addEventListener('click', function() {
-            document.querySelector('.admin-sidebar').classList.toggle('hidden');
-        });
+      // Mobile menu toggle
+      document.getElementById("mobileMenuBtn").addEventListener(
+        "click",
+        function () {
+          document.querySelector(".admin-sidebar").classList.toggle(
+            "hidden",
+          );
+        },
+      );
 
-        // Initialize transaction chart
-        const transactionCtx = document.getElementById('transactionChart').getContext('2d');
-        const transactionChart = new Chart(transactionCtx, {
-            type: 'bar',
-            data: {
-                labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-                datasets: [{
-                    label: 'Transaction Volume (HBAR)',
-                    data: [12000, 19000, 15000, 22000, 18000, 25000, 21000],
-                    backgroundColor: '#4f46e5',
-                    borderColor: '#4f46e5',
-                    borderWidth: 1
-                }]
+      // Initialize transaction chart
+      const transactionCtx = document.getElementById("transactionChart")
+        .getContext("2d");
+      const transactionChart = new Chart(transactionCtx, {
+        type: "bar",
+        data: {
+          labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+          datasets: [{
+            label: "Transaction Volume (HBAR)",
+            data: [12000, 19000, 15000, 22000, 18000, 25000, 21000],
+            backgroundColor: "#4f46e5",
+            borderColor: "#4f46e5",
+            borderWidth: 1,
+          }],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              display: false,
             },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        display: false
-                    }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        grid: {
-                            drawBorder: false
-                        }
-                    },
-                    x: {
-                        grid: {
-                            display: false
-                        }
-                    }
-                }
-            }
-        });
-
-        // Initialize user growth chart
-        const userGrowthCtx = document.getElementById('userGrowthChart').getContext('2d');
-        const userGrowthChart = new Chart(userGrowthCtx, {
-            type: 'line',
-            data: {
-                labels: Array.from({length: 30}, (_, i) => i+1 + ' Mar'),
-                datasets: [{
-                    label: 'New Users',
-                    data: Array.from({length: 30}, () => Math.floor(Math.random() * 100) + 50),
-                    fill: true,
-                    backgroundColor: 'rgba(79, 70, 229, 0.1)',
-                    borderColor: '#4f46e5',
-                    tension: 0.4
-                }]
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              grid: {
+                drawBorder: false,
+              },
             },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        display: false
-                    }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        grid: {
-                            drawBorder: false
-                        }
-                    },
-                    x: {
-                        grid: {
-                            display: false
-                        },
-                        ticks: {
-                            maxRotation: 0,
-                            autoSkip: true,
-                            maxTicksLimit: 10
-                        }
-                    }
-                }
-            }
+            x: {
+              grid: {
+                display: false,
+              },
+            },
+          },
+        },
+      });
+
+      // Initialize user growth chart
+      const userGrowthCtx = document.getElementById("userGrowthChart")
+        .getContext("2d");
+      const userGrowthChart = new Chart(userGrowthCtx, {
+        type: "line",
+        data: {
+          labels: Array.from({ length: 30 }, (_, i) => i + 1 + " Mar"),
+          datasets: [{
+            label: "New Users",
+            data: Array.from(
+              { length: 30 },
+              () => Math.floor(Math.random() * 100) + 50,
+            ),
+            fill: true,
+            backgroundColor: "rgba(79, 70, 229, 0.1)",
+            borderColor: "#4f46e5",
+            tension: 0.4,
+          }],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              display: false,
+            },
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              grid: {
+                drawBorder: false,
+              },
+            },
+            x: {
+              grid: {
+                display: false,
+              },
+              ticks: {
+                maxRotation: 0,
+                autoSkip: true,
+                maxTicksLimit: 10,
+              },
+            },
+          },
+        },
+      });
+
+      // Simulate real-time updates
+      function updateStats() {
+        // Random updates to stats
+        const stats = [
+          document.querySelector(".admin-card:nth-child(1) .text-2xl"),
+          document.querySelector(".admin-card:nth-child(2) .text-2xl"),
+          document.querySelector(".admin-card:nth-child(3) .text-2xl"),
+        ];
+
+        stats.forEach((stat) => {
+          const currentValue = parseInt(
+            stat.textContent.replace(/,/g, ""),
+          );
+          const change = Math.floor(Math.random() * 20) - 5; // Random change between -5 and +15
+          const newValue = Math.max(0, currentValue + change);
+          stat.textContent = newValue.toLocaleString();
         });
+      }
 
-        // Simulate real-time updates
-        function updateStats() {
-            // Random updates to stats
-            const stats = [
-                document.querySelector('.admin-card:nth-child(1) .text-2xl'),
-                document.querySelector('.admin-card:nth-child(2) .text-2xl'),
-                document.querySelector('.admin-card:nth-child(3) .text-2xl')
-            ];
-            
-            stats.forEach(stat => {
-                const currentValue = parseInt(stat.textContent.replace(/,/g, ''));
-                const change = Math.floor(Math.random() * 20) - 5; // Random change between -5 and +15
-                const newValue = Math.max(0, currentValue + change);
-                stat.textContent = newValue.toLocaleString();
-            });
-        }
-
-        // Update stats every 10 seconds
-        setInterval(updateStats, 10000);
+      // Update stats every 10 seconds
+      setInterval(updateStats, 10000);
     </script>
-</body>
+  </body>
 </html>

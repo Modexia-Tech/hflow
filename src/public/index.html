@@ -1,349 +1,543 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HPESA - USSD Crypto Wallet for Africa</title>
     <!-- Flowbite CSS -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css"
+      rel="stylesheet"
+    />
     <!-- Custom CSS -->
     <link href="css/style.css" rel="stylesheet">
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-</head>
-<body class="bg-gray-50">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    >
+  </head>
+  <body class="bg-gray-50">
     <!-- Navigation -->
-    <nav class="bg-white border-gray-200 fixed w-full z-20 top-0 start-0 border-b">
-        <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-            <a href="#" class="flex items-center space-x-3 rtl:space-x-reverse">
-                <span class="self-center text-2xl font-bold whitespace-nowrap text-indigo-600">HPESA</span>
-            </a>
-            <div class="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
-                <button type="button" class="text-white bg-indigo-600 hover:bg-indigo-700 focus:ring-4 focus:outline-none focus:ring-indigo-300 font-medium rounded-lg text-sm px-4 py-2 text-center">Get Started</button>
-                <button data-collapse-toggle="navbar-sticky" type="button" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200" aria-controls="navbar-sticky" aria-expanded="false">
-                    <span class="sr-only">Open main menu</span>
-                    <i class="fas fa-bars"></i>
-                </button>
-            </div>
-            <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-sticky">
-                <ul class="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white">
-                    <li>
-                        <a href="#features" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-indigo-600 md:p-0">Features</a>
-                    </li>
-                    <li>
-                        <a href="#how-it-works" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-indigo-600 md:p-0">How It Works</a>
-                    </li>
-                    <li>
-                        <a href="#faq" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-indigo-600 md:p-0">FAQ</a>
-                    </li>
-                    <li>
-                        <a href="#contact" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-indigo-600 md:p-0">Contact</a>
-                    </li>
-                </ul>
-            </div>
+    <nav
+      class="bg-white border-gray-200 fixed w-full z-20 top-0 start-0 border-b"
+    >
+      <div
+        class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4"
+      >
+        <a href="#" class="flex items-center space-x-3 rtl:space-x-reverse">
+          <span
+            class="self-center text-2xl font-bold whitespace-nowrap text-indigo-600"
+          >HPESA</span>
+        </a>
+        <div class="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
+          <button
+            type="button"
+            class="text-white bg-indigo-600 hover:bg-indigo-700 focus:ring-4 focus:outline-none focus:ring-indigo-300 font-medium rounded-lg text-sm px-4 py-2 text-center"
+          >
+            Get Started
+          </button>
+          <button
+            data-collapse-toggle="navbar-sticky"
+            type="button"
+            class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
+            aria-controls="navbar-sticky"
+            aria-expanded="false"
+          >
+            <span class="sr-only">Open main menu</span>
+            <i class="fas fa-bars"></i>
+          </button>
         </div>
+        <div
+          class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1"
+          id="navbar-sticky"
+        >
+          <ul
+            class="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white"
+          >
+            <li>
+              <a
+                href="#features"
+                class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-indigo-600 md:p-0"
+              >Features</a>
+            </li>
+            <li>
+              <a
+                href="#how-it-works"
+                class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-indigo-600 md:p-0"
+              >How It Works</a>
+            </li>
+            <li>
+              <a
+                href="#faq"
+                class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-indigo-600 md:p-0"
+              >FAQ</a>
+            </li>
+            <li>
+              <a
+                href="#contact"
+                class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-indigo-600 md:p-0"
+              >Contact</a>
+            </li>
+          </ul>
+        </div>
+      </div>
     </nav>
 
     <!-- Hero Section -->
-    <section class="pt-32 pb-16 px-4 mx-auto max-w-screen-xl text-center lg:py-32">
-        <h1 class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl">Banking Without Internet Using <span class="text-indigo-600">USSD & Crypto</span></h1>
-        <p class="mb-8 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 lg:px-48">HPESA lets you send, receive, and store cryptocurrency using simple USSD codes on any mobile phone - no smartphone or internet required.</p>
-        <div class="flex flex-col space-y-4 sm:flex-row sm:justify-center sm:space-y-0 sm:space-x-4">
-            <a href="#" class="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg bg-indigo-600 hover:bg-indigo-700 focus:ring-4 focus:ring-indigo-300">
-                Get Started
-                <i class="fas fa-arrow-right ml-2"></i>
-            </a>
-            <a href="#how-it-works" class="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-gray-900 rounded-lg border border-gray-300 hover:bg-gray-100 focus:ring-4 focus:ring-gray-100">
-                <i class="fas fa-play-circle mr-2"></i>
-                Watch demo
-            </a>
-        </div>
+    <section
+      class="pt-32 pb-16 px-4 mx-auto max-w-screen-xl text-center lg:py-32"
+    >
+      <h1
+        class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl"
+      >
+        Banking Without Internet Using <span class="text-indigo-600"
+        >USSD & Crypto</span>
+      </h1>
+      <p
+        class="mb-8 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 lg:px-48"
+      >
+        HPESA lets you send, receive, and store cryptocurrency using simple USSD
+        codes on any mobile phone - no smartphone or internet required.
+      </p>
+      <div
+        class="flex flex-col space-y-4 sm:flex-row sm:justify-center sm:space-y-0 sm:space-x-4"
+      >
+        <a
+          href="#"
+          class="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg bg-indigo-600 hover:bg-indigo-700 focus:ring-4 focus:ring-indigo-300"
+        >
+          Get Started
+          <i class="fas fa-arrow-right ml-2"></i>
+        </a>
+        <a
+          href="#how-it-works"
+          class="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-gray-900 rounded-lg border border-gray-300 hover:bg-gray-100 focus:ring-4 focus:ring-gray-100"
+        >
+          <i class="fas fa-play-circle mr-2"></i>
+          Watch demo
+        </a>
+      </div>
     </section>
 
     <!-- USSD Demo -->
     <div class="max-w-screen-xl mx-auto px-4 mb-16">
-        <div class="ussd-demo bg-gray-800 rounded-xl p-6 max-w-md mx-auto">
-            <div class="ussd-header bg-gray-700 rounded-t-lg p-3 flex items-center">
-                <div class="flex space-x-2">
-                    <div class="w-3 h-3 rounded-full bg-red-500"></div>
-                    <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
-                    <div class="w-3 h-3 rounded-full bg-green-500"></div>
-                </div>
-                <div class="text-white text-sm mx-auto">HPESA USSD</div>
-            </div>
-            <div class="ussd-body bg-gray-900 rounded-b-lg p-4 text-white font-mono h-64 overflow-y-auto">
-                <div class="text-green-400">Welcome to HPESA</div>
-                <div class="my-2">1. Send Money</div>
-                <div class="my-2">2. Receive Money</div>
-                <div class="my-2">3. Buy Crypto</div>
-                <div class="my-2">4. Sell Crypto</div>
-                <div class="my-2">5. Check Balance</div>
-                <div class="mt-4 text-yellow-400">Reply with option number</div>
-            </div>
+      <div class="ussd-demo bg-gray-800 rounded-xl p-6 max-w-md mx-auto">
+        <div class="ussd-header bg-gray-700 rounded-t-lg p-3 flex items-center">
+          <div class="flex space-x-2">
+            <div class="w-3 h-3 rounded-full bg-red-500"></div>
+            <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+            <div class="w-3 h-3 rounded-full bg-green-500"></div>
+          </div>
+          <div class="text-white text-sm mx-auto">HPESA USSD</div>
         </div>
+        <div
+          class="ussd-body bg-gray-900 rounded-b-lg p-4 text-white font-mono h-64 overflow-y-auto"
+        >
+          <div class="text-green-400">Welcome to HPESA</div>
+          <div class="my-2">1. Send Money</div>
+          <div class="my-2">2. Receive Money</div>
+          <div class="my-2">3. Buy Crypto</div>
+          <div class="my-2">4. Sell Crypto</div>
+          <div class="my-2">5. Check Balance</div>
+          <div class="mt-4 text-yellow-400">Reply with option number</div>
+        </div>
+      </div>
     </div>
 
     <!-- Features Section -->
     <section id="features" class="bg-white py-16 px-4">
-        <div class="max-w-screen-xl mx-auto">
-            <h2 class="mb-12 text-3xl font-extrabold tracking-tight text-center text-gray-900">Why Choose HPESA</h2>
-            <div class="grid gap-8 md:grid-cols-3">
-                <!-- Feature 1 -->
-                <div class="feature-card p-6 bg-white border border-gray-200 rounded-lg shadow hover:shadow-lg transition-shadow">
-                    <div class="w-10 h-10 bg-indigo-100 rounded-full flex items-center justify-center mb-4">
-                        <i class="fas fa-mobile-alt text-indigo-600"></i>
-                    </div>
-                    <h3 class="mb-2 text-xl font-bold text-gray-900">No Internet Needed</h3>
-                    <p class="text-gray-500">Works on any mobile phone with basic USSD capabilities. No smartphone or data required.</p>
-                </div>
-                
-                <!-- Feature 2 -->
-                <div class="feature-card p-6 bg-white border border-gray-200 rounded-lg shadow hover:shadow-lg transition-shadow">
-                    <div class="w-10 h-10 bg-indigo-100 rounded-full flex items-center justify-center mb-4">
-                        <i class="fas fa-bolt text-indigo-600"></i>
-                    </div>
-                    <h3 class="mb-2 text-xl font-bold text-gray-900">Instant Transactions</h3>
-                    <p class="text-gray-500">Send and receive money or crypto in seconds, 24/7, even on holidays.</p>
-                </div>
-                
-                <!-- Feature 3 -->
-                <div class="feature-card p-6 bg-white border border-gray-200 rounded-lg shadow hover:shadow-lg transition-shadow">
-                    <div class="w-10 h-10 bg-indigo-100 rounded-full flex items-center justify-center mb-4">
-                        <i class="fas fa-lock text-indigo-600"></i>
-                    </div>
-                    <h3 class="mb-2 text-xl font-bold text-gray-900">Bank-Level Security</h3>
-                    <p class="text-gray-500">Military-grade encryption protects your transactions and wallet balance.</p>
-                </div>
+      <div class="max-w-screen-xl mx-auto">
+        <h2
+          class="mb-12 text-3xl font-extrabold tracking-tight text-center text-gray-900"
+        >
+          Why Choose HPESA
+        </h2>
+        <div class="grid gap-8 md:grid-cols-3">
+          <!-- Feature 1 -->
+          <div
+            class="feature-card p-6 bg-white border border-gray-200 rounded-lg shadow hover:shadow-lg transition-shadow"
+          >
+            <div
+              class="w-10 h-10 bg-indigo-100 rounded-full flex items-center justify-center mb-4"
+            >
+              <i class="fas fa-mobile-alt text-indigo-600"></i>
             </div>
+            <h3 class="mb-2 text-xl font-bold text-gray-900">
+              No Internet Needed
+            </h3>
+            <p class="text-gray-500">
+              Works on any mobile phone with basic USSD capabilities. No
+              smartphone or data required.
+            </p>
+          </div>
+
+          <!-- Feature 2 -->
+          <div
+            class="feature-card p-6 bg-white border border-gray-200 rounded-lg shadow hover:shadow-lg transition-shadow"
+          >
+            <div
+              class="w-10 h-10 bg-indigo-100 rounded-full flex items-center justify-center mb-4"
+            >
+              <i class="fas fa-bolt text-indigo-600"></i>
+            </div>
+            <h3 class="mb-2 text-xl font-bold text-gray-900">
+              Instant Transactions
+            </h3>
+            <p class="text-gray-500">
+              Send and receive money or crypto in seconds, 24/7, even on
+              holidays.
+            </p>
+          </div>
+
+          <!-- Feature 3 -->
+          <div
+            class="feature-card p-6 bg-white border border-gray-200 rounded-lg shadow hover:shadow-lg transition-shadow"
+          >
+            <div
+              class="w-10 h-10 bg-indigo-100 rounded-full flex items-center justify-center mb-4"
+            >
+              <i class="fas fa-lock text-indigo-600"></i>
+            </div>
+            <h3 class="mb-2 text-xl font-bold text-gray-900">
+              Bank-Level Security
+            </h3>
+            <p class="text-gray-500">
+              Military-grade encryption protects your transactions and wallet
+              balance.
+            </p>
+          </div>
         </div>
+      </div>
     </section>
 
     <!-- How It Works -->
     <section id="how-it-works" class="py-16 px-4 bg-gray-50">
-        <div class="max-w-screen-xl mx-auto">
-            <h2 class="mb-12 text-3xl font-extrabold tracking-tight text-center text-gray-900">How HPESA Works</h2>
-            <div class="grid gap-8 md:grid-cols-3">
-                <!-- Step 1 -->
-                <div class="text-center">
-                    <div class="w-16 h-16 bg-indigo-600 rounded-full flex items-center justify-center mx-auto mb-4 text-white font-bold text-xl">1</div>
-                    <h3 class="mb-2 text-xl font-bold text-gray-900">Dial USSD Code</h3>
-                    <p class="text-gray-500">Dial *123# from any mobile phone to access HPESA menu</p>
-                </div>
-                
-                <!-- Step 2 -->
-                <div class="text-center">
-                    <div class="w-16 h-16 bg-indigo-600 rounded-full flex items-center justify-center mx-auto mb-4 text-white font-bold text-xl">2</div>
-                    <h3 class="mb-2 text-xl font-bold text-gray-900">Select Option</h3>
-                    <p class="text-gray-500">Choose from send money, receive, buy/sell crypto, or check balance</p>
-                </div>
-                
-                <!-- Step 3 -->
-                <div class="text-center">
-                    <div class="w-16 h-16 bg-indigo-600 rounded-full flex items-center justify-center mx-auto mb-4 text-white font-bold text-xl">3</div>
-                    <h3 class="mb-2 text-xl font-bold text-gray-900">Complete Transaction</h3>
-                    <p class="text-gray-500">Follow the prompts to complete your transaction securely</p>
-                </div>
+      <div class="max-w-screen-xl mx-auto">
+        <h2
+          class="mb-12 text-3xl font-extrabold tracking-tight text-center text-gray-900"
+        >
+          How HPESA Works
+        </h2>
+        <div class="grid gap-8 md:grid-cols-3">
+          <!-- Step 1 -->
+          <div class="text-center">
+            <div
+              class="w-16 h-16 bg-indigo-600 rounded-full flex items-center justify-center mx-auto mb-4 text-white font-bold text-xl"
+            >
+              1
             </div>
+            <h3 class="mb-2 text-xl font-bold text-gray-900">Dial USSD Code</h3>
+            <p class="text-gray-500">
+              Dial *123# from any mobile phone to access HPESA menu
+            </p>
+          </div>
+
+          <!-- Step 2 -->
+          <div class="text-center">
+            <div
+              class="w-16 h-16 bg-indigo-600 rounded-full flex items-center justify-center mx-auto mb-4 text-white font-bold text-xl"
+            >
+              2
+            </div>
+            <h3 class="mb-2 text-xl font-bold text-gray-900">Select Option</h3>
+            <p class="text-gray-500">
+              Choose from send money, receive, buy/sell crypto, or check balance
+            </p>
+          </div>
+
+          <!-- Step 3 -->
+          <div class="text-center">
+            <div
+              class="w-16 h-16 bg-indigo-600 rounded-full flex items-center justify-center mx-auto mb-4 text-white font-bold text-xl"
+            >
+              3
+            </div>
+            <h3 class="mb-2 text-xl font-bold text-gray-900">
+              Complete Transaction
+            </h3>
+            <p class="text-gray-500">
+              Follow the prompts to complete your transaction securely
+            </p>
+          </div>
         </div>
+      </div>
     </section>
 
     <!-- CTA Section -->
     <section class="py-16 px-4 bg-indigo-600 text-white">
-        <div class="max-w-screen-xl mx-auto text-center">
-            <h2 class="mb-4 text-3xl font-extrabold tracking-tight">Ready to Experience Financial Freedom?</h2>
-            <p class="mb-8 text-lg font-normal sm:px-16 lg:px-48">Join thousands of users who are already banking without boundaries with HPESA.</p>
-            <div class="flex flex-col space-y-4 sm:flex-row sm:justify-center sm:space-y-0 sm:space-x-4">
-                <a href="#" class="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-indigo-600 rounded-lg bg-white hover:bg-gray-100 focus:ring-4 focus:ring-gray-100">
-                    Get Started Now
-                    <i class="fas fa-arrow-right ml-2"></i>
-                </a>
-                <a href="#" class="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg border border-white hover:bg-indigo-700 focus:ring-4 focus:ring-indigo-800">
-                    <i class="fas fa-phone-alt mr-2"></i>
-                    Call Support
-                </a>
-            </div>
+      <div class="max-w-screen-xl mx-auto text-center">
+        <h2 class="mb-4 text-3xl font-extrabold tracking-tight">
+          Ready to Experience Financial Freedom?
+        </h2>
+        <p class="mb-8 text-lg font-normal sm:px-16 lg:px-48">
+          Join thousands of users who are already banking without boundaries
+          with HPESA.
+        </p>
+        <div
+          class="flex flex-col space-y-4 sm:flex-row sm:justify-center sm:space-y-0 sm:space-x-4"
+        >
+          <a
+            href="#"
+            class="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-indigo-600 rounded-lg bg-white hover:bg-gray-100 focus:ring-4 focus:ring-gray-100"
+          >
+            Get Started Now
+            <i class="fas fa-arrow-right ml-2"></i>
+          </a>
+          <a
+            href="#"
+            class="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg border border-white hover:bg-indigo-700 focus:ring-4 focus:ring-indigo-800"
+          >
+            <i class="fas fa-phone-alt mr-2"></i>
+            Call Support
+          </a>
         </div>
+      </div>
     </section>
 
     <!-- FAQ Section -->
     <section id="faq" class="py-16 px-4 bg-white">
-        <div class="max-w-screen-xl mx-auto">
-            <h2 class="mb-12 text-3xl font-extrabold tracking-tight text-center text-gray-900">Frequently Asked Questions</h2>
-            <div class="grid gap-4 md:grid-cols-2">
-                <!-- FAQ Item 1 -->
-                <div class="faq-item border border-gray-200 rounded-lg p-6">
-                    <button class="faq-question flex justify-between items-center w-full text-left font-medium text-gray-900">
-                        <span>Do I need a smartphone to use HPESA?</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </button>
-                    <div class="faq-answer hidden mt-4 text-gray-500">
-                        No! HPESA works on any mobile phone with USSD capability, even basic feature phones without internet access.
-                    </div>
-                </div>
-                
-                <!-- FAQ Item 2 -->
-                <div class="faq-item border border-gray-200 rounded-lg p-6">
-                    <button class="faq-question flex justify-between items-center w-full text-left font-medium text-gray-900">
-                        <span>Which cryptocurrencies does HPESA support?</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </button>
-                    <div class="faq-answer hidden mt-4 text-gray-500">
-                        Currently we support Bitcoin (BTC), Ethereum (ETH), and USDC. More currencies coming soon!
-                    </div>
-                </div>
-                
-                <!-- FAQ Item 3 -->
-                <div class="faq-item border border-gray-200 rounded-lg p-6">
-                    <button class="faq-question flex justify-between items-center w-full text-left font-medium text-gray-900">
-                        <span>How much does HPESA cost?</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </button>
-                    <div class="faq-answer hidden mt-4 text-gray-500">
-                        Creating a wallet is free. We charge small fees for transactions (typically 1-2%) depending on the type of transaction.
-                    </div>
-                </div>
-                
-                <!-- FAQ Item 4 -->
-                <div class="faq-item border border-gray-200 rounded-lg p-6">
-                    <button class="faq-question flex justify-between items-center w-full text-left font-medium text-gray-900">
-                        <span>Is my money safe with HPESA?</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </button>
-                    <div class="faq-answer hidden mt-4 text-gray-500">
-                        Absolutely. We use bank-level security and encryption. Your funds are protected with multiple layers of security.
-                    </div>
-                </div>
+      <div class="max-w-screen-xl mx-auto">
+        <h2
+          class="mb-12 text-3xl font-extrabold tracking-tight text-center text-gray-900"
+        >
+          Frequently Asked Questions
+        </h2>
+        <div class="grid gap-4 md:grid-cols-2">
+          <!-- FAQ Item 1 -->
+          <div class="faq-item border border-gray-200 rounded-lg p-6">
+            <button
+              class="faq-question flex justify-between items-center w-full text-left font-medium text-gray-900"
+            >
+              <span>Do I need a smartphone to use HPESA?</span>
+              <i class="fas fa-chevron-down"></i>
+            </button>
+            <div class="faq-answer hidden mt-4 text-gray-500">
+              No! HPESA works on any mobile phone with USSD capability, even
+              basic feature phones without internet access.
             </div>
+          </div>
+
+          <!-- FAQ Item 2 -->
+          <div class="faq-item border border-gray-200 rounded-lg p-6">
+            <button
+              class="faq-question flex justify-between items-center w-full text-left font-medium text-gray-900"
+            >
+              <span>Which cryptocurrencies does HPESA support?</span>
+              <i class="fas fa-chevron-down"></i>
+            </button>
+            <div class="faq-answer hidden mt-4 text-gray-500">
+              Currently we support Bitcoin (BTC), Ethereum (ETH), and USDC. More
+              currencies coming soon!
+            </div>
+          </div>
+
+          <!-- FAQ Item 3 -->
+          <div class="faq-item border border-gray-200 rounded-lg p-6">
+            <button
+              class="faq-question flex justify-between items-center w-full text-left font-medium text-gray-900"
+            >
+              <span>How much does HPESA cost?</span>
+              <i class="fas fa-chevron-down"></i>
+            </button>
+            <div class="faq-answer hidden mt-4 text-gray-500">
+              Creating a wallet is free. We charge small fees for transactions
+              (typically 1-2%) depending on the type of transaction.
+            </div>
+          </div>
+
+          <!-- FAQ Item 4 -->
+          <div class="faq-item border border-gray-200 rounded-lg p-6">
+            <button
+              class="faq-question flex justify-between items-center w-full text-left font-medium text-gray-900"
+            >
+              <span>Is my money safe with HPESA?</span>
+              <i class="fas fa-chevron-down"></i>
+            </button>
+            <div class="faq-answer hidden mt-4 text-gray-500">
+              Absolutely. We use bank-level security and encryption. Your funds
+              are protected with multiple layers of security.
+            </div>
+          </div>
         </div>
+      </div>
     </section>
 
     <!-- Contact Section -->
     <section id="contact" class="py-16 px-4 bg-gray-50">
-        <div class="max-w-screen-xl mx-auto">
-            <h2 class="mb-12 text-3xl font-extrabold tracking-tight text-center text-gray-900">Contact Us</h2>
-            <div class="grid gap-8 md:grid-cols-2">
-                <div>
-                    <h3 class="mb-4 text-xl font-bold text-gray-900">Get in touch</h3>
-                    <p class="mb-6 text-gray-500">Have questions? Our team is here to help you 24/7.</p>
-                    <div class="space-y-4">
-                        <div class="flex items-center">
-                            <i class="fas fa-map-marker-alt text-indigo-600 mr-4"></i>
-                            <span class="text-gray-700">123 Fintech Street, Nairobi, Kenya</span>
-                        </div>
-                        <div class="flex items-center">
-                            <i class="fas fa-phone-alt text-indigo-600 mr-4"></i>
-                            <span class="text-gray-700">+254 700 123 456</span>
-                        </div>
-                        <div class="flex items-center">
-                            <i class="fas fa-envelope text-indigo-600 mr-4"></i>
-                            <span class="text-gray-700">support@hpesa.com</span>
-                        </div>
-                    </div>
-                </div>
-                <div>
-                    <form class="space-y-4">
-                        <div>
-                            <label for="name" class="block mb-2 text-sm font-medium text-gray-900">Your Name</label>
-                            <input type="text" id="name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5" required>
-                        </div>
-                        <div>
-                            <label for="email" class="block mb-2 text-sm font-medium text-gray-900">Your Email</label>
-                            <input type="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5" required>
-                        </div>
-                        <div>
-                            <label for="message" class="block mb-2 text-sm font-medium text-gray-900">Your Message</label>
-                            <textarea id="message" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-indigo-500 focus:border-indigo-500"></textarea>
-                        </div>
-                        <button type="submit" class="text-white bg-indigo-600 hover:bg-indigo-700 focus:ring-4 focus:outline-none focus:ring-indigo-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Send Message</button>
-                    </form>
-                </div>
+      <div class="max-w-screen-xl mx-auto">
+        <h2
+          class="mb-12 text-3xl font-extrabold tracking-tight text-center text-gray-900"
+        >
+          Contact Us
+        </h2>
+        <div class="grid gap-8 md:grid-cols-2">
+          <div>
+            <h3 class="mb-4 text-xl font-bold text-gray-900">Get in touch</h3>
+            <p class="mb-6 text-gray-500">
+              Have questions? Our team is here to help you 24/7.
+            </p>
+            <div class="space-y-4">
+              <div class="flex items-center">
+                <i class="fas fa-map-marker-alt text-indigo-600 mr-4"></i>
+                <span class="text-gray-700"
+                >123 Fintech Street, Nairobi, Kenya</span>
+              </div>
+              <div class="flex items-center">
+                <i class="fas fa-phone-alt text-indigo-600 mr-4"></i>
+                <span class="text-gray-700">+254 700 123 456</span>
+              </div>
+              <div class="flex items-center">
+                <i class="fas fa-envelope text-indigo-600 mr-4"></i>
+                <span class="text-gray-700">support@hpesa.com</span>
+              </div>
             </div>
+          </div>
+          <div>
+            <form class="space-y-4">
+              <div>
+                <label
+                  for="name"
+                  class="block mb-2 text-sm font-medium text-gray-900"
+                >Your Name</label>
+                <input
+                  type="text"
+                  id="name"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5"
+                  required
+                >
+              </div>
+              <div>
+                <label
+                  for="email"
+                  class="block mb-2 text-sm font-medium text-gray-900"
+                >Your Email</label>
+                <input
+                  type="email"
+                  id="email"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5"
+                  required
+                >
+              </div>
+              <div>
+                <label
+                  for="message"
+                  class="block mb-2 text-sm font-medium text-gray-900"
+                >Your Message</label>
+                <textarea
+                  id="message"
+                  rows="4"
+                  class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-indigo-500 focus:border-indigo-500"
+                ></textarea>
+              </div>
+              <button
+                type="submit"
+                class="text-white bg-indigo-600 hover:bg-indigo-700 focus:ring-4 focus:outline-none focus:ring-indigo-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center"
+              >
+                Send Message
+              </button>
+            </form>
+          </div>
         </div>
+      </div>
     </section>
 
     <!-- Footer -->
     <footer class="bg-white py-8 px-4">
-        <div class="max-w-screen-xl mx-auto">
-            <div class="md:flex md:justify-between">
-                <div class="mb-6 md:mb-0">
-                    <a href="#" class="flex items-center">
-                        <span class="self-center text-2xl font-bold whitespace-nowrap text-indigo-600">HPESA</span>
-                    </a>
-                </div>
-                <div class="grid grid-cols-2 gap-8 sm:grid-cols-3">
-                    <div>
-                        <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase">Resources</h2>
-                        <ul class="text-gray-500 font-medium">
-                            <li class="mb-4">
-                                <a href="#" class="hover:underline">Documentation</a>
-                            </li>
-                            <li class="mb-4">
-                                <a href="#" class="hover:underline">Help Center</a>
-                            </li>
-                            <li class="mb-4">
-                                <a href="#" class="hover:underline">API Status</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase">Company</h2>
-                        <ul class="text-gray-500 font-medium">
-                            <li class="mb-4">
-                                <a href="#" class="hover:underline">About</a>
-                            </li>
-                            <li class="mb-4">
-                                <a href="#" class="hover:underline">Careers</a>
-                            </li>
-                            <li class="mb-4">
-                                <a href="#" class="hover:underline">Blog</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase">Legal</h2>
-                        <ul class="text-gray-500 font-medium">
-                            <li class="mb-4">
-                                <a href="#" class="hover:underline">Privacy Policy</a>
-                            </li>
-                            <li class="mb-4">
-                                <a href="#" class="hover:underline">Terms & Conditions</a>
-                            </li>
-                            <li class="mb-4">
-                                <a href="#" class="hover:underline">Licenses</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
+      <div class="max-w-screen-xl mx-auto">
+        <div class="md:flex md:justify-between">
+          <div class="mb-6 md:mb-0">
+            <a href="#" class="flex items-center">
+              <span
+                class="self-center text-2xl font-bold whitespace-nowrap text-indigo-600"
+              >HPESA</span>
+            </a>
+          </div>
+          <div class="grid grid-cols-2 gap-8 sm:grid-cols-3">
+            <div>
+              <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase">
+                Resources
+              </h2>
+              <ul class="text-gray-500 font-medium">
+                <li class="mb-4">
+                  <a href="#" class="hover:underline">Documentation</a>
+                </li>
+                <li class="mb-4">
+                  <a href="#" class="hover:underline">Help Center</a>
+                </li>
+                <li class="mb-4">
+                  <a href="#" class="hover:underline">API Status</a>
+                </li>
+              </ul>
             </div>
-            <hr class="my-6 border-gray-200 sm:mx-auto lg:my-8">
-            <div class="sm:flex sm:items-center sm:justify-between">
-                <span class="text-sm text-gray-500 sm:text-center">© 2023 <a href="#" class="hover:underline">HPESA™</a>. All Rights Reserved.
-                </span>
-                <div class="flex mt-4 sm:justify-center sm:mt-0 space-x-5">
-                    <a href="#" class="text-gray-500 hover:text-gray-900">
-                        <i class="fab fa-facebook-f"></i>
-                        <span class="sr-only">Facebook</span>
-                    </a>
-                    <a href="#" class="text-gray-500 hover:text-gray-900">
-                        <i class="fab fa-twitter"></i>
-                        <span class="sr-only">Twitter</span>
-                    </a>
-                    <a href="#" class="text-gray-500 hover:text-gray-900">
-                        <i class="fab fa-instagram"></i>
-                        <span class="sr-only">Instagram</span>
-                    </a>
-                    <a href="#" class="text-gray-500 hover:text-gray-900">
-                        <i class="fab fa-linkedin-in"></i>
-                        <span class="sr-only">LinkedIn</span>
-                    </a>
-                </div>
+            <div>
+              <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase">
+                Company
+              </h2>
+              <ul class="text-gray-500 font-medium">
+                <li class="mb-4">
+                  <a href="#" class="hover:underline">About</a>
+                </li>
+                <li class="mb-4">
+                  <a href="#" class="hover:underline">Careers</a>
+                </li>
+                <li class="mb-4">
+                  <a href="#" class="hover:underline">Blog</a>
+                </li>
+              </ul>
             </div>
+            <div>
+              <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase">
+                Legal
+              </h2>
+              <ul class="text-gray-500 font-medium">
+                <li class="mb-4">
+                  <a href="#" class="hover:underline">Privacy Policy</a>
+                </li>
+                <li class="mb-4">
+                  <a href="#" class="hover:underline">Terms & Conditions</a>
+                </li>
+                <li class="mb-4">
+                  <a href="#" class="hover:underline">Licenses</a>
+                </li>
+              </ul>
+            </div>
+          </div>
         </div>
+        <hr class="my-6 border-gray-200 sm:mx-auto lg:my-8">
+        <div class="sm:flex sm:items-center sm:justify-between">
+          <span class="text-sm text-gray-500 sm:text-center">© 2023 <a
+              href="#"
+              class="hover:underline"
+            >HPESA™</a>. All Rights Reserved.
+          </span>
+          <div class="flex mt-4 sm:justify-center sm:mt-0 space-x-5">
+            <a href="#" class="text-gray-500 hover:text-gray-900">
+              <i class="fab fa-facebook-f"></i>
+              <span class="sr-only">Facebook</span>
+            </a>
+            <a href="#" class="text-gray-500 hover:text-gray-900">
+              <i class="fab fa-twitter"></i>
+              <span class="sr-only">Twitter</span>
+            </a>
+            <a href="#" class="text-gray-500 hover:text-gray-900">
+              <i class="fab fa-instagram"></i>
+              <span class="sr-only">Instagram</span>
+            </a>
+            <a href="#" class="text-gray-500 hover:text-gray-900">
+              <i class="fab fa-linkedin-in"></i>
+              <span class="sr-only">LinkedIn</span>
+            </a>
+          </div>
+        </div>
+      </div>
     </footer>
 
     <!-- Flowbite JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"
+    ></script>
     <!-- Custom JS -->
     <script src="js/script.js"></script>
-</body>
+  </body>
 </html>
