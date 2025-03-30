@@ -1,15 +1,18 @@
 const router = require("express").Router();
-const { getUser, registerUser, addTransaction, updateUser } = require(
-  "../database",
-);
-const hederaService = require("../hederaService");
+const {
+  getUser,
+  registerUser,
+  addTransaction,
+  updateUser,
+} = require("@services/database");
+const hederaService = require("@services/hedera");
 
 const {
   encryptPrivateKey,
   decryptPrivateKey,
   hashPinPhone,
   verifyPinPhone,
-} = require("../utils/encryption");
+} = require("@utils/encryption");
 
 router.post("/", async (req, res) => {
   const { sessionId, serviceCode, phoneNumber, text } = {
@@ -52,7 +55,7 @@ What would you like us to help you with today?
       }
 
       const { accountId, privateKey } = await hederaService.createUserWallet(
-        ussdPassedInput[2],
+        ussdPassedInput[2]
       );
       const pinHash = hashPinPhone(ussdPassedInput[2], phoneNumber);
 
@@ -61,10 +64,9 @@ What would you like us to help you with today?
         ussdPassedInput[1],
         privateKey,
         accountId,
-        pinHash,
+        pinHash
       );
-      response =
-        `END successfully created your account of id ${id}\nWelcome to HPESA your number one solution to all your payment needs : )`;
+      response = `END successfully created your account of id ${id}\nWelcome to HPESA your number one solution to all your payment needs : )`;
       break;
 
     /* Main Menu Option 3 */
@@ -98,21 +100,17 @@ What would you like us to help you with today?
       if (sender.failedAttempts >= 3) {
         return res.status(403).send("END Account locked, contact support");
       }
-      if (
-        !verifyPinPhone(
-          ussdPassedInput[3],
-          sender.phone,
-          sender.pinHash,
-        )
-      ) {
+      if (!verifyPinPhone(ussdPassedInput[3], sender.phone, sender.pinHash)) {
         await updateUser(sender.phone, {
           failedAttempts: sender.failedAttempts + 1,
         });
-        return res.status(403).send(
-          `END Invalid pin: remaining attempts ${
-            3 - (sender.failedAttempts + 1)
-          }`,
-        );
+        return res
+          .status(403)
+          .send(
+            `END Invalid pin: remaining attempts ${
+              3 - (sender.failedAttempts + 1)
+            }`
+          );
       }
 
       const receiver = await getUser(ussdPassedInput[1]);
@@ -126,14 +124,14 @@ What would you like us to help you with today?
 
       const senderPrivateKey = decryptPrivateKey(
         sender.encryptedPrivateKey,
-        ussdPassedInput[3],
+        ussdPassedInput[3]
       );
-      const { status, txId, hashscanUrl, newBalance } = await hederaService
-        .sendHBAR(
+      const { status, txId, hashscanUrl, newBalance } =
+        await hederaService.sendHBAR(
           senderPrivateKey,
           sender.hederaAccountId,
           receiver.hederaAccountId,
-          Number(ussdPassedInput[2]),
+          Number(ussdPassedInput[2])
         );
 
       const transactionId = await addTransaction(
@@ -141,10 +139,9 @@ What would you like us to help you with today?
         req.body.receiverPhone,
         req.body.amount,
         txId,
-        status.toLowerCase(),
+        status.toLowerCase()
       );
-      response =
-        `END Transaction successful of id: ${txId} new balance: ${newBalance} HBAR`;
+      response = `END Transaction successful of id: ${txId} new balance: ${newBalance} HBAR`;
       break;
     default:
       response = "END Invalid choice please try again";

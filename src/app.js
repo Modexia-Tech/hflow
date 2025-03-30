@@ -9,10 +9,10 @@ const compression = require("compression");
 
 dotenv.config();
 
-const { initDB } = require("./database");
+const { initDB } = require("@services/database");
 const ussdRouter = require("@routes/ussd");
 const apiRouter = require("@routes/api");
-const webRouter = require("@routes/web");
+// const webRouter = require("@routes/web");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -24,15 +24,15 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(bodyParser.text({ type: "text/plain" }));
 
-app.set("view engine", "ejs");
-app.set("views", path.join(__dirname, "views"));
+// app.set("view engine", "ejs");
+// app.set("views", path.join(__dirname, "views"));
 
 app.use(express.static(path.join(__dirname, "public")));
 
 // routes
 app.use("/ussd", ussdRouter);
 app.use("/api", apiRouter);
-app.use("/", webRouter);
+// app.use("/", webRouter);
 
 app.use((req, res) => {
   res.status(404).sendFile(path.join(__dirname, "public", "404.html"));

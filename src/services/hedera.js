@@ -13,8 +13,8 @@ const {
   decryptPrivateKey,
   hashPinPhone,
   verifyPinPhone,
-} = require("./utils/encryption");
-const { hbarToKes, kesToHbar } = require("./utils/currency");
+} = require("../utils/encryption");
+const { hbarToKes, kesToHbar } = require("../utils/currency");
 require("dotenv").config();
 
 class HederaService {
@@ -22,9 +22,7 @@ class HederaService {
     this.client = Client.forTestnet();
     this.client.setOperator(
       AccountId.fromString(process.env.HEDERA_OPERATOR_ID),
-      PrivateKey.fromStringED25519(
-        process.env.HEDERA_OPERATOR_PRIVATE_KEY,
-      ),
+      PrivateKey.fromStringED25519(process.env.HEDERA_OPERATOR_PRIVATE_KEY)
     );
     this.minBalance = 1;
     this.maxAttempts = 3;
@@ -77,7 +75,7 @@ class HederaService {
       privateKey,
       sender.accountId,
       receiverAccountId,
-      amountHBAR,
+      amountHBAR
     );
   }
 

@@ -4,19 +4,20 @@ const {
   getUser,
   addTransaction,
   updateUser,
-} = require("../database");
-const hederaService = require("../hederaService");
+} = require("@services/database");
+const hederaService = require("@services/hedera");
 
-const { newUserSchema, userActionSchema } = require("../schemas/user");
-const { newTransactionSchema, fundWalletSchema } = require(
-  "../schemas/transaction",
-);
+const { newUserSchema, userActionSchema } = require("@schemas/user");
+const {
+  newTransactionSchema,
+  fundWalletSchema,
+} = require("@schemas/transaction");
 const {
   encryptPrivateKey,
   decryptPrivateKey,
   hashPinPhone,
   verifyPinPhone,
-} = require("../utils/encryption");
+} = require("@utils/encryption");
 
 router.post("/registerUser", async (req, res) => {
   try {
@@ -25,10 +26,9 @@ router.post("/registerUser", async (req, res) => {
       return res.status(400).send({ error: error.details[0].message });
     }
 
-    const {
-      accountId,
-      privateKey,
-    } = await hederaService.createUserWallet(req.body.pin);
+    const { accountId, privateKey } = await hederaService.createUserWallet(
+      req.body.pin
+    );
     const pinHash = hashPinPhone(req.body.pin, req.body.phone);
 
     const id = await registerUser(
@@ -36,7 +36,7 @@ router.post("/registerUser", async (req, res) => {
       req.body.fullName,
       privateKey,
       accountId,
-      pinHash,
+      pinHash
     );
     res.status(201).send(`successfully created user of id: ${id}`);
   } catch (err) {
@@ -98,32 +98,30 @@ router.post("/makeTransaction", async (req, res) => {
 
     const senderPrivateKey = decryptPrivateKey(
       sender.encryptedPrivateKey,
-      req.body.senderPin,
+      req.body.senderPin
     );
-    const { status, txId, hashscanUrl, newBalance } = await hederaService
-      .sendHBAR(
+    const { status, txId, hashscanUrl, newBalance } =
+      await hederaService.sendHBAR(
         senderPrivateKey,
         sender.hederaAccountId,
         receiver.hederaAccountId,
-        req.body.amount,
+        req.body.amount
       );
     const transactionId = await addTransaction(
       req.body.senderPhone,
       req.body.receiverPhone,
       req.body.amount,
       txId,
-      status.toLowerCase(),
+      status.toLowerCase()
     );
     if (!transactionId) {
       return res.status(500).send({ error: "Failed to log transaction" });
     }
-    return res
-      .status(200)
-      .send({
-        message: `Transaction successful of id: ${txId}`,
-        newBalance,
-        hashscanUrl,
-      });
+    return res.status(200).send({
+      message: `Transaction successful of id: ${txId}`,
+      newBalance,
+      hashscanUrl,
+    });
   } catch (err) {
     res.status(400).send({ error: err.message });
   }
@@ -142,11 +140,10 @@ router.post("/fundWallet", async (req, res) => {
       return res.status(404).json({ error: "Account not found" });
     }
 
-    const result = await hederaService
-      .fundWallet(
-        receiver.hederaAccountId,
-        req.body.amount,
-      );
+    const result = await hederaService.fundWallet(
+      receiver.hederaAccountId,
+      req.body.amount
+    );
 
     return res.status(200).json(result);
   } catch (error) {
