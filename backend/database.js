@@ -1,11 +1,24 @@
 require("dotenv").config();
 const { Database } = require("@sqlitecloud/drivers");
 
-const db = new Database(process.env.HPESA_DB);
-
-db.on("error", (err) => {
-  console.error("[DB ERROR]:", err);
-});
+let db;
+if (!process.env.HPESA_DB) {
+  const sqlite3 = require("sqlite3");
+  const path = require("path");
+  db = new sqlite3.Database(
+    path.resolve(__dirname, "hpesa.db"),
+    sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE,
+    (err) => {
+      if (err) console.error("[DB ERROR]: Database error:", err);
+      else console.log("[DB INFO]: Connected to SQLite database");
+    },
+  );
+} else {
+  db = new Database(process.env.HPESA_DB);
+  db.on("error", (error) => {
+    console.error("[DB ERROR]: ", error);
+  });
+}
 
 /**
  * Initialize database tables
