@@ -1,0 +1,63 @@
+/* Custom styles for HPESA landing page */
+
+/* USSD Demo Styling */
+.ussd-demo {
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.ussd-header {
+    font-family: monospace;
+}
+
+.ussd-body {
+    font-family: monospace;
+    line-height: 1.8;
+}
+
+/* Smooth scrolling */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Feature cards hover effect */
+.feature-card:hover {
+    transform: translateY(-5px);
+    transition: transform 0.3s ease;
+}
+
+/* FAQ animation */
+.faq-item {
+    transition: all 0.3s ease;
+}
+
+.faq-item:hover {
+    border-color: #6366f1;
+}
+
+.faq-question i {
+    transition: transform 0.3s ease;
+}
+
+.faq-question[aria-expanded="true"] i {
+    transform: rotate(180deg);
+}
+
+/* Mobile menu animation */
+#navbar-sticky {
+    transition: all 0.3s ease;
+}
+
+/* Hero section padding for mobile */
+@media (max-width: 768px) {
+    section {
+        padding-top: 2rem;
+        padding-bottom: 2rem;
+    }
+}
+
+/* Button hover effects */
+.bg-indigo-600:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgba(99, 102, 241, 0.3);
+    transition: all 0.3s ease;
+}
