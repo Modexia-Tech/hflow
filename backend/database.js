@@ -15,11 +15,11 @@ if (!process.env.HPESA_DB) {
   );
 } else {
   db = new Database(process.env.HPESA_DB);
-  db.on("error", (error) => {
-    console.error("[DB ERROR]: ", error);
-  });
 }
 
+db.on("error", (error) => {
+  console.error("[DB ERROR]: ", error);
+});
 /**
  * Initialize database tables
  * @returns {Promise<void>}
