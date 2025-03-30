@@ -51,7 +51,7 @@ What would you like us to help you with today?
         return res.send("END The pins do not match please try again");
       }
 
-      const { accountId, privateKey } = await hederaService.createWallet(
+      const { accountId, privateKey } = await hederaService.createUserWallet(
         ussdPassedInput[2],
       );
       const pinHash = hashPinPhone(ussdPassedInput[2], phoneNumber);

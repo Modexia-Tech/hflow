@@ -28,7 +28,7 @@ router.post("/registerUser", async (req, res) => {
     const {
       accountId,
       privateKey,
-    } = await hederaService.createWallet(req.body.pin);
+    } = await hederaService.createUserWallet(req.body.pin);
     const pinHash = hashPinPhone(req.body.pin, req.body.phone);
 
     const id = await registerUser(
