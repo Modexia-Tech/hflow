@@ -1,13 +1,16 @@
 const dotenv = require("dotenv");
 const express = require("express");
 const cors = require("cors");
+const path = require("path");
+const bodyParser = require("body-parser");
+const compression = require("compression");
+
+dotenv.config();
+
 const { initDB } = require("./database");
 const ussdRouter = require("./routes/ussd");
 const apiRouter = require("./routes/api");
-const bodyParser = require("body-parser");
-const compression = require("compression");
-const path = require("path");
-dotenv.config();
+const webRouter = require("./routes/web");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -24,13 +27,10 @@ app.set("views", path.join(__dirname, "views"));
 
 app.use(express.static(path.join(__dirname, "public")));
 
-// api routes
+// routes
 app.use("/ussd", ussdRouter);
 app.use("/api", apiRouter);
-
-app.get("/", (req, res) => {
-  res.render("index", { title: "Home Page" });
-});
+app.use("/", webRouter);
 
 app.listen(PORT, () => {
   console.log(`[INFO]: Server has started at http://localhost:${PORT}`);
