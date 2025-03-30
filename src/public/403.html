@@ -1,1 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Access Denied | HPesa</title>
+    <!-- Flowbite CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
+    <!-- Custom CSS -->
+    <style>
+        body {
+            background-color: #f8fafc;
+            font-family: 'Inter', sans-serif;
+        }
+        .hpesa-gradient {
+            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+        }
+        .animation-shake {
+            animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
+        }
+        @keyframes shake {
+            10%, 90% { transform: translateX(-2px); }
+            20%, 80% { transform: translateX(4px); }
+            30%, 50%, 70% { transform: translateX(-8px); }
+            40%, 60% { transform: translateX(8px); }
+        }
+        .forbidden-icon {
+            filter: drop-shadow(0 4px 6px rgba(239, 68, 68, 0.2));
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen">
+    <div class="container mx-auto px-4 py-16 text-center">
+        <div class="max-w-2xl mx-auto">
+            <!-- Animated 403 Graphic -->
+            <div class="animation-shake mb-8">
+                <svg class="w-48 h-48 mx-auto forbidden-icon" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="100" cy="100" r="90" fill="#FEE2E2"/>
+                    <circle cx="100" cy="100" r="70" fill="#FECACA"/>
+                    <path d="M60 60L140 140" stroke="#EF4444" stroke-width="12" stroke-linecap="round"/>
+                    <path d="M140 60L60 140" stroke="#EF4444" stroke-width="12" stroke-linecap="round"/>
+                    <circle cx="100" cy="100" r="30" fill="#EF4444"/>
+                    <text x="100" y="110" font-family="Arial" font-size="24" font-weight="bold" fill="white" text-anchor="middle">403</text>
+                </svg>
+            </div>
+            
+            <!-- Message -->
+            <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4">Access Denied</h1>
+            <p class="text-lg text-gray-600 mb-6">
+                You don't have permission to access this resource.
+                <br>
+                Please check your credentials or contact support if you believe this is an error.
+            </p>
+            
+            <!-- Security Warning -->
+            <div class="bg-red-50 border-l-4 border-red-500 p-4 mb-8 text-left max-w-md mx-auto">
+                <div class="flex items-start">
+                    <svg class="h-5 w-5 text-red-500 mt-0.5 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+                    </svg>
+                    <p class="text-red-700 font-medium">Security notice: Unauthorized access attempts are logged.</p>
+                </div>
+            </div>
+            
+            <!-- Actions -->
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="/" class="hpesa-gradient text-white font-medium rounded-lg px-6 py-3 text-center hover:opacity-90 transition">
+                    Return to Safety
+                </a>
+                <button id="goBackBtn" class="bg-white border border-gray-300 text-gray-700 font-medium rounded-lg px-6 py-3 hover:bg-gray-50 transition">
+                    Go Back
+                </button>
+            </div>
+            
+            <!-- USSD Alternative -->
+            <div class="mt-12 p-4 bg-blue-50 rounded-lg inline-block">
+                <p class="text-gray-700">
+                    <span class="font-semibold">Need help?</span> Access your account securely via USSD: 
+                    <span class="font-mono bg-gray-100 px-2 py-1 rounded">*384*2005#</span>
+                </p>
+            </div>
+        </div>
+    </div>
 
+    <!-- Flowbite JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
+    <!-- Custom JS -->
+    <script>
+        // Back button functionality
+        document.getElementById('goBackBtn').addEventListener('click', () => {
+            window.history.back();
+        });
+
+        // Security logging (optional)
+        console.warn('403 Forbidden Access Attempt - Path:', window.location.pathname, 
+                   '- Referrer:', document.referrer);
+
+        // Add vibration effect on load (for mobile)
+        if (navigator.vibrate) {
+            navigator.vibrate([100, 50, 100]);
+        }
+    </script>
+</body>
+</html>
