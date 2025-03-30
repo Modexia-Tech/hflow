@@ -6,22 +6,25 @@ const {
   TransferTransaction,
   Hbar,
   AccountBalanceQuery,
-  Status
+  Status,
 } = require("@hashgraph/sdk");
-const { 
-  encryptPrivateKey, 
+const {
+  encryptPrivateKey,
   decryptPrivateKey,
   hashPinPhone,
-  verifyPinPhone 
-} = require("../utils/encryption");
-const { hbarToKes, kesToHbar } = require("../utils/currency");
+  verifyPinPhone,
+} = require("./utils/encryption");
+const { hbarToKes, kesToHbar } = require("./utils/currency");
+require("dotenv").config();
 
 class HederaService {
   constructor() {
     this.client = Client.forTestnet();
     this.client.setOperator(
-      AccountId.fromString("0.0.5767695"),
-      PrivateKey.fromStringED25519("302e020100300506032b657004220420b302745426a96cdd8c15baea174644e48d2896a94182f299e2815012455c7f5d...")
+      AccountId.fromString(process.env.HEDERA_OPERATOR_ID),
+      PrivateKey.fromStringED25519(
+        process.env.HEDERA_OPERATOR_PRIVATE_KEY,
+      ),
     );
     this.minBalance = 1;
     this.maxAttempts = 3;
@@ -29,13 +32,13 @@ class HederaService {
 
   /**
    * Complete wallet creation with PIN security
-   * @param {string} phone - User phone number 
+   * @param {string} phone - User phone number
    * @param {string} pin - 4-digit PIN
    * @returns {Promise<{accountId: string, encryptedKey: string, pinHash: string}>}
    */
   async createUserWallet(phone, pin) {
     const newKey = PrivateKey.generateED25519();
-    
+
     // Fund account with 1 HBAR
     const tx = await new AccountCreateTransaction()
       .setKey(newKey.publicKey)
@@ -48,13 +51,13 @@ class HederaService {
     return {
       accountId,
       encryptedKey: encryptPrivateKey(newKey.toString(), pin),
-      pinHash: hashPinPhone(pin, phone)
+      pinHash: hashPinPhone(pin, phone),
     };
   }
 
   /**
    * Secure transaction processing with PIN verification
-   * @param {object} sender - {phone, encryptedKey, pinHash, accountId} 
+   * @param {object} sender - {phone, encryptedKey, pinHash, accountId}
    * @param {string} receiverAccountId
    * @param {number} amountHBAR
    * @param {string} inputPin
@@ -74,14 +77,14 @@ class HederaService {
       privateKey,
       sender.accountId,
       receiverAccountId,
-      amountHBAR
+      amountHBAR,
     );
   }
 
   /**
    * Currency-converted funding
-   * @param {string} accountId 
-   * @param {number} amountKES 
+   * @param {string} accountId
+   * @param {number} amountKES
    * @returns {Promise<{status: string, amountHBAR: number}>}
    */
   async fundWalletWithKES(accountId, amountKES) {
@@ -89,13 +92,13 @@ class HederaService {
     await this.fundWallet(accountId, amountHBAR);
     return {
       status: "success",
-      amountHBAR: parseFloat(amountHBAR.toFixed(8))
+      amountHBAR: parseFloat(amountHBAR.toFixed(8)),
     };
   }
 
   /**
    * Get balance with currency conversion
-   * @param {string} accountId 
+   * @param {string} accountId
    * @returns {Promise<{hbars: number, kesEquivalent: number}>}
    */
   async getBalanceWithKES(accountId) {
@@ -103,11 +106,9 @@ class HederaService {
     const kesEquivalent = await hbarToKes(balance.hbars);
     return {
       hbars: balance.hbars,
-      kesEquivalent: parseFloat(kesEquivalent.toFixed(2))
+      kesEquivalent: parseFloat(kesEquivalent.toFixed(2)),
     };
   }
-
- 
 
   async accountExists(accountId) {
     try {
@@ -120,3 +121,4 @@ class HederaService {
 }
 
 module.exports = new HederaService();
+
