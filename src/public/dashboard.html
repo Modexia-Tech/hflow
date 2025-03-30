@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | HPesa - USSD Crypto Wallet</title>
+    <!-- Flowbite CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .sidebar {
+            transition: all 0.3s ease;
+        }
+        .dashboard-card {
+            transition: all 0.3s ease;
+        }
+        .dashboard-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+        .active-nav-item {
+            background-color: #eef2ff;
+            color: #4f46e5;
+            border-left: 4px solid #4f46e5;
+        }
+        .active-nav-item i {
+            color: #4f46e5;
+        }
+        .hbar-price-change.positive {
+            color: #10b981;
+        }
+        .hbar-price-change.negative {
+            color: #ef4444;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Sidebar -->
+    <div class="fixed top-0 left-0 h-screen w-64 bg-white shadow-lg sidebar hidden md:block">
+        <div class="p-4 flex items-center space-x-3 border-b">
+            <div class="w-10 h-10 bg-indigo-600 rounded-full flex items-center justify-center text-white font-bold">
+                HP
+            </div>
+            <span class="font-bold text-lg">HPesa</span>
+        </div>
+        <nav class="p-4 space-y-1">
+            <a href="#" class="nav-item flex items-center space-x-3 p-3 rounded-lg active-nav-item">
+                <i class="fas fa-home w-5 text-gray-500"></i>
+                <span>Dashboard</span>
+            </a>
+            <a href="#" class="nav-item flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-100">
+                <i class="fas fa-exchange-alt w-5 text-gray-500"></i>
+                <span>Transactions</span>
+            </a>
+            <a href="#" class="nav-item flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-100">
+                <i class="fas fa-wallet w-5 text-gray-500"></i>
+                <span>Wallet</span>
+            </a>
+            <a href="#" class="nav-item flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-100">
+                <i class="fas fa-chart-line w-5 text-gray-500"></i>
+                <span>Market</span>
+            </a>
+            <a href="#" class="nav-item flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-100">
+                <i class="fas fa-user w-5 text-gray-500"></i>
+                <span>Profile</span>
+            </a>
+            <a href="#" class="nav-item flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-100">
+                <i class="fas fa-cog w-5 text-gray-500"></i>
+                <span>Settings</span>
+            </a>
+        </nav>
+        <div class="absolute bottom-0 left-0 right-0 p-4 border-t">
+            <button class="w-full flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-100 text-gray-700">
+                <i class="fas fa-sign-out-alt w-5"></i>
+                <span>Log Out</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Mobile Header -->
+    <header class="md:hidden bg-white shadow-sm fixed top-0 left-0 right-0 z-10">
+        <div class="flex items-center justify-between p-4">
+            <button id="mobileMenuBtn">
+                <i class="fas fa-bars text-gray-600 text-xl"></i>
+            </button>
+            <div class="flex items-center space-x-2">
+                <div class="w-8 h-8 bg-indigo-600 rounded-full flex items-center justify-center text-white text-xs font-bold">
+                    HP
+                </div>
+                <span class="font-bold">HPesa</span>
+            </div>
+            <div class="w-8"></div> <!-- Spacer -->
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="md:ml-64 pt-16 md:pt-0">
+        <div class="p-6">
+            <!-- Welcome Banner -->
+            <div class="bg-indigo-600 text-white rounded-xl p-6 mb-6">
+                <div class="flex flex-col md:flex-row md:items-center md:justify-between">
+                    <div>
+                        <h1 class="text-2xl font-bold mb-2">Welcome back, John!</h1>
+                        <p class="text-indigo-100">Track your HBAR transactions and manage your crypto wallet</p>
+                    </div>
+                    <div class="mt-4 md:mt-0">
+                        <button class="bg-white text-indigo-600 px-4 py-2 rounded-lg font-medium hover:bg-indigo-50 transition">
+                            <i class="fas fa-plus mr-2"></i> Buy HBAR
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stats Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+                <!-- HBAR Balance -->
+                <div class="dashboard-card bg-white rounded-xl p-6 shadow-sm">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-gray-500 font-medium">HBAR Balance</h3>
+                        <i class="fas fa-wallet text-indigo-500"></i>
+                    </div>
+                    <div class="flex items-end space-x-2">
+                        <span class="text-2xl font-bold">5,342.50</span>
+                        <span class="text-gray-500">HBAR</span>
+                    </div>
+                    <div class="mt-2 text-sm text-gray-500">
+                        ≈ $1,234.56
+                    </div>
+                </div>
+
+                <!-- Local Currency Balance -->
+                <div class="dashboard-card bg-white rounded-xl p-6 shadow-sm">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-gray-500 font-medium">KES Balance</h3>
+                        <i class="fas fa-money-bill-wave text-green-500"></i>
+                    </div>
+                    <div class="flex items-end space-x-2">
+                        <span class="text-2xl font-bold">124,560.00</span>
+                        <span class="text-gray-500">KES</span>
+                    </div>
+                    <div class="mt-2 text-sm text-gray-500">
+                        ≈ $1,234.56
+                    </div>
+                </div>
+
+                <!-- HBAR Price -->
+                <div class="dashboard-card bg-white rounded-xl p-6 shadow-sm">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-gray-500 font-medium">HBAR Price</h3>
+                        <i class="fas fa-chart-line text-blue-500"></i>
+                    </div>
+                    <div class="flex items-end space-x-2">
+                        <span class="text-2xl font-bold">$0.2315</span>
+                        <span class="text-sm hbar-price-change positive">
+                            <i class="fas fa-caret-up mr-1"></i>2.34%
+                        </span>
+                    </div>
+                    <div class="mt-2 text-sm text-gray-500">
+                        24h change
+                    </div>
+                </div>
+
+                <!-- Recent Transactions -->
+                <div class="dashboard-card bg-white rounded-xl p-6 shadow-sm">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-gray-500 font-medium">Recent Activity</h3>
+                        <i class="fas fa-history text-purple-500"></i>
+                    </div>
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-2">
+                                <div class="w-8 h-8 bg-indigo-100 rounded-full flex items-center justify-center">
+                                    <i class="fas fa-arrow-down text-indigo-600 text-sm"></i>
+                                </div>
+                                <span class="text-sm font-medium">Received HBAR</span>
+                            </div>
+                            <span class="text-sm font-medium text-green-500">+500 HBAR</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-2">
+                                <div class="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center">
+                                    <i class="fas fa-arrow-up text-red-600 text-sm"></i>
+                                </div>
+                                <span class="text-sm font-medium">Sent HBAR</span>
+                            </div>
+                            <span class="text-sm font-medium text-red-500">-200 HBAR</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts and Exchange Rates -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+                <!-- HBAR Price Chart -->
+                <div class="lg:col-span-2 dashboard-card bg-white rounded-xl p-6 shadow-sm">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-lg font-bold">HBAR Price (7 Days)</h3>
+                        <div class="flex space-x-2">
+                            <button class="px-3 py-1 text-xs bg-indigo-100 text-indigo-700 rounded-full">1W</button>
+                            <button class="px-3 py-1 text-xs bg-gray-100 text-gray-700 rounded-full">1M</button>
+                            <button class="px-3 py-1 text-xs bg-gray-100 text-gray-700 rounded-full">1Y</button>
+                        </div>
+                    </div>
+                    <div class="h-64">
+                        <canvas id="priceChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Exchange Rates -->
+                <div class="dashboard-card bg-white rounded-xl p-6 shadow-sm">
+                    <h3 class="text-lg font-bold mb-4">Exchange Rates</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-2">
+                                <img src="https://cryptologos.cc/logos/hedera-hbar-logo.png" alt="HBAR" class="w-6 h-6">
+                                <span class="font-medium">HBAR/USD</span>
+                            </div>
+                            <span class="font-medium">$0.2315</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-2">
+                                <img src="https://cryptologos.cc/logos/hedera-hbar-logo.png" alt="HBAR" class="w-6 h-6">
+                                <span class="font-medium">HBAR/KES</span>
+                            </div>
+                            <span class="font-medium">KES 23.45</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-2">
+                                <img src="https://cryptologos.cc/logos/bitcoin-btc-logo.png" alt="BTC" class="w-6 h-6">
+                                <span class="font-medium">BTC/HBAR</span>
+                            </div>
+                            <span class="font-medium">21,543.21</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-2">
+                                <img src="https://cryptologos.cc/logos/ethereum-eth-logo.png" alt="ETH" class="w-6 h-6">
+                                <span class="font-medium">ETH/HBAR</span>
+                            </div>
+                            <span class="font-medium">1,234.56</span>
+                        </div>
+                        <div class="pt-4 border-t">
+                            <p class="text-sm text-gray-500">Rates update every 60 seconds</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Transactions and Quick Actions -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Recent Transactions -->
+                <div class="lg:col-span-2 dashboard-card bg-white rounded-xl shadow-sm">
+                    <div class="p-6 border-b">
+                        <h3 class="text-lg font-bold">Recent Transactions</h3>
+                    </div>
+                    <div class="divide-y">
+                        <!-- Transaction Item -->
+                        <div class="p-4 hover:bg-gray-50">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center space-x-3">
+                                    <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
+                                        <i class="fas fa-arrow-down text-green-600"></i>
+                                    </div>
+                                    <div>
+                                        <p class="font-medium">Received HBAR</p>
+                                        <p class="text-sm text-gray-500">From: 0.0.1234</p>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <p class="font-medium text-green-600">+500 HBAR</p>
+                                    <p class="text-sm text-gray-500">Today, 10:30 AM</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Transaction Item -->
+                        <div class="p-4 hover:bg-gray-50">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center space-x-3">
+                                    <div class="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center">
+                                        <i class="fas fa-arrow-up text-red-600"></i>
+                                    </div>
+                                    <div>
+                                        <p class="font-medium">Sent HBAR</p>
+                                        <p class="text-sm text-gray-500">To: 0.0.5678</p>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <p class="font-medium text-red-600">-200 HBAR</p>
+                                    <p class="text-sm text-gray-500">Yesterday, 3:45 PM</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Transaction Item -->
+                        <div class="p-4 hover:bg-gray-50">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center space-x-3">
+                                    <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
+                                        <i class="fas fa-exchange-alt text-blue-600"></i>
+                                    </div>
+                                    <div>
+                                        <p class="font-medium">Converted HBAR</p>
+                                        <p class="text-sm text-gray-500">To KES</p>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <p class="font-medium text-gray-600">-50 HBAR</p>
+                                    <p class="text-sm text-gray-500">Mar 28, 2024</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-4 border-t text-center">
+                        <a href="#" class="text-indigo-600 hover:text-indigo-800 font-medium">View all transactions</a>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="dashboard-card bg-white rounded-xl p-6 shadow-sm">
+                    <h3 class="text-lg font-bold mb-4">Quick Actions</h3>
+                    <div class="space-y-3">
+                        <button class="w-full flex items-center space-x-3 p-4 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition">
+                            <i class="fas fa-plus"></i>
+                            <span>Buy HBAR</span>
+                        </button>
+                        <button class="w-full flex items-center space-x-3 p-4 bg-white border border-indigo-600 text-indigo-600 rounded-lg hover:bg-indigo-50 transition">
+                            <i class="fas fa-arrow-up"></i>
+                            <span>Send HBAR</span>
+                        </button>
+                        <button class="w-full flex items-center space-x-3 p-4 bg-white border border-indigo-600 text-indigo-600 rounded-lg hover:bg-indigo-50 transition">
+                            <i class="fas fa-exchange-alt"></i>
+                            <span>Convert</span>
+                        </button>
+                        <button class="w-full flex items-center space-x-3 p-4 bg-white border border-indigo-600 text-indigo-600 rounded-lg hover:bg-indigo-50 transition">
+                            <i class="fas fa-qrcode"></i>
+                            <span>Receive HBAR</span>
+                        </button>
+                    </div>
+
+                    <!-- Buy HBAR Form (Initially hidden) -->
+                    <div id="buyHbarForm" class="mt-6 hidden">
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Amount (KES)</label>
+                                <input type="number" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500" placeholder="1000">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">You'll receive</label>
+                                <div class="w-full p-3 bg-gray-100 rounded-lg">
+                                    <span class="font-medium">4,320.25 HBAR</span>
+                                    <span class="text-sm text-gray-500 ml-2">≈ $1,000.00</span>
+                                </div>
+                            </div>
+                            <button class="w-full bg-indigo-600 text-white py-3 rounded-lg font-medium hover:bg-indigo-700 transition">
+                                Confirm Purchase
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Flowbite JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
+    <!-- Font Awesome -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js"></script>
+    
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobileMenuBtn').addEventListener('click', function() {
+            document.querySelector('.sidebar').classList.toggle('hidden');
+        });
+
+        // Initialize price chart
+        const ctx = document.getElementById('priceChart').getContext('2d');
+        const priceChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                datasets: [{
+                    label: 'HBAR Price (USD)',
+                    data: [0.215, 0.221, 0.225, 0.218, 0.227, 0.230, 0.2315],
+                    borderColor: '#4f46e5',
+                    backgroundColor: 'rgba(79, 70, 229, 0.1)',
+                    borderWidth: 2,
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: false,
+                        grid: {
+                            drawBorder: false
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false
+                        }
+                    }
+                }
+            }
+        });
+
+        // Toggle buy HBAR form
+        document.querySelectorAll('button').forEach(button => {
+            if (button.textContent.includes('Buy HBAR')) {
+                button.addEventListener('click', function(e) {
+                    if (e.target.closest('#buyHbarForm') === null) {
+                        document.getElementById('buyHbarForm').classList.toggle('hidden');
+                    }
+                });
+            }
+        });
+
+        // Simulate live price updates
+        function updatePrices() {
+            // Random price fluctuation
+            const change = (Math.random() - 0.5) * 0.01;
+            const currentPrice = parseFloat(document.querySelector('.dashboard-card:nth-child(3) .text-2xl').textContent.replace('$', ''));
+            const newPrice = currentPrice * (1 + change);
+            
+            // Update UI
+            document.querySelector('.dashboard-card:nth-child(3) .text-2xl').textContent = '$' + newPrice.toFixed(4);
+            const changeElement = document.querySelector('.hbar-price-change');
+            
+            if (change >= 0) {
+                changeElement.innerHTML = '<i class="fas fa-caret-up mr-1"></i>' + (change * 100).toFixed(2) + '%';
+                changeElement.classList.remove('negative');
+                changeElement.classList.add('positive');
+            } else {
+                changeElement.innerHTML = '<i class="fas fa-caret-down mr-1"></i>' + (Math.abs(change) * 100).toFixed(2) + '%';
+                changeElement.classList.remove('positive');
+                changeElement.classList.add('negative');
+            }
+        }
+
+        // Update prices every 10 seconds
+        setInterval(updatePrices, 10000);
+    </script>
+</body>
+</html>
