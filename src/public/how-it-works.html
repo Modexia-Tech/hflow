@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How HPesa Works | USSD Crypto Wallet</title>
+    <!-- Flowbite CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        .ussd-demo {
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+            transition: transform 0.3s ease;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white border-gray-200 fixed w-full z-20 top-0 start-0 border-b">
+        <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+            <a href="index.html" class="flex items-center space-x-3 rtl:space-x-reverse">
+                <span class="self-center text-2xl font-bold whitespace-nowrap text-indigo-600">HPESA</span>
+            </a>
+            <div class="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
+                <a href="index.html#get-started" class="text-white bg-indigo-600 hover:bg-indigo-700 focus:ring-4 focus:outline-none focus:ring-indigo-300 font-medium rounded-lg text-sm px-4 py-2 text-center">Get Started</a>
+                <button data-collapse-toggle="navbar-sticky" type="button" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200" aria-controls="navbar-sticky" aria-expanded="false">
+                    <span class="sr-only">Open main menu</span>
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+            <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-sticky">
+                <ul class="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white">
+                    <li>
+                        <a href="index.html" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-indigo-600 md:p-0">Home</a>
+                    </li>
+                    <li>
+                        <a href="how-it-works.html" class="block py-2 px-3 text-white bg-indigo-600 rounded md:bg-transparent md:text-indigo-600 md:p-0" aria-current="page">How It Works</a>
+                    </li>
+                    <li>
+                        <a href="index.html#features" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-indigo-600 md:p-0">Features</a>
+                    </li>
+                    <li>
+                        <a href="index.html#faq" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-indigo-600 md:p-0">FAQ</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="pt-32 pb-16 px-4 mx-auto max-w-screen-xl text-center lg:py-24">
+        <h1 class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl">How <span class="text-indigo-600">HPesa</span> Works</h1>
+        <p class="mb-8 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 lg:px-48">Send, receive, and store cryptocurrency using simple USSD codes on any mobile phone - no smartphone or internet required.</p>
+        <div class="flex flex-col space-y-4 sm:flex-row sm:justify-center sm:space-y-0 sm:space-x-4">
+            <a href="#registration" class="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg bg-indigo-600 hover:bg-indigo-700 focus:ring-4 focus:ring-indigo-300">
+                Get Started
+                <i class="fas fa-arrow-right ml-2"></i>
+            </a>
+            <a href="#demo" class="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-gray-900 rounded-lg border border-gray-300 hover:bg-gray-100 focus:ring-4 focus:ring-gray-100">
+                <i class="fas fa-mobile-alt mr-2"></i>
+                Try Demo
+            </a>
+        </div>
+    </section>
+
+    <!-- Registration Process -->
+    <section id="registration" class="py-16 px-4 bg-white">
+        <div class="max-w-screen-xl mx-auto">
+            <h2 class="mb-12 text-3xl font-extrabold tracking-tight text-center text-gray-900">1. Getting Started</h2>
+            <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+                <!-- Step 1 -->
+                <div class="text-center p-6 bg-gray-50 rounded-lg">
+                    <div class="w-16 h-16 bg-indigo-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-indigo-600 font-bold text-xl">1</span>
+                    </div>
+                    <h3 class="mb-2 text-xl font-bold text-gray-900">Dial USSD Code</h3>
+                    <p class="text-gray-500">Dial <span class="font-mono font-bold">*123#</span> from any mobile phone</p>
+                </div>
+                
+                <!-- Step 2 -->
+                <div class="text-center p-6 bg-gray-50 rounded-lg">
+                    <div class="w-16 h-16 bg-indigo-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-indigo-600 font-bold text-xl">2</span>
+                    </div>
+                    <h3 class="mb-2 text-xl font-bold text-gray-900">Select Register</h3>
+                    <p class="text-gray-500">Choose "Register" from the main menu</p>
+                </div>
+                
+                <!-- Step 3 -->
+                <div class="text-center p-6 bg-gray-50 rounded-lg">
+                    <div class="w-16 h-16 bg-indigo-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-indigo-600 font-bold text-xl">3</span>
+                    </div>
+                    <h3 class="mb-2 text-xl font-bold text-gray-900">Enter Details</h3>
+                    <p class="text-gray-500">Provide your phone number and create a 4-digit PIN</p>
+                </div>
+                
+                <!-- Step 4 -->
+                <div class="text-center p-6 bg-gray-50 rounded-lg">
+                    <div class="w-16 h-16 bg-indigo-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-indigo-600 font-bold text-xl">4</span>
+                    </div>
+                    <h3 class="mb-2 text-xl font-bold text-gray-900">Receive Confirmation</h3>
+                    <p class="text-gray-500">Get your Hedera Account ID via SMS</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- USSD Demo -->
+    <section id="demo" class="py-16 px-4 bg-gray-50">
+        <div class="max-w-screen-xl mx-auto">
+            <h2 class="mb-12 text-3xl font-extrabold tracking-tight text-center text-gray-900">Try the USSD Demo</h2>
+            <div class="flex flex-col lg:flex-row items-center justify-center gap-12">
+                <div class="ussd-demo bg-gray-800 rounded-xl p-6 max-w-md">
+                    <div class="ussd-header bg-gray-700 rounded-t-lg p-3 flex items-center">
+                        <div class="flex space-x-2">
+                            <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                            <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                            <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                        </div>
+                        <div class="text-white text-sm mx-auto">HPESA USSD</div>
+                    </div>
+                    <div class="ussd-body bg-gray-900 rounded-b-lg p-4 text-white font-mono h-64 overflow-y-auto">
+                        <div class="text-green-400">Welcome to HPESA</div>
+                        <div class="my-2">1. Send Money</div>
+                        <div class="my-2">2. Receive Money</div>
+                        <div class="my-2">3. Buy Crypto</div>
+                        <div class="my-2">4. Sell Crypto</div>
+                        <div class="my-2">5. Check Balance</div>
+                        <div class="mt-4 text-yellow-400">Reply with option number</div>
+                    </div>
+                </div>
+                <div class="max-w-lg">
+                    <h3 class="mb-4 text-2xl font-bold text-gray-900">Experience Banking Without Internet</h3>
+                    <p class="mb-6 text-gray-500">HPesa works on any mobile phone with USSD capability. No smartphone or data connection required.</p>
+                    <ul class="space-y-4 text-gray-600">
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-indigo-600 mt-1 mr-2"></i>
+                            <span>Instant transactions (3-5 second settlement)</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-indigo-600 mt-1 mr-2"></i>
+                            <span>Ultra-low fees ($0.0001 per transaction)</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-indigo-600 mt-1 mr-2"></i>
+                            <span>Bank-level security with PIN protection</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Core Features -->
+    <section class="py-16 px-4 bg-white">
+        <div class="max-w-screen-xl mx-auto">
+            <h2 class="mb-12 text-3xl font-extrabold tracking-tight text-center text-gray-900">2. Core Features</h2>
+            <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+                <!-- Send HBAR -->
+                <div class="feature-card p-6 bg-white border border-gray-200 rounded-lg shadow hover:shadow-lg transition-shadow">
+                    <div class="w-12 h-12 bg-indigo-100 rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-paper-plane text-indigo-600 text-xl"></i>
+                    </div>
+                    <h3 class="mb-2 text-xl font-bold text-gray-900">Send HBAR</h3>
+                    <ol class="list-decimal pl-5 text-gray-500 space-y-2">
+                        <li>Dial <span class="font-mono">*123#</span></li>
+                        <li>Select "Send Money"</li>
+                        <li>Enter recipient's phone or Hedera ID</li>
+                        <li>Enter amount</li>
+                        <li>Confirm with PIN</li>
+                    </ol>
+                </div>
+                
+                <!-- Buy Crypto -->
+                <div class="feature-card p-6 bg-white border border-gray-200 rounded-lg shadow hover:shadow-lg transition-shadow">
+                    <div class="w-12 h-12 bg-indigo-100 rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-coins text-indigo-600 text-xl"></i>
+                    </div>
+                    <h3 class="mb-2 text-xl font-bold text-gray-900">Buy Crypto</h3>
+                    <ol class="list-decimal pl-5 text-gray-500 space-y-2">
+                        <li>Dial <span class="font-mono">*123#</span></li>
+                        <li>Select "Buy Crypto"</li>
+                        <li>Choose currency (BTC, ETH, HBAR)</li>
+                        <li>Enter amount in local currency</li>
+                        <li>Confirm with PIN</li>
+                    </ol>
+                </div>
+                
+                <!-- Check Balance -->
+                <div class="feature-card p-6 bg-white border border-gray-200 rounded-lg shadow hover:shadow-lg transition-shadow">
+                    <div class="w-12 h-12 bg-indigo-100 rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-wallet text-indigo-600 text-xl"></i>
+                    </div>
+                    <h3 class="mb-2 text-xl font-bold text-gray-900">Check Balance</h3>
+                    <ol class="list-decimal pl-5 text-gray-500 space-y-2">
+                        <li>Dial <span class="font-mono">*123#</span></li>
+                        <li>Select "Check Balance"</li>
+                        <li>View HBAR and local currency balance</li>
+                        <li>Option to receive via SMS</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Transaction Flow -->
+    <section class="py-16 px-4 bg-gray-50">
+        <div class="max-w-screen-xl mx-auto">
+            <h2 class="mb-12 text-3xl font-extrabold tracking-tight text-center text-gray-900">3. Behind the Scenes</h2>
+            <div class="bg-white p-8 rounded-xl shadow">
+                <div class="flowbite-steps flex flex-col md:flex-row justify-between items-center">
+                    <div class="step text-center mb-8 md:mb-0">
+                        <div class="w-16 h-16 bg-indigo-600 rounded-full flex items-center justify-center mx-auto mb-4 text-white font-bold text-xl">1</div>
+                        <h3 class="font-bold text-gray-900">USSD Request</h3>
+                        <p class="text-gray-500">User dials *123# and selects action</p>
+                    </div>
+                    <div class="hidden md:block flex-1 border-t-2 border-indigo-300 mx-4"></div>
+                    <div class="step text-center mb-8 md:mb-0">
+                        <div class="w-16 h-16 bg-indigo-600 rounded-full flex items-center justify-center mx-auto mb-4 text-white font-bold text-xl">2</div>
+                        <h3 class="font-bold text-gray-900">PIN Verification</h3>
+                        <p class="text-gray-500">System decrypts private key with user's PIN</p>
+                    </div>
+                    <div class="hidden md:block flex-1 border-t-2 border-indigo-300 mx-4"></div>
+                    <div class="step text-center mb-8 md:mb-0">
+                        <div class="w-16 h-16 bg-indigo-600 rounded-full flex items-center justify-center mx-auto mb-4 text-white font-bold text-xl">3</div>
+                        <h3 class="font-bold text-gray-900">Hedera Transaction</h3>
+                        <p class="text-gray-500">TX signed and broadcast to Hedera network</p>
+                    </div>
+                    <div class="hidden md:block flex-1 border-t-2 border-indigo-300 mx-4"></div>
+                    <div class="step text-center">
+                        <div class="w-16 h-16 bg-indigo-600 rounded-full flex items-center justify-center mx-auto mb-4 text-white font-bold text-xl">4</div>
+                        <h3 class="font-bold text-gray-900">Confirmation</h3>
+                        <p class="text-gray-500">User receives SMS with TX details</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-16 px-4 bg-indigo-600 text-white">
+        <div class="max-w-screen-xl mx-auto text-center">
+            <h2 class="mb-4 text-3xl font-extrabold tracking-tight">Ready to Bank Without Internet?</h2>
+            <p class="mb-8 text-lg font-normal sm:px-16 lg:px-48">Join thousands of users who are already enjoying fast, low-cost transactions with HPesa.</p>
+            <div class="flex flex-col space-y-4 sm:flex-row sm:justify-center sm:space-y-0 sm:space-x-4">
+                <a href="index.html#get-started" class="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-indigo-600 rounded-lg bg-white hover:bg-gray-100 focus:ring-4 focus:ring-gray-100">
+                    Get Started Now
+                    <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+                <a href="index.html#faq" class="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg border border-white hover:bg-indigo-700 focus:ring-4 focus:ring-indigo-800">
+                    <i class="fas fa-question-circle mr-2"></i>
+                    See FAQ
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-white py-8 px-4">
+        <div class="max-w-screen-xl mx-auto">
+            <div class="md:flex md:justify-between">
+                <div class="mb-6 md:mb-0">
+                    <a href="index.html" class="flex items-center">
+                        <span class="self-center text-2xl font-bold whitespace-nowrap text-indigo-600">HPESA</span>
+                    </a>
+                </div>
+                <div class="grid grid-cols-2 gap-8 sm:grid-cols-3">
+                    <div>
+                        <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase">Resources</h2>
+                        <ul class="text-gray-500 font-medium">
+                            <li class="mb-4">
+                                <a href="how-it-works.html" class="hover:underline">How It Works</a>
+                            </li>
+                            <li class="mb-4">
+                                <a href="index.html#faq" class="hover:underline">FAQ</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase">Company</h2>
+                        <ul class="text-gray-500 font-medium">
+                            <li class="mb-4">
+                                <a href="#" class="hover:underline">About</a>
+                            </li>
+                            <li class="mb-4">
+                                <a href="#" class="hover:underline">Careers</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase">Legal</h2>
+                        <ul class="text-gray-500 font-medium">
+                            <li class="mb-4">
+                                <a href="#" class="hover:underline">Privacy Policy</a>
+                            </li>
+                            <li class="mb-4">
+                                <a href="#" class="hover:underline">Terms & Conditions</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <hr class="my-6 border-gray-200 sm:mx-auto lg:my-8">
+            <div class="sm:flex sm:items-center sm:justify-between">
+                <span class="text-sm text-gray-500 sm:text-center">© 2023 <a href="index.html" class="hover:underline">HPESA™</a>. All Rights Reserved.
+                </span>
+                <div class="flex mt-4 sm:justify-center sm:mt-0 space-x-5">
+                    <a href="#" class="text-gray-500 hover:text-gray-900">
+                        <i class="fab fa-twitter"></i>
+                        <span class="sr-only">Twitter</span>
+                    </a>
+                    <a href="#" class="text-gray-500 hover:text-gray-900">
+                        <i class="fab fa-facebook-f"></i>
+                        <span class="sr-only">Facebook</span>
+                    </a>
+                    <a href="#" class="text-gray-500 hover:text-gray-900">
+                        <i class="fab fa-instagram"></i>
+                        <span class="sr-only">Instagram</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Flowbite JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
+</body>
+</html>
