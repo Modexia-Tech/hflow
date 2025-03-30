@@ -1,7 +1,3 @@
-Here’s a comprehensive **Architecture Documentation (ARCHITECTURE.md)** for your HPesa project, designed for clarity and scalability:
-
----
-
 # HPesa Architecture Overview  
 *A USSD-first Hedera wallet bridging mobile money and blockchain*
 
