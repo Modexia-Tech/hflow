@@ -6,31 +6,40 @@ const {
   TransferTransaction,
   Hbar,
   AccountBalanceQuery,
+  Status
 } = require("@hashgraph/sdk");
-const { encryptPrivateKey } = require("./utils/encryption.js");
+const { 
+  encryptPrivateKey, 
+  decryptPrivateKey,
+  hashPinPhone,
+  verifyPinPhone 
+} = require("../utils/encryption");
+const { hbarToKes, kesToHbar } = require("../utils/currency");
 
 class HederaService {
   constructor() {
-    // Testnet configuration
     this.client = Client.forTestnet();
-    this.operatorId = AccountId.fromString("0.0.5767695");
-    this.operatorKey = PrivateKey.fromStringED25519(
-      "302e020100300506032b657004220420b302745426a96cdd8c15baea174644e48d2896a94182f299e2815012455c7f5d",
+    this.client.setOperator(
+      AccountId.fromString("0.0.5767695"),
+      PrivateKey.fromStringED25519("302e020100300506032b657004220420b302745426a96cdd8c15baea174644e48d2896a94182f299e2815012455c7f5d...")
     );
-    this.client.setOperator(this.operatorId, this.operatorKey);
-    this.minBalance = 1; // Minimum HBAR reserve
+    this.minBalance = 1;
+    this.maxAttempts = 3;
   }
 
   /**
-   * Creates a new Hedera wallet
-   * @returns {Promise<{accountId: string, privateKey: string, publicKey: string}>}
+   * Complete wallet creation with PIN security
+   * @param {string} phone - User phone number 
+   * @param {string} pin - 4-digit PIN
+   * @returns {Promise<{accountId: string, encryptedKey: string, pinHash: string}>}
    */
-  async createWallet(pin) {
+  async createUserWallet(phone, pin) {
     const newKey = PrivateKey.generateED25519();
-
+    
+    // Fund account with 1 HBAR
     const tx = await new AccountCreateTransaction()
       .setKey(newKey.publicKey)
-      .setInitialBalance(Hbar.from(100))
+      .setInitialBalance(Hbar.from(1))
       .execute(this.client);
 
     const receipt = await tx.getReceipt(this.client);
@@ -38,80 +47,68 @@ class HederaService {
 
     return {
       accountId,
-      privateKey: encryptPrivateKey(newKey.toString(), pin),
+      encryptedKey: encryptPrivateKey(newKey.toString(), pin),
+      pinHash: hashPinPhone(pin, phone)
     };
   }
 
   /**
-   * Sends HBAR between accounts
-   * @param {string} senderPrivateKey
-   * @param {string} senderAccountId
+   * Secure transaction processing with PIN verification
+   * @param {object} sender - {phone, encryptedKey, pinHash, accountId} 
    * @param {string} receiverAccountId
-   * @param {number} amount
-   * @returns {Promise<{status: string, txId: string, hashscanUrl: string}>}
+   * @param {number} amountHBAR
+   * @param {string} inputPin
+   * @returns {Promise<{status: string, txId: string, newBalance: number}>}
    */
-  async sendHBAR(senderPrivateKey, senderAccountId, receiverAccountId, amount) {
-    const senderKey = PrivateKey.fromString(senderPrivateKey);
-
-    // Verify sufficient balance
-    const balance = await this.getBalance(senderAccountId);
-    if (balance.hbars < amount + this.minBalance) {
-      throw new Error(`Insufficient balance. Available: ${balance.hbars} HBAR`);
+  async processTransaction(sender, receiverAccountId, amountHBAR, inputPin) {
+    // 1. PIN verification
+    if (!verifyPinPhone(inputPin, sender.phone, sender.pinHash)) {
+      throw new Error("Invalid PIN");
     }
 
-    const tx = await new TransferTransaction()
-      .addHbarTransfer(senderAccountId, Hbar.from(-amount))
-      .addHbarTransfer(receiverAccountId, Hbar.from(amount))
-      .freezeWith(this.client)
-      .sign(senderKey);
+    // 2. Decrypt private key
+    const privateKey = decryptPrivateKey(sender.encryptedKey, inputPin);
 
-    const txResponse = await tx.execute(this.client);
-    const receipt = await txResponse.getReceipt(this.client);
+    // 3. Execute transfer
+    return this.sendHBAR(
+      privateKey,
+      sender.accountId,
+      receiverAccountId,
+      amountHBAR
+    );
+  }
 
+  /**
+   * Currency-converted funding
+   * @param {string} accountId 
+   * @param {number} amountKES 
+   * @returns {Promise<{status: string, amountHBAR: number}>}
+   */
+  async fundWalletWithKES(accountId, amountKES) {
+    const amountHBAR = await kesToHbar(amountKES);
+    await this.fundWallet(accountId, amountHBAR);
     return {
-      status: receipt.status.toString(),
-      txId: txResponse.transactionId.toString(),
-      hashscanUrl:
-        `https://hashscan.io/testnet/transaction/${txResponse.transactionId}`,
-      newBalance: balance.hbars - amount,
+      status: "success",
+      amountHBAR: parseFloat(amountHBAR.toFixed(8))
     };
   }
 
   /**
-   * Gets account balance
-   * @param {string} accountId
-   * @returns {Promise<{hbars: number, tinybars: number}>}
+   * Get balance with currency conversion
+   * @param {string} accountId 
+   * @returns {Promise<{hbars: number, kesEquivalent: number}>}
    */
-  async getBalance(accountId) {
-    const balance = await new AccountBalanceQuery()
-      .setAccountId(accountId)
-      .execute(this.client);
-
+  async getBalanceWithKES(accountId) {
+    const balance = await this.getBalance(accountId);
+    const kesEquivalent = await hbarToKes(balance.hbars);
     return {
-      hbars: balance.hbars.toBigNumber().toNumber(),
-      tinybars: balance.hbars.toTinybars().toNumber(),
+      hbars: balance.hbars,
+      kesEquivalent: parseFloat(kesEquivalent.toFixed(2))
     };
   }
 
-  /**
-   * Funds a wallet from operator account
-   * @param {string} accountId
-   * @param {number} amount
-   */
-  async fundWallet(accountId, amount) {
-    const tx = await new TransferTransaction()
-      .addHbarTransfer(this.operatorId, Hbar.from(-amount))
-      .addHbarTransfer(accountId, Hbar.from(amount))
-      .execute(this.client);
+ 
 
-    return await tx.getReceipt(this.client);
-  }
-
-  /**
-   * Validates an account exists
-   * @param {string} accountId
-   * @returns {Promise<boolean>}
-   */
   async accountExists(accountId) {
     try {
       await this.getBalance(accountId);
