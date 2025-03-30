@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HPesa FAQ | USSD Crypto Wallet</title>
+    <!-- Flowbite CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        .faq-item {
+            transition: all 0.3s ease;
+        }
+        .faq-item:hover {
+            border-color: #6366f1;
+        }
+        .faq-question i {
+            transition: transform 0.3s ease;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white border-gray-200 fixed w-full z-20 top-0 start-0 border-b">
+        <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+            <a href="index.html" class="flex items-center space-x-3 rtl:space-x-reverse">
+                <span class="self-center text-2xl font-bold whitespace-nowrap text-indigo-600">HPESA</span>
+            </a>
+            <div class="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
+                <a href="index.html#get-started" class="text-white bg-indigo-600 hover:bg-indigo-700 focus:ring-4 focus:outline-none focus:ring-indigo-300 font-medium rounded-lg text-sm px-4 py-2 text-center">Get Started</a>
+                <button data-collapse-toggle="navbar-sticky" type="button" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200" aria-controls="navbar-sticky" aria-expanded="false">
+                    <span class="sr-only">Open main menu</span>
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+            <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-sticky">
+                <ul class="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white">
+                    <li>
+                        <a href="index.html" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-indigo-600 md:p-0">Home</a>
+                    </li>
+                    <li>
+                        <a href="how-it-works.html" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-indigo-600 md:p-0">How It Works</a>
+                    </li>
+                    <li>
+                        <a href="faq.html" class="block py-2 px-3 text-white bg-indigo-600 rounded md:bg-transparent md:text-indigo-600 md:p-0" aria-current="page">FAQ</a>
+                    </li>
+                    <li>
+                        <a href="index.html#contact" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-indigo-600 md:p-0">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="pt-32 pb-16 px-4 mx-auto max-w-screen-xl text-center lg:py-24">
+        <h1 class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl">Frequently Asked Questions</h1>
+        <p class="mb-8 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 lg:px-48">Find answers to common questions about HPesa - the USSD crypto wallet for feature phones.</p>
+        <div class="flex flex-col space-y-4 sm:flex-row sm:justify-center sm:space-y-0 sm:space-x-4">
+            <a href="#general" class="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg bg-indigo-600 hover:bg-indigo-700 focus:ring-4 focus:ring-indigo-300">
+                General Questions
+            </a>
+            <a href="#technical" class="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-gray-900 rounded-lg border border-gray-300 hover:bg-gray-100 focus:ring-4 focus:ring-gray-100">
+                Technical Questions
+            </a>
+        </div>
+    </section>
+
+    <!-- FAQ Sections -->
+    <div class="max-w-screen-xl mx-auto px-4 pb-16">
+        <!-- General Questions -->
+        <section id="general" class="mb-16">
+            <h2 class="mb-8 text-2xl font-bold text-gray-900">General Questions</h2>
+            <div class="grid gap-4">
+                <!-- FAQ Item 1 -->
+                <div class="faq-item border border-gray-200 rounded-lg p-6">
+                    <button class="faq-question flex justify-between items-center w-full text-left font-medium text-gray-900">
+                        <span>Do I need a smartphone to use HPesa?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer hidden mt-4 text-gray-500">
+                        <p>No! HPesa works on any mobile phone with USSD capability, even basic feature phones without internet access. You can send, receive, and store cryptocurrency using just your phone's dial pad.</p>
+                    </div>
+                </div>
+                
+                <!-- FAQ Item 2 -->
+                <div class="faq-item border border-gray-200 rounded-lg p-6">
+                    <button class="faq-question flex justify-between items-center w-full text-left font-medium text-gray-900">
+                        <span>Which cryptocurrencies does HPesa support?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer hidden mt-4 text-gray-500">
+                        <p>Currently we support:</p>
+                        <ul class="list-disc pl-5 mt-2 space-y-1">
+                            <li>HBAR (Hedera Hashgraph)</li>
+                            <li>Bitcoin (BTC)</li>
+                            <li>Ethereum (ETH)</li>
+                            <li>USDC (USD Coin)</li>
+                        </ul>
+                        <p class="mt-2">More currencies will be added based on user demand.</p>
+                    </div>
+                </div>
+                
+                <!-- FAQ Item 3 -->
+                <div class="faq-item border border-gray-200 rounded-lg p-6">
+                    <button class="faq-question flex justify-between items-center w-full text-left font-medium text-gray-900">
+                        <span>How much does HPesa cost?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer hidden mt-4 text-gray-500">
+                        <p>Creating a wallet is completely free. We charge small fees for transactions:</p>
+                        <ul class="list-disc pl-5 mt-2 space-y-1">
+                            <li>HBAR transfers: 0.1% (minimum $0.0001)</li>
+                            <li>Cross-chain transfers: 1%</li>
+                            <li>M-Pesa cash-out: 1.5%</li>
+                        </ul>
+                        <p class="mt-2">These fees are significantly lower than traditional mobile money services.</p>
+                    </div>
+                </div>
+                
+                <!-- FAQ Item 4 -->
+                <div class="faq-item border border-gray-200 rounded-lg p-6">
+                    <button class="faq-question flex justify-between items-center w-full text-left font-medium text-gray-900">
+                        <span>Is my money safe with HPesa?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer hidden mt-4 text-gray-500">
+                        <p>Absolutely. We use multiple layers of security:</p>
+                        <ul class="list-disc pl-5 mt-2 space-y-1">
+                            <li>Bank-level AES-256 encryption for all private keys</li>
+                            <li>PIN protection for all transactions</li>
+                            <li>Regular security audits</li>
+                            <li>Non-custodial option available (you control your keys)</li>
+                        </ul>
+                        <p class="mt-2">Your funds are protected with the same technology used by financial institutions.</p>
+                    </div>
+                </div>
+                
+                <!-- FAQ Item 5 -->
+                <div class="faq-item border border-gray-200 rounded-lg p-6">
+                    <button class="faq-question flex justify-between items-center w-full text-left font-medium text-gray-900">
+                        <span>What countries do you operate in?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer hidden mt-4 text-gray-500">
+                        <p>Currently available in:</p>
+                        <ul class="list-disc pl-5 mt-2 space-y-1">
+                            <li>Kenya</li>
+                            <li>Nigeria</li>
+                            <li>South Africa</li>
+                            <li>Ghana</li>
+                        </ul>
+                        <p class="mt-2">We're expanding to more African countries throughout 2024. Contact us if you'd like HPesa in your country.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Technical Questions -->
+        <section id="technical">
+            <h2 class="mb-8 text-2xl font-bold text-gray-900">Technical Questions</h2>
+            <div class="grid gap-4">
+                <!-- FAQ Item 6 -->
+                <div class="faq-item border border-gray-200 rounded-lg p-6">
+                    <button class="faq-question flex justify-between items-center w-full text-left font-medium text-gray-900">
+                        <span>How do I recover my account if I lose my phone?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer hidden mt-4 text-gray-500">
+                        <p>We provide multiple recovery options:</p>
+                        <ol class="list-decimal pl-5 mt-2 space-y-2">
+                            <li><strong>Secret Recovery Phrase</strong>: During registration, you'll receive a 12-word phrase that can restore your wallet on any device</li>
+                            <li><strong>Phone Number Verification</strong>: You can recover using your registered phone number and ID verification</li>
+                            <li><strong>Agent Assistance</strong>: Visit any HPesa agent with your ID to recover your account</li>
+                        </ol>
+                        <p class="mt-2">We recommend writing down your recovery phrase and keeping it in a safe place.</p>
+                    </div>
+                </div>
+                
+                <!-- FAQ Item 7 -->
+                <div class="faq-item border border-gray-200 rounded-lg p-6">
+                    <button class="faq-question flex justify-between items-center w-full text-left font-medium text-gray-900">
+                        <span>How long do transactions take?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer hidden mt-4 text-gray-500">
+                        <p>Transaction times vary by type:</p>
+                        <ul class="list-disc pl-5 mt-2 space-y-1">
+                            <li><strong>HBAR transfers</strong>: 3-5 seconds (Hedera network speed)</li>
+                            <li><strong>Cross-chain transfers</strong>: 2-5 minutes (depends on blockchain congestion)</li>
+                            <li><strong>M-Pesa cash-out</strong>: Instant to 5 minutes</li>
+                        </ul>
+                        <p class="mt-2">All transactions are confirmed via SMS once completed.</p>
+                    </div>
+                </div>
+                
+                <!-- FAQ Item 8 -->
+                <div class="faq-item border border-gray-200 rounded-lg p-6">
+                    <button class="faq-question flex justify-between items-center w-full text-left font-medium text-gray-900">
+                        <span>What's the minimum/maximum transaction amount?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer hidden mt-4 text-gray-500">
+                        <p>Our transaction limits are:</p>
+                        <ul class="list-disc pl-5 mt-2 space-y-1">
+                            <li><strong>Minimum</strong>: 10 HBAR (≈$0.10) or equivalent</li>
+                            <li><strong>Maximum (unverified users)</strong>: $100 equivalent per day</li>
+                            <li><strong>Maximum (verified users)</strong>: $10,000 equivalent per day</li>
+                        </ul>
+                        <p class="mt-2">Higher limits available for enterprise customers.</p>
+                    </div>
+                </div>
+                
+                <!-- FAQ Item 9 -->
+                <div class="faq-item border border-gray-200 rounded-lg p-6">
+                    <button class="faq-question flex justify-between items-center w-full text-left font-medium text-gray-900">
+                        <span>How do you handle exchange rates?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer hidden mt-4 text-gray-500">
+                        <p>We use a combination of:</p>
+                        <ul class="list-disc pl-5 mt-2 space-y-1">
+                            <li>Real-time market data from multiple exchanges</li>
+                            <li>Hedera's native price oracle</li>
+                            <li>Local currency feeds from central banks</li>
+                        </ul>
+                        <p class="mt-2">Exchange rates are locked in when you initiate a transaction and confirmed before completion. You'll always see the exact amount you're sending/receiving before confirming.</p>
+                    </div>
+                </div>
+                
+                <!-- FAQ Item 10 -->
+                <div class="faq-item border border-gray-200 rounded-lg p-6">
+                    <button class="faq-question flex justify-between items-center w-full text-left font-medium text-gray-900">
+                        <span>Can I use HPesa for business transactions?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer hidden mt-4 text-gray-500">
+                        <p>Yes! We offer business accounts with additional features:</p>
+                        <ul class="list-disc pl-5 mt-2 space-y-1">
+                            <li>Higher transaction limits</li>
+                            <li>Batch payments</li>
+                            <li>Accounting integrations</li>
+                            <li>Dedicated support</li>
+                            <li>Custom USSD shortcodes</li>
+                        </ul>
+                        <p class="mt-2">Contact our business team at <a href="mailto:business@hpesa.com" class="text-indigo-600 hover:underline">business@hpesa.com</a> to get started.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- CTA Section -->
+    <section class="py-16 px-4 bg-indigo-600 text-white">
+        <div class="max-w-screen-xl mx-auto text-center">
+            <h2 class="mb-4 text-3xl font-extrabold tracking-tight">Still have questions?</h2>
+            <p class="mb-8 text-lg font-normal sm:px-16 lg:px-48">Our support team is available 24/7 to help you with any questions about HPesa.</p>
+            <div class="flex flex-col space-y-4 sm:flex-row sm:justify-center sm:space-y-0 sm:space-x-4">
+                <a href="index.html#contact" class="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-indigo-600 rounded-lg bg-white hover:bg-gray-100 focus:ring-4 focus:ring-gray-100">
+                    Contact Support
+                    <i class="fas fa-headset ml-2"></i>
+                </a>
+                <a href="how-it-works.html" class="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg border border-white hover:bg-indigo-700 focus:ring-4 focus:ring-indigo-800">
+                    <i class="fas fa-play-circle mr-2"></i>
+                    Watch Demo
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-white py-8 px-4">
+        <div class="max-w-screen-xl mx-auto">
+            <div class="md:flex md:justify-between">
+                <div class="mb-6 md:mb-0">
+                    <a href="index.html" class="flex items-center">
+                        <span class="self-center text-2xl font-bold whitespace-nowrap text-indigo-600">HPESA</span>
+                    </a>
+                </div>
+                <div class="grid grid-cols-2 gap-8 sm:grid-cols-3">
+                    <div>
+                        <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase">Resources</h2>
+                        <ul class="text-gray-500 font-medium">
+                            <li class="mb-4">
+                                <a href="how-it-works.html" class="hover:underline">How It Works</a>
+                            </li>
+                            <li class="mb-4">
+                                <a href="faq.html" class="hover:underline">FAQ</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase">Company</h2>
+                        <ul class="text-gray-500 font-medium">
+                            <li class="mb-4">
+                                <a href="#" class="hover:underline">About</a>
+                            </li>
+                            <li class="mb-4">
+                                <a href="#" class="hover:underline">Careers</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase">Legal</h2>
+                        <ul class="text-gray-500 font-medium">
+                            <li class="mb-4">
+                                <a href="#" class="hover:underline">Privacy Policy</a>
+                            </li>
+                            <li class="mb-4">
+                                <a href="#" class="hover:underline">Terms & Conditions</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <hr class="my-6 border-gray-200 sm:mx-auto lg:my-8">
+            <div class="sm:flex sm:items-center sm:justify-between">
+                <span class="text-sm text-gray-500 sm:text-center">© 2023 <a href="index.html" class="hover:underline">HPESA™</a>. All Rights Reserved.
+                </span>
+                <div class="flex mt-4 sm:justify-center sm:mt-0 space-x-5">
+                    <a href="#" class="text-gray-500 hover:text-gray-900">
+                        <i class="fab fa-twitter"></i>
+                        <span class="sr-only">Twitter</span>
+                    </a>
+                    <a href="#" class="text-gray-500 hover:text-gray-900">
+                        <i class="fab fa-facebook-f"></i>
+                        <span class="sr-only">Facebook</span>
+                    </a>
+                    <a href="#" class="text-gray-500 hover:text-gray-900">
+                        <i class="fab fa-instagram"></i>
+                        <span class="sr-only">Instagram</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Flowbite JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
+    <script>
+        // FAQ toggle functionality
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const answer = question.nextElementSibling;
+                const isExpanded = question.getAttribute('aria-expanded') === 'true';
+                
+                // Toggle answer visibility
+                if (isExpanded) {
+                    answer.classList.add('hidden');
+                    question.setAttribute('aria-expanded', 'false');
+                    question.querySelector('i').classList.remove('fa-chevron-up');
+                    question.querySelector('i').classList.add('fa-chevron-down');
+                } else {
+                    answer.classList.remove('hidden');
+                    question.setAttribute('aria-expanded', 'true');
+                    question.querySelector('i').classList.remove('fa-chevron-down');
+                    question.querySelector('i').classList.add('fa-chevron-up');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
