@@ -34,6 +34,10 @@ app.use("/ussd", ussdRouter);
 app.use("/api", apiRouter);
 app.use("/", webRouter);
 
+app.use((req, res) => {
+  res.status(404).sendFile(path.join(__dirname, "public", "404.html"));
+});
+
 app.listen(PORT, () => {
   console.log(`[INFO]: Server has started at http://localhost:${PORT}`);
   initDB();
