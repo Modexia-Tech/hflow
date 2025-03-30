@@ -1,6 +1,3 @@
-To generate an `API.md` file to explain the API architecture for the `Modexia-Tech/hpesa` repository, I'll outline a structure that you can use to fill in the details of your API. Here's a template that you can start with:
-
-```markdown
 # API Documentation
 
 ## Overview
@@ -159,5 +156,3 @@ The API is versioned to ensure backward compatibility. The current version is `v
 For questions or support, please contact [support@modexia-tech.com](mailto:support@modexia-tech.com).
 
 ---
-
-This is a basic template to help you get started. You can expand on each section and add more details specific to your API as needed.
