@@ -11,7 +11,7 @@ Built on Hedera Hashgraph for **3-second, sub-cent transactions**.
 </div>
 
 ## 🚀 Key Features
-- **USSD Interface**: Dial `*384*2005#` to send HBAR (works on Nokia 3310!).
+- **USSD Interface**: Dial `*384*2005#` to send HBAR (works on a kabambe).
 - **Non-Custodial**: Users own keys (encrypted with PIN).
 - **AI Fraud Detection**: Blocks scams in real-time.
 - **Hedera-Powered**: 3-second TXs at $0.0001 fees.
