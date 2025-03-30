@@ -1,3 +1,5 @@
+require("module-alias/register");
+
 const dotenv = require("dotenv");
 const express = require("express");
 const cors = require("cors");
@@ -8,9 +10,9 @@ const compression = require("compression");
 dotenv.config();
 
 const { initDB } = require("./database");
-const ussdRouter = require("./routes/ussd");
-const apiRouter = require("./routes/api");
-const webRouter = require("./routes/web");
+const ussdRouter = require("@routes/ussd");
+const apiRouter = require("@routes/api");
+const webRouter = require("@routes/web");
 
 const app = express();
 const PORT = process.env.PORT || 5000;

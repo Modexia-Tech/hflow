@@ -5,10 +5,17 @@
   "license": "GPL-3.0",
   "author": "modexia",
   "type": "commonjs",
-  "main": "app.js",
+  "main": "src/app.js",
   "scripts": {
-    "start": "node app.js",
-    "dev": "nodemon backend/routes/api.js"
+    "start": "node src/app.js",
+    "dev": "nodemon src/api.js"
+  },
+  "_moduleAliases": {
+    "@": "./src",
+    "@views": "./src/views",
+    "@routes": "./src/routes",
+    "@services": "./src/services",
+    "@utils": "./src/utils"
   },
   "dependencies": {
     "@hashgraph/sdk": "^2.61.0",
@@ -23,6 +30,7 @@
     "express": "^4.21.2",
     "joi": "^17.13.3",
     "jsonwebtoken": "^9.0.2",
+    "module-alias": "^2.2.3",
     "sqlite3": "^5.1.7"
   },
   "devDependencies": {
