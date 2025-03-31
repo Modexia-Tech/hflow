@@ -1,6 +1,6 @@
 # 🌍 StarHash (HPay) - USSD Hedera Wallet
 
-**Send crypto like M-Pesa—on any phone, no internet needed.**\
+**Send digital assets on any phone, no internet needed.**\
 Built on Hedera Hashgraph for **3-second, sub-cent transactions**.
 
 [![Hedera](https://img.shields.io/badge/Powered%20by-Hedera-000000)](https://hedera.com)
