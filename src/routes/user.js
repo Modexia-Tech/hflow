@@ -8,6 +8,7 @@ const {
   registerUser,
   getUser,
   getUsers,
+  getUserTransactions,
 } = require("@services/database");
 const hederaService = require("@services/hedera");
 
@@ -87,17 +88,42 @@ router.post("/login", async (req, res) => {
   }
 });
 
-router.get("/accountInfo", verifyToken, async (req, res) => {
-  try {
-    const user = await getUser(req.user.phone);
+router.get(
+  "/transactions",
+  verifyToken,
+  requireRole("user"),
+  async (req, res) => {
+    try {
+      const {
+        limit = 10,
+        offset = 0,
+        sortBy = "timestamp",
+        sortOrder = "DESC",
+      } = req.query;
+      const users = await getUserTransactions(limit, offset, sortBy, sortOrder);
+      return res.status(200).send(users);
+    } catch (error) {
+      return res.status(500).send({ error: error.message });
+    }
+  },
+);
 
-    const balance = await hederaService.getBalance(user.hederaAccountId);
+router.get(
+  "/accountInfo",
+  verifyToken,
+  requireRole("user"),
+  async (req, res) => {
+    try {
+      const user = await getUser(req.user.phone);
 
-    return res.status(200).send(balance);
-  } catch (error) {
-    return res.status(500).send({ error: error.message });
-  }
-});
+      const balance = await hederaService.getBalance(user.hederaAccountId);
+
+      return res.status(200).send(balance);
+    } catch (error) {
+      return res.status(500).send({ error: error.message });
+    }
+  },
+);
 
 router.get("/all", verifyToken, requireRole("admin"), async (req, res) => {
   try {

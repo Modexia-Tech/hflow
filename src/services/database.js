@@ -271,15 +271,42 @@ const addTransaction = async (
  * @param {number} [limit=10]
  * @returns {Promise<Array>} List of transactions
  */
-const getUserTransactions = async (phone, limit = 10) => {
+const getUserTransactions = async (
+  phone,
+  limit = 10,
+  offset = 0,
+  sortBy = "timestamp",
+  sortOrder = "DESC",
+) => {
   try {
-    return db.all(
-      `SELECT * FROM transactions 
-       WHERE senderPhone = ? OR receiverPhone = ?
-       ORDER BY timestamp DESC
-       LIMIT ?`,
-      [phone, phone, limit],
-    );
+    const validSortFields = [
+      "timestamp",
+      "status",
+      "amount",
+    ];
+    const validSortOrders = ["ASC", "DESC"];
+
+    const safeSortBy = validSortFields.includes(sortBy) ? sortBy : "timestamp";
+    const safeSortOrder = validSortOrders.includes(sortOrder.toUpperCase())
+      ? sortOrder
+      : "DESC";
+    return await new Promise((resolve, reject) => {
+      return db.all(
+        `
+        SELECT id,senderPhone, receiverPhone, amount, txHash, status, timestamp
+        FROM transactions
+        WHERE senderPhone = ? OR receiverPhone = ?
+        ORDER BY ${safeSortBy} ${safeSortOrder}
+        LIMIT ? OFFSET ?`,
+        [phone, phone, limit, offset],
+        (err, rows) => {
+          if (err) {
+            reject(new Error("Failed to get transactions"));
+          }
+          resolve(rows);
+        },
+      );
+    });
   } catch (err) {
     throw err;
   }
