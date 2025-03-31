@@ -38,9 +38,19 @@ function verifyPinPhone(submittedPin, submittedPhone, storedHash) {
   return newHash === originalHash;
 }
 
+function hashPassword(email, password) {
+  const salt = CryptoJS.lib.WordArray.random(16).toString();
+  const hash = CryptoJS.PBKDF2(`${password}$${email}$${SECRET_SALT}`, salt, {
+    keySize: 512 / 32,
+    iterations: 10000,
+  }).toString();
+
+  return `${salt}$${hash}`;
+}
 module.exports = {
   encryptPrivateKey,
   decryptPrivateKey,
   hashPinPhone,
   verifyPinPhone,
+  hashPassword,
 };
