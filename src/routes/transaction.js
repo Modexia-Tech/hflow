@@ -1,9 +1,9 @@
 const router = require("express").Router();
 const {
-  registerUser,
   getUser,
   addTransaction,
   updateUser,
+  getTransactions,
 } = require("@services/database");
 const hederaService = require("@services/hedera");
 
@@ -14,6 +14,7 @@ const {
   decryptPrivateKey,
   verifyPinPhone,
 } = require("@utils/encryption");
+const { verifyToken, requireRole } = require("@middleware/auth");
 
 router.post("/new", async (req, res) => {
   try {
@@ -35,9 +36,8 @@ router.post("/new", async (req, res) => {
         failedAttempts: sender.failedAttempts + 1,
       });
       return res.status(403).send({
-        error: `Invalid pin: remaining attempts ${
-          3 - (sender.failedAttempts + 1)
-        }`,
+        error: `Invalid pin: remaining attempts ${3 - (sender.failedAttempts + 1)
+          }`,
       });
     }
 
@@ -81,4 +81,18 @@ router.post("/new", async (req, res) => {
   }
 });
 
+router.get("/all", verifyToken, requireRole("admin"), async (req, res) => {
+  try {
+    const {
+      limit = 10,
+      offset = 0,
+      sortBy = "timestamp",
+      sortOrder = "DESC",
+    } = req.query;
+    const users = await getTransactions(limit, offset, sortBy, sortOrder);
+    return res.status(200).send(users);
+  } catch (error) {
+    return res.status(500).send({ error: error.message });
+  }
+});
 module.exports = router;

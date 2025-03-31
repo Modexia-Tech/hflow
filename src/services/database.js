@@ -285,6 +285,45 @@ const getUserTransactions = async (phone, limit = 10) => {
   }
 };
 
+const getTransactions = async (
+  limit = 10,
+  offset = 0,
+  sortBy = "timestamp",
+  sortOrder = "DESC",
+) => {
+  try {
+    const validSortFields = [
+      "timestamp",
+      "status",
+      "amount",
+    ];
+    const validSortOrders = ["ASC", "DESC"];
+
+    const safeSortBy = validSortFields.includes(sortBy) ? sortBy : "timestamp";
+    const safeSortOrder = validSortOrders.includes(sortOrder.toUpperCase())
+      ? sortOrder
+      : "DESC";
+    return await new Promise((resolve, reject) => {
+      return db.all(
+        `
+        SELECT id,senderPhone, receiverPhone, amount, txHash, status, timestamp
+        FROM transactions
+        ORDER BY ${safeSortBy} ${safeSortOrder}
+        LIMIT ? OFFSET ?`,
+        [limit, offset],
+        (err, rows) => {
+          if (err) {
+            reject(new Error("Failed to get transactions"));
+          }
+          resolve(rows);
+        },
+      );
+    });
+  } catch (err) {
+    throw err;
+  }
+};
+
 const registerAdmin = async (fullName, email, passwordHash) => {
   try {
     const result = await new Promise((resolve, reject) => {
@@ -340,4 +379,5 @@ module.exports = {
   getUsers,
   getAdmin,
   registerAdmin,
+  getTransactions,
 };
