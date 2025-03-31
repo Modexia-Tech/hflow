@@ -41,8 +41,10 @@ const initDB = () => {
       CREATE TABLE IF NOT EXISTS admins( 
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         fullName TEXT NOT NULL,
+        email TEXT NOT NULL,
         password TEXT NOT NULL,
-        createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        UNIQUE(email)
       );
       
       CREATE TABLE IF NOT EXISTS transactions (
@@ -180,6 +182,24 @@ const updateUser = async (phone, updatedFields) => {
     throw err;
   }
 };
+/**
+ * Get transactions for a user
+ * @param {string} phone
+ * @param {number} [limit=10]
+ * @returns {Promise<Array>} List of transactions
+ */
+const getUsers = async (limit = 10) => {
+  try {
+    return db.all(
+      `SELECT * FROM transactions 
+       ORDER BY timestamp DESC
+       LIMIT ?`,
+      [limit],
+    );
+  } catch (err) {
+    throw err;
+  }
+};
 
 /**
  * Add a new transaction record
@@ -236,6 +256,37 @@ const getUserTransactions = async (phone, limit = 10) => {
   }
 };
 
+const registerAdmin = async (fullName, email, password) => {
+  try {
+    const result = await new Promise((resolve, reject) => {
+      db.run(
+        `INSERT INTO users 
+         (fullName,email,password)
+         VALUES (?, ?, ?)`,
+        [
+          fullName,
+          email,
+          password,
+        ],
+        function (err) {
+          if (err) {
+            if (err.message.includes("UNIQUE constraint failed")) {
+              reject(new Error("Admin already exists"));
+            } else {
+              reject(err);
+            }
+          } else {
+            resolve(this); // 'this' contains lastID and changes
+          }
+        },
+      );
+    });
+    return result;
+  } catch (err) {
+    throw err;
+  }
+};
+
 module.exports = {
   db,
   initDB,
@@ -244,4 +295,6 @@ module.exports = {
   getUser,
   registerUser,
   updateUser,
+  getUsers,
+  registerAdmin,
 };
