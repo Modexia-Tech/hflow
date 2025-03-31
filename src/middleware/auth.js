@@ -1,6 +1,7 @@
 const { getUser } = require("@services/database");
 const path = require("path");
 const jwt = require("jsonwebtoken");
+const { PUBLIC_FOLDER } = require("@/constants");
 
 function verifyToken(req, res, next) {
   const token = req.headers.authorization?.split(" ")[1]; // Expecting "Bearer TOKEN"
@@ -10,7 +11,7 @@ function verifyToken(req, res, next) {
   jwt.verify(token, process.env.SECRET_KEY, (err, user) => {
     if (err) {
       return res.status(403).sendFile(
-        path.join(__dirname, "public", "login.html"),
+        path.resolve(PUBLIC_FOLDER, "login.html"),
       );
     }
     req.user = user;
@@ -21,7 +22,7 @@ function requireRole(role) {
   return (req, res, next) => {
     if (!req.user || req.user.role !== role) {
       return res.status(403).sendFile(
-        path.join(__dirname, "public", "403.html"),
+        path.resolve(PUBLIC_FOLDER, "403.html"),
       );
     }
     next();
