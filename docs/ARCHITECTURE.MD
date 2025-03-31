@@ -1,15 +1,13 @@
 # HPesa Architecture Overview
 
-_A USSD-first Hedera wallet bridging mobile money and blockchain_
-
+A USSD-first Hedera wallet bridging digital currency transfer
 ```mermaid
 flowchart TD
     A[User] -->|USSD *123#| B[Africa's Talking]
     B --> C[HPesa Backend]
     C --> D[Hedera Network]
     C --> E[SQLite/PostgreSQL]
-    C --> F[M-Pesa API]
-    D --> G[Mirror Node]
+      D --> G[Mirror Node]
 ```
 
 ---
@@ -18,7 +16,7 @@ flowchart TD
 
 ### **1.1 USSD Gateway**
 
-- **Provider**: Africa's Talking/Twilio
+- **Provider**: Africa's Talking/
 - **Role**:
   - Handles USSD sessions via `*123#` shortcode.
   - Forwards payloads to HPesa backend.

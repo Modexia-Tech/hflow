@@ -3,27 +3,36 @@
 ## Overview
 
 This document provides an overview of the API architecture for the `hpesa`
-project. The `hpesa` project focuses on mobile banking powered by Hedera
+project. The `hpesa` project focuses on digital currency transfer  by Hedera
 Hashgraph.
 
 ## Table of Contents
 
-1. [Introduction](#introduction)
-2. [Authentication](#authentication)
-3. [Endpoints](#endpoints)
-   - [User Management](#user-management)
-   - [Accounts](#accounts)
-   - [Transactions](#transactions)
-   - [Notifications](#notifications)
-4. [Error Handling](#error-handling)
-5. [Rate Limiting](#rate-limiting)
-6. [Versioning](#versioning)
-7. [Changelog](#changelog)
-8. [Contact Information](#contact-information)
+- [API Documentation](#api-documentation)
+  - [Overview](#overview)
+  - [Table of Contents](#table-of-contents)
+  - [Introduction](#introduction)
+  - [Authentication](#authentication)
+    - [Obtaining a Token](#obtaining-a-token)
+  - [Endpoints](#endpoints)
+    - [User Management](#user-management)
+      - [Register a New User](#register-a-new-user)
+      - [Get User Details](#get-user-details)
+    - [Accounts](#accounts)
+      - [Get Account Balance](#get-account-balance)
+    - [Transactions](#transactions)
+      - [Create a Transaction](#create-a-transaction)
+    - [Notifications](#notifications)
+      - [Get Notifications](#get-notifications)
+  - [Error Handling](#error-handling)
+  - [Rate Limiting](#rate-limiting)
+  - [Versioning](#versioning)
+  - [Changelog](#changelog)
+  - [Contact Information](#contact-information)
 
 ## Introduction
 
-The `hpesa` API allows developers to integrate mobile banking functionalities
+The `hpesa` API allows developers to integrate mobile digital currency transfer functionalities
 into their applications. The API is designed to be RESTful and provides
 endpoints for managing users, accounts, transactions, and notifications.
 

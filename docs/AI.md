@@ -19,13 +19,7 @@ _Smart fraud detection and personalized financial services via USSD_
   - **Response**:
     - `"END Suspicious activity detected. Visit agent."`
 
-### **1.2 Voice-to-USSD (For Illiterate Users)**
 
-- **What it does**:
-  - Converts spoken Swahili/English to USSD commands (e.g., _"Send 100 HBAR to
-    Mama"_ → `*123*1*100*0.0.1234#`).
-- **Tech Stack**:
-  - **Whisper API** (voice-to-text) + **NLP keyword extraction**.
 
 ### **1.3 Dynamic Pricing**
 
@@ -89,8 +83,7 @@ flowchart LR
 ## **4. Why This Matters**
 
 - **Saves Money**: Reduces fraud losses by **30%**.
-- **Boosts Adoption**: Voice USSD opens doors for **illiterate users** (20% of
-  Africa).
+
 - **Compliance**: Logs all predictions on Hedera for audits.
 
 ---
@@ -103,6 +96,6 @@ flowchart LR
 
 **TL;DR**:
 
-- AI blocks fraud + adds voice controls.
+- AI blocks fraud .
 - Runs cheaply ($20/month on AWS SageMaker).
 - Built for **offline-first** users.
