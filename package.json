@@ -11,12 +11,13 @@
     "dev": "nodemon src/api.js"
   },
   "_moduleAliases": {
-    "@": "./src",
-    "@views": "./src/views",
-    "@schemas": "./src/schemas",
-    "@routes": "./src/routes",
-    "@services": "./src/services",
-    "@utils": "./src/utils"
+    "@": "./src/",
+    "@views": "./src/views/",
+    "@schemas": "./src/schemas/",
+    "@routes": "./src/routes/",
+    "@services": "./src/services/",
+    "@utils": "./src/utils/",
+    "@middleware": "./src/middleware/"
   },
   "dependencies": {
     "@hashgraph/sdk": "^2.61.0",

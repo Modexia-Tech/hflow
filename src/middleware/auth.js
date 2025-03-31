@@ -1,3 +1,6 @@
+const { getUser } = require("@services/database");
+const jwt = require("jsonwebtoken");
+
 function verifyUserToken(req, res, next) {
   const token = req.headers.authorization?.split(" ")[1]; // Expecting "Bearer TOKEN"
 
@@ -9,3 +12,5 @@ function verifyUserToken(req, res, next) {
     next();
   });
 }
+
+module.exports = { verifyUserToken };

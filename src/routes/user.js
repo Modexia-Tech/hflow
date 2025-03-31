@@ -1,4 +1,8 @@
 const router = require("express").Router();
+const jwt = require("jsonwebtoken");
+
+const { verifyPinPhone } = require("@utils/encryption");
+const { verifyUserToken } = require("@middleware/auth");
 
 const {
   registerUser,
@@ -38,14 +42,52 @@ router.post("/new", async (req, res) => {
   }
 });
 
-router.post("/accountInfo", async (req, res) => {
+router.post("/login", async (req, res) => {
   try {
-    const { error } = userActionSchema.validate(req.body);
-
-    if (error) {
-      return res.status(400).send({ error: error.details[0].message });
+    const { phone, pin } = req.body;
+    if (!phone || !pin) {
+      return res.status(400).send({ error: "Phone and PIN are required" });
     }
-    const user = await getUser(req.body.phone);
+
+    const user = await getUser(phone);
+    if (!user) {
+      return res.status(404).send({ error: "User not found" });
+    }
+
+    if (!verifyPinPhone(pin, phone, user.pinHash)) {
+      return res.status(401).send({ error: "Invalid PIN" });
+    }
+
+    // Create JWT token
+    const token = jwt.sign(
+      {
+        phone: user.phone,
+        hederaAccountId: user.hederaAccountId,
+      },
+      process.env.SECRET_KEY,
+      { expiresIn: "24h" }, // Token expires in 24 hours
+    );
+
+    // Return success response with token
+    res.status(200).send({
+      message: "Login successful",
+      token,
+      user: {
+        phone: user.phone,
+        fullName: user.fullName,
+        hederaAccountId: user.hederaAccountId,
+        publicKey: user.publicKey,
+      },
+    });
+  } catch (err) {
+    console.error("Login error:", err);
+    res.status(500).send({ error: "Internal server error" });
+  }
+});
+
+router.get("/accountInfo", verifyUserToken, async (req, res) => {
+  try {
+    const user = await getUser(req.user.phone);
 
     const balance = await hederaService.getBalance(user.hederaAccountId);
 
