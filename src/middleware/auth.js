@@ -8,7 +8,11 @@ function verifyToken(req, res, next) {
   if (!token) return res.status(401).send("Unauthorized");
 
   jwt.verify(token, process.env.SECRET_KEY, (err, user) => {
-    if (err) return res.status(403).send("Forbidden");
+    if (err) {
+      return res.status(403).sendFile(
+        path.join(__dirname, "public", "login.html"),
+      );
+    }
     req.user = user;
     next();
   });
