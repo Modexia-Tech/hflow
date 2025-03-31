@@ -6,7 +6,7 @@ const {
 } = require("@services/database");
 const { verifyToken, requireRole } = require("@middleware/auth");
 const hederaService = require("@services/hedera");
-const {verifyPassword}=require("@utils/encryption")
+const { verifyPassword } = require("@utils/encryption");
 const jwt = require("jsonwebtoken");
 
 const { fundWalletSchema, newAdminSchema } = require("@schemas/transaction");
@@ -23,7 +23,7 @@ router.post("/login", async (req, res) => {
       return res.status(404).send({ error: "Admin not found" });
     }
 
-    console.log(email,password)
+    console.log(email, password);
     if (!verifyPassword(email, password, admin.password)) {
       return res.status(401).send({ error: "Invalid password" });
     }
@@ -55,7 +55,7 @@ router.post(
   requireRole("admin"),
   async (req, res) => {
     try {
-     // 1. Validate request
+      // 1. Validate request
       const { error } = fundWalletSchema.validate(req.body);
       if (error) {
         return res.status(400).json({ error: error.details[0].message });
@@ -82,7 +82,22 @@ router.post(
   },
 );
 
-router.post("/getBalance", async (req, res) => { });
+router.get("/balance", async (req, res) => {
+  try {
+    const balance = await hederaService.getBalance(
+      process.env.HEDERA_OPERATOR_ID,
+    );
+    return res.send(
+      balance,
+    );
+  } catch (error) {
+    console.error("GetBalance Error:", error);
+    return res.status(500).json({
+      error: "Internal server error",
+      message: "Unable to process wallet funding",
+    });
+  }
+});
 
 router.post("/new", verifyToken, requireRole("admin"), async (req, res) => {
   try {
