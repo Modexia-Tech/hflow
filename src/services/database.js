@@ -183,19 +183,48 @@ const updateUser = async (phone, updatedFields) => {
   }
 };
 /**
- * Get transactions for a user
+ * Get users
  * @param {string} phone
  * @param {number} [limit=10]
- * @returns {Promise<Array>} List of transactions
+ * @param {string} [sortBy='createdAt'] - Field to sort by (phone, fullName, createdAt)
+ * @param {string} [sortOrder='DESC'] - Sort order (ASC or DESC)
+ * @returns {Promise<Array>} List of users
  */
-const getUsers = async (limit = 10) => {
+const getUsers = async (
+  limit = 10,
+  offset = 0,
+  sortBy = "createdAt",
+  sortOrder = "DESC",
+) => {
   try {
-    return db.all(
-      `SELECT * FROM transactions 
-       ORDER BY timestamp DESC
-       LIMIT ?`,
-      [limit],
-    );
+    const validSortFields = [
+      "phone",
+      "fullName",
+      "createdAt",
+      "hederaAccountId",
+    ];
+    const validSortOrders = ["ASC", "DESC"];
+
+    const safeSortBy = validSortFields.includes(sortBy) ? sortBy : "createdAt";
+    const safeSortOrder = validSortOrders.includes(sortOrder.toUpperCase())
+      ? sortOrder
+      : "DESC";
+    return await new Promise((resolve, reject) => {
+      return db.all(
+        `
+        SELECT phone, fullName, publicKey, hederaAccountId, createdAt 
+        FROM users 
+        ORDER BY ${safeSortBy} ${safeSortOrder}
+        LIMIT ? OFFSET ?`,
+        [limit, offset],
+        (err, rows) => {
+          if (err) {
+            reject(new Error("Failed to get users"));
+          }
+          resolve(rows);
+        },
+      );
+    });
   } catch (err) {
     throw err;
   }

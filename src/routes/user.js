@@ -101,8 +101,14 @@ router.get("/accountInfo", verifyToken, async (req, res) => {
 
 router.get("/all", verifyToken, requireRole("admin"), async (req, res) => {
   try {
-    const { limit } = req.query;
-    return getUsers(limit);
+    const {
+      limit = 10,
+      offset = 0,
+      sortBy = "createdAt",
+      sortOrder = "DESC",
+    } = req.query;
+    const users = await getUsers(limit, offset, sortBy, sortOrder);
+    return res.status(200).send(users);
   } catch (error) {
     return res.status(500).send({ error: error.message });
   }

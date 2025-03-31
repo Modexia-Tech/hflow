@@ -55,7 +55,7 @@ router.post(
   requireRole("admin"),
   async (req, res) => {
     try {
-      // 1. Validate request
+     // 1. Validate request
       const { error } = fundWalletSchema.validate(req.body);
       if (error) {
         return res.status(400).json({ error: error.details[0].message });
