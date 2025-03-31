@@ -8,9 +8,7 @@ const {
 const hederaService = require("@services/hedera");
 
 const {
-  encryptPrivateKey,
   decryptPrivateKey,
-  hashPinPhone,
   verifyPinPhone,
 } = require("@utils/encryption");
 
@@ -23,7 +21,7 @@ router.post("/", async (req, res) => {
     ...req.body,
   };
 
-  const user = await getUser(phoneNumber);
+  const user = await getUser(phoneNumber.replace("+", ""));
   let response = "";
   const ussdPassedInput = text.split("*");
   switch (true) {
@@ -38,6 +36,9 @@ What would you like us to help you with today?
       break;
     /* Main Menu Option 1 */
     case text === "1":
+      if (user) {
+        response = "END You already have an account";
+      }
       response = `CON Please Enter your Full Name:`;
       break;
 
@@ -50,23 +51,32 @@ What would you like us to help you with today?
       break;
 
     case text.startsWith("1") && ussdPassedInput.length === 4:
+      if (user) {
+        return res.send("END You already have an account");
+      }
       if (ussdPassedInput[2] !== ussdPassedInput[3]) {
         return res.send("END The pins do not match please try again");
       }
 
-      const { accountId, privateKey } = await hederaService.createUserWallet(
-        ussdPassedInput[2]
-      );
-      const pinHash = hashPinPhone(ussdPassedInput[2], phoneNumber);
-
-      const id = await registerUser(
+      const { accountId, publicKey, encryptedPrivateKey, pinHash } =
+        await hederaService.createUserWallet(
+          phoneNumber.replace("+", ""),
+          ussdPassedInput[3],
+        );
+      const result = await registerUser(
         phoneNumber.replace("+", ""),
         ussdPassedInput[1],
-        privateKey,
+        encryptedPrivateKey,
+        publicKey,
         accountId,
-        pinHash
+        pinHash,
       );
-      response = `END successfully created your account of id ${id}\nWelcome to HPESA your number one solution to all your payment needs : )`;
+      if (!result) {
+        response = "END Failed to create account please try again later";
+      }
+
+      response =
+        `END successfully created your account of id ${accountId}\nWelcome to HPESA your number one solution to all your payment needs : )`;
       break;
 
     /* Main Menu Option 3 */
@@ -74,9 +84,11 @@ What would you like us to help you with today?
       response = `CON Enter your pin:`;
       break;
     case text.startsWith("2") && ussdPassedInput.length === 2:
-      const user = await getUser(phoneNumber.replace("+", ""));
       if (!user) {
         return res.status(404).send("END Please create an account first");
+      }
+      if (!verifyPinPhone(user.phone, ussdPassedInput[1], pinHash)) {
+        return res.status(403).send("END Invalid pin");
       }
       const balance = await hederaService.getBalance(user.hederaAccountId);
       response = `END Your balance is ${balance.hbars} HBAR`;
@@ -109,7 +121,7 @@ What would you like us to help you with today?
           .send(
             `END Invalid pin: remaining attempts ${
               3 - (sender.failedAttempts + 1)
-            }`
+            }`,
           );
       }
 
@@ -124,14 +136,14 @@ What would you like us to help you with today?
 
       const senderPrivateKey = decryptPrivateKey(
         sender.encryptedPrivateKey,
-        ussdPassedInput[3]
+        ussdPassedInput[3],
       );
-      const { status, txId, hashscanUrl, newBalance } =
-        await hederaService.sendHBAR(
+      const { status, txId, hashscanUrl, newBalance } = await hederaService
+        .sendHBAR(
           senderPrivateKey,
           sender.hederaAccountId,
           receiver.hederaAccountId,
-          Number(ussdPassedInput[2])
+          Number(ussdPassedInput[2]),
         );
 
       const transactionId = await addTransaction(
@@ -139,9 +151,10 @@ What would you like us to help you with today?
         req.body.receiverPhone,
         req.body.amount,
         txId,
-        status.toLowerCase()
+        status.toLowerCase(),
       );
-      response = `END Transaction successful of id: ${txId} new balance: ${newBalance} HBAR`;
+      response =
+        `END Transaction successful of id: ${txId} new balance: ${newBalance} HBAR`;
       break;
     default:
       response = "END Invalid choice please try again";
