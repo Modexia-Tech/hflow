@@ -7,6 +7,7 @@ const { verifyToken, requireRole } = require("@middleware/auth");
 const {
   registerUser,
   getUser,
+  getUsers,
 } = require("@services/database");
 const hederaService = require("@services/hedera");
 
@@ -98,4 +99,12 @@ router.get("/accountInfo", verifyToken, async (req, res) => {
   }
 });
 
+router.get("/all", verifyToken, requireRole("admin"), async (req, res) => {
+  try {
+    const { limit } = req.query;
+    return getUsers(limit);
+  } catch (error) {
+    return res.status(500).send({ error: error.message });
+  }
+});
 module.exports = router;
