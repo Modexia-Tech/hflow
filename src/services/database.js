@@ -256,27 +256,23 @@ const getUserTransactions = async (phone, limit = 10) => {
   }
 };
 
-const registerAdmin = async (fullName, email, password) => {
+const registerAdmin = async (fullName, email, passwordHash) => {
   try {
     const result = await new Promise((resolve, reject) => {
       db.run(
-        `INSERT INTO users 
-         (fullName,email,password)
+        `INSERT INTO admins 
+         (fullName, email, password)
          VALUES (?, ?, ?)`,
-        [
-          fullName,
-          email,
-          password,
-        ],
+        [fullName, email, passwordHash],
         function (err) {
           if (err) {
             if (err.message.includes("UNIQUE constraint failed")) {
-              reject(new Error("Admin already exists"));
+              reject(new Error("Admin with this email already exists"));
             } else {
               reject(err);
             }
           } else {
-            resolve(this); // 'this' contains lastID and changes
+            resolve(this);
           }
         },
       );
