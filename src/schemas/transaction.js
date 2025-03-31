@@ -15,7 +15,6 @@ const newTransactionSchema = joi.object({
 
 const fundWalletSchema = joi.object({
   receiverPhone: joi.string().required(),
-  adminPassword: joi.string().required(),
   amount: joi.number().positive().precision(8).required(),
 });
 module.exports = { newTransactionSchema, fundWalletSchema };
