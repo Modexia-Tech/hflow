@@ -2,7 +2,7 @@ const router = require("express").Router();
 const jwt = require("jsonwebtoken");
 
 const { verifyPinPhone } = require("@utils/encryption");
-const { verifyUserToken } = require("@middleware/auth");
+const { verifyToken, requireRole } = require("@middleware/auth");
 
 const {
   registerUser,
@@ -63,6 +63,7 @@ router.post("/login", async (req, res) => {
       {
         phone: user.phone,
         hederaAccountId: user.hederaAccountId,
+        role: "user",
       },
       process.env.SECRET_KEY,
       { expiresIn: "24h" }, // Token expires in 24 hours
@@ -85,7 +86,7 @@ router.post("/login", async (req, res) => {
   }
 });
 
-router.get("/accountInfo", verifyUserToken, async (req, res) => {
+router.get("/accountInfo", verifyToken, async (req, res) => {
   try {
     const user = await getUser(req.user.phone);
 

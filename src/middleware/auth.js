@@ -1,7 +1,8 @@
 const { getUser } = require("@services/database");
+const path = require("path");
 const jwt = require("jsonwebtoken");
 
-function verifyUserToken(req, res, next) {
+function verifyToken(req, res, next) {
   const token = req.headers.authorization?.split(" ")[1]; // Expecting "Bearer TOKEN"
 
   if (!token) return res.status(401).send("Unauthorized");
@@ -12,5 +13,14 @@ function verifyUserToken(req, res, next) {
     next();
   });
 }
-
-module.exports = { verifyUserToken };
+function requireRole(role) {
+  return (req, res, next) => {
+    if (!req.user || req.user.role !== role) {
+      return res.status(403).sendFile(
+        path.join(__dirname, "public", "403.html"),
+      );
+    }
+    next();
+  };
+}
+module.exports = { verifyToken, requireRole };
