@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register | HPesa - Crypto Wallet for Africa</title>
+    <!-- Flowbite CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
+    <!-- Custom Styles -->
+    <style>
+        :root {
+            --hpesa-primary: #4f46e5;
+            --hpesa-secondary: #8b5cf6;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+        
+        .hpesa-gradient-bg {
+            background: linear-gradient(135deg, var(--hpesa-primary) 0%, var(--hpesa-secondary) 100%);
+        }
+        
+        .hpesa-shadow {
+            box-shadow: 0 10px 25px -5px rgba(79, 70, 229, 0.1);
+        }
+        
+        .progress-bar {
+            height: 4px;
+            background-color: #e5e7eb;
+        }
+        
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--hpesa-primary) 0%, var(--hpesa-secondary) 100%);
+            transition: width 0.3s ease;
+        }
+        
+        .password-strength-0 { width: 20%; background-color: #ef4444; } /* Weak */
+        .password-strength-1 { width: 40%; background-color: #f59e0b; } /* Fair */
+        .password-strength-2 { width: 70%; background-color: #3b82f6; } /* Good */
+        .password-strength-3 { width: 100%; background-color: #10b981; } /* Strong */
+        
+        .tooltip-arrow {
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-width: 5px 5px 0;
+            border-color: #374151 transparent transparent;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-4">
+    <div class="w-full max-w-md">
+        <!-- Registration Progress -->
+        <div class="mb-6">
+            <div class="flex justify-between items-center mb-1">
+                <span class="text-sm font-medium text-gray-700">Step 1 of 3</span>
+                <span class="text-sm font-medium text-indigo-600">Create Account</span>
+            </div>
+            <div class="progress-bar rounded-full">
+                <div class="progress-bar-fill rounded-full password-strength-0" id="progressBar"></div>
+            </div>
+        </div>
+
+        <!-- Registration Card -->
+        <div class="bg-white rounded-xl shadow-lg hpesa-shadow overflow-hidden">
+            <!-- USSD Fallback -->
+            <div class="mobile-ussd-banner hidden bg-blue-50 p-3 border-b border-blue-100">
+                <div class="flex items-center justify-center space-x-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                    </svg>
+                    <span class="text-sm font-medium text-blue-700">
+                        Prefer USSD? Dial <span class="font-mono bg-blue-100 px-2 py-0.5 rounded">*384*2005#</span> to register
+                    </span>
+                </div>
+            </div>
+
+            <!-- Registration Form -->
+            <form id="registerForm" class="p-6 space-y-4">
+                <!-- Phone Number -->
+                <div>
+                    <label for="registerPhone" class="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <span class="text-gray-500">+254</span>
+                        </div>
+                        <input 
+                            type="tel" 
+                            id="registerPhone" 
+                            name="phone" 
+                            placeholder="712345678" 
+                            pattern="[0-9]{9}" 
+                            title="Enter 9-digit Kenyan number without country code"
+                            class="pl-16 block w-full rounded-lg border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 py-3 px-4 border"
+                            required
+                        >
+                    </div>
+                </div>
+
+                <!-- PIN Creation -->
+                <div>
+                    <label for="registerPin" class="block text-sm font-medium text-gray-700 mb-1">Create 6-digit PIN</label>
+                    <div class="relative">
+                        <input 
+                            type="password" 
+                            id="registerPin" 
+                            name="pin" 
+                            placeholder="••••••" 
+                            maxlength="6" 
+                            pattern="[0-9]{6}" 
+                            title="6-digit numeric PIN"
+                            class="block w-full rounded-lg border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 py-3 px-4 border"
+                            required
+                        >
+                        <div class="absolute inset-y-0 right-0 pr-3 flex items-center">
+                            <button type="button" id="togglePinVisibility" class="text-gray-500 hover:text-gray-600">
+                                <svg id="pinVisibleIcon" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                </svg>
+                                <svg id="pinHiddenIcon" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <p class="mt-1 text-xs text-gray-500">Do not share your PIN with anyone</p>
+                </div>
+
+                <!-- PIN Confirmation -->
+                <div>
+                    <label for="confirmPin" class="block text-sm font-medium text-gray-700 mb-1">Confirm PIN</label>
+                    <input 
+                        type="password" 
+                        id="confirmPin" 
+                        name="confirmPin" 
+                        placeholder="••••••" 
+                        maxlength="6" 
+                        pattern="[0-9]{6}" 
+                        class="block w-full rounded-lg border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 py-3 px-4 border"
+                        required
+                    >
+                </div>
+
+                <!-- Terms Agreement -->
+                <div class="flex items-start">
+                    <div class="flex items-center h-5">
+                        <input 
+                            type="checkbox" 
+                            id="termsAgreement" 
+                            name="terms"
+                            class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+                            required
+                        >
+                    </div>
+                    <div class="ml-3">
+                        <label for="termsAgreement" class="text-sm text-gray-700">
+                            I agree to HPesa's <a href="/terms" class="text-indigo-600 hover:text-indigo-500">Terms</a> and <a href="/privacy" class="text-indigo-600 hover:text-indigo-500">Privacy Policy</a>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Hedera Wallet Info -->
+                <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
+                    <div class="flex items-start">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-600 mr-2 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                        </svg>
+                        <p class="text-sm text-gray-600">
+                            By registering, you'll get a <strong>Hedera wallet</strong> with 1 HBAR (≈5 KES) initial balance. Wallet keys are encrypted with your PIN.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <button 
+                    type="submit" 
+                    class="w-full hpesa-gradient-bg text-white font-medium rounded-lg py-3 px-4 hover:opacity-90 transition duration-150 flex justify-center items-center mt-4"
+                    id="registerButton"
+                >
+                    <span id="registerButtonText">Create Wallet</span>
+                    <svg id="registerSpinner" class="hidden h-5 w-5 ml-2 text-white animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                </button>
+            </form>
+
+            <!-- Already have account -->
+            <div class="px-6 pb-6 text-center">
+                <p class="text-sm text-gray-600">
+                    Already have an account? <a href="/login" class="font-medium text-indigo-600 hover:text-indigo-500">Sign in</a>
+                </p>
+            </div>
+        </div>
+
+        <!-- Security Footer -->
+        <div class="mt-6 text-center">
+            <div class="flex items-center justify-center space-x-4">
+                <div class="flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-green-500 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                    </svg>
+                    <span class="text-xs text-gray-500">Non-Custodial Wallet</span>
+                </div>
+                <div class="flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-green-500 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                    </svg>
+                    <span class="text-xs text-gray-500">Military-Grade Encryption</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Flowbite JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
+    <!-- Registration Logic -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const registerForm = document.getElementById('registerForm');
+            const registerButton = document.getElementById('registerButton');
+            const registerButtonText = document.getElementById('registerButtonText');
+            const registerSpinner = document.getElementById('registerSpinner');
+            const togglePinVisibility = document.getElementById('togglePinVisibility');
+            const pinVisibleIcon = document.getElementById('pinVisibleIcon');
+            const pinHiddenIcon = document.getElementById('pinHiddenIcon');
+            const registerPin = document.getElementById('registerPin');
+            const confirmPin = document.getElementById('confirmPin');
+            const progressBar = document.getElementById('progressBar');
+
+            // Toggle PIN visibility
+            togglePinVisibility.addEventListener('click', function() {
+                const isPassword = registerPin.type === 'password';
+                registerPin.type = isPassword ? 'text' : 'password';
+                confirmPin.type = isPassword ? 'text' : 'password';
+                pinVisibleIcon.classList.toggle('hidden', !isPassword);
+                pinHiddenIcon.classList.toggle('hidden', isPassword);
+            });
+
+            // PIN matching validation
+            confirmPin.addEventListener('input', function() {
+                if (registerPin.value && confirmPin.value && registerPin.value !== confirmPin.value) {
+                    confirmPin.setCustomValidity("PINs do not match");
+                } else {
+                    confirmPin.setCustomValidity("");
+                }
+            });
+
+            // Form submission handler
+            registerForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                // Get form values
+                const phone = '+254' + document.getElementById('registerPhone').value;
+                const pin = document.getElementById('registerPin').value;
+                
+                // Validate PIN match
+                if (pin !== document.getElementById('confirmPin').value) {
+                    showErrorToast("PINs do not match");
+                    return;
+                }
+                
+                // UI Loading state
+                registerButton.disabled = true;
+                registerButtonText.textContent = 'Creating Wallet...';
+                registerSpinner.classList.remove('hidden');
+                progressBar.classList.remove('password-strength-0', 'password-strength-1', 'password-strength-2', 'password-strength-3');
+                progressBar.classList.add('hpesa-gradient-bg');
+                
+                try {
+                    // Simulate API call (replace with actual fetch)
+                    const response = await mockRegistrationApi(phone, pin);
+                    
+                    // On success - redirect to success page
+                    window.location.href = '/register/success?account=' + response.accountId;
+                } catch (error) {
+                    // Show error toast
+                    showErrorToast(error.message);
+                    
+                    // Reset UI
+                    registerButton.disabled = false;
+                    registerButtonText.textContent = 'Create Wallet';
+                    registerSpinner.classList.add('hidden');
+                    progressBar.classList.remove('hpesa-gradient-bg');
+                    progressBar.classList.add('password-strength-0');
+                }
+            });
+
+            // Helper functions
+            function showErrorToast(message) {
+                // Implement with Flowbite toast or custom solution
+                alert(`Error: ${message}`);
+            }
+
+            // Mock API function (replace with actual fetch to your backend)
+            async function mockRegistrationApi(phone, pin) {
+                return new Promise((resolve, reject) => {
+                    setTimeout(() => {
+                        // Simulate 90% success rate
+                        if (Math.random() > 0.1) {
+                            // Simulate Hedera wallet creation response
+                            resolve({ 
+                                status: 'success',
+                                accountId: '0.0.' + Math.floor(1000000 + Math.random() * 9000000),
+                                encryptedKey: 'encrypted:' + btoa('mock-key-data'),
+                                initialBalance: 1
+                            });
+                        } else {
+                            // Simulate potential errors
+                            const errors = [
+                                'Phone number already registered',
+                                'Network error: Could not create Hedera wallet',
+                                'Temporary service unavailable'
+                            ];
+                            reject(new Error(errors[Math.floor(Math.random() * errors.length)]));
+                        }
+                    }, 2000);
+                });
+            }
+        });
+    </script>
+</body>
+</html>
