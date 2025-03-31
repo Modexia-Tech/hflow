@@ -47,10 +47,34 @@ function hashPassword(email, password) {
 
   return `${salt}$${hash}`;
 }
+
+function verifyPassword(submittedEmail, submittedPassword, storedHash) {
+  try {
+    // Split the stored hash into salt and original hash
+    const [salt, originalHash] = storedHash.split("$");
+
+    // Recreate the hash with the submitted credentials
+    const newHash = CryptoJS.PBKDF2(
+      `${submittedPassword}$${submittedEmail}$${SECRET_SALT}`,
+      salt,
+      {
+        keySize: 512 / 32,
+        iterations: 10000,
+      },
+    ).toString();
+
+    // Compare the new hash with the stored hash
+    return newHash === originalHash;
+  } catch (error) {
+    console.error("Password verification error:", error);
+    return false;
+  }
+}
 module.exports = {
   encryptPrivateKey,
   decryptPrivateKey,
   hashPinPhone,
   verifyPinPhone,
   hashPassword,
+  verifyPassword,
 };

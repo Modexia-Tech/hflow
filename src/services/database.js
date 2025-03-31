@@ -283,6 +283,23 @@ const registerAdmin = async (fullName, email, passwordHash) => {
   }
 };
 
+const getAdmin = async (email) => {
+  try {
+    const user = await new Promise((resolve, reject) => {
+      db.get(
+        `SELECT * FROM admins WHERE email = ?`,
+        [email],
+        (err, row) => {
+          if (err) reject(err);
+          resolve(row || null);
+        },
+      );
+    });
+    return user;
+  } catch (err) {
+    throw err;
+  }
+};
 module.exports = {
   db,
   initDB,
@@ -292,5 +309,6 @@ module.exports = {
   registerUser,
   updateUser,
   getUsers,
+  getAdmin,
   registerAdmin,
 };
