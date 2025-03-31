@@ -31,9 +31,17 @@ const initDB = () => {
         phone TEXT PRIMARY KEY,
         fullName TEXT NOT NULL,
         encryptedPrivateKey TEXT NOT NULL,
+        publicKey TEXT NOT NULL,
         hederaAccountId TEXT NOT NULL,
         pinHash TEXT NOT NULL,
         failedAttempts INTEGER DEFAULT 0,
+        createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      );
+      
+      CREATE TABLE IF NOT EXISTS admins( 
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        fullName TEXT NOT NULL,
+        password TEXT NOT NULL,
         createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       );
       
@@ -72,21 +80,39 @@ const registerUser = async (
   phone,
   fullName,
   encryptedPrivateKey,
+  publicKey,
   hederaAccountId,
   pinHash,
 ) => {
   try {
-    const result = db.run(
-      `INSERT INTO users 
-       (phone, fullName, encryptedPrivateKey, hederaAccountId, pinHash) 
-       VALUES (?, ?, ?, ?, ?)`,
-      [phone, fullName, encryptedPrivateKey, hederaAccountId, pinHash],
-    );
-    return phone;
+    const result = await new Promise((resolve, reject) => {
+      db.run(
+        `INSERT INTO users 
+         (phone, fullName, encryptedPrivateKey,publicKey, hederaAccountId, pinHash) 
+         VALUES (?, ?, ?,?, ?, ?)`,
+        [
+          phone,
+          fullName,
+          encryptedPrivateKey,
+          publicKey,
+          hederaAccountId,
+          pinHash,
+        ],
+        function (err) {
+          if (err) {
+            if (err.message.includes("UNIQUE constraint failed")) {
+              reject(new Error("User already exists"));
+            } else {
+              reject(err);
+            }
+          } else {
+            resolve(this); // 'this' contains lastID and changes
+          }
+        },
+      );
+    });
+    return result;
   } catch (err) {
-    if (err.message.includes("UNIQUE constraint failed")) {
-      throw new Error("User already exists");
-    }
     throw err;
   }
 };
@@ -98,11 +124,17 @@ const registerUser = async (
  */
 const getUser = async (phone) => {
   try {
-    const user = db.get(
-      `SELECT * FROM users WHERE phone = ?`,
-      [phone],
-    );
-    return user || null;
+    const user = await new Promise((resolve, reject) => {
+      db.get(
+        `SELECT * FROM users WHERE phone = ?`,
+        [phone],
+        (err, row) => {
+          if (err) reject(err);
+          resolve(row || null);
+        },
+      );
+    });
+    return user;
   } catch (err) {
     throw err;
   }
@@ -125,6 +157,7 @@ const updateUser = async (phone, updatedFields) => {
   const validFields = [
     "fullName",
     "encryptedPrivateKey",
+    "publicKey",
     "hederaAccountId",
     "pinHash",
     "failedAttempts",
@@ -138,10 +171,10 @@ const updateUser = async (phone, updatedFields) => {
   const setClause = fields.map((field) => `${field} = ?`).join(", ");
 
   try {
-    const result = db.run(
-      `UPDATE users SET ${setClause} WHERE phone = ?`,
-      [...values, phone],
-    );
+    const result = db.run(`UPDATE users SET ${setClause} WHERE phone = ?`, [
+      ...values,
+      phone,
+    ]);
     return result.changes;
   } catch (err) {
     throw err;

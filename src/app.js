@@ -10,8 +10,11 @@ const compression = require("compression");
 dotenv.config();
 
 const { initDB } = require("@services/database");
+
 const ussdRouter = require("@routes/ussd");
-const apiRouter = require("@routes/api");
+const userRouter = require("@routes/user");
+const transactionRouter = require("@routes/transaction");
+const adminRouter = require("@routes/admin");
 // const webRouter = require("@routes/web");
 
 const app = express();
@@ -31,7 +34,9 @@ app.use(express.static(path.join(__dirname, "public")));
 
 // routes
 app.use("/ussd", ussdRouter);
-app.use("/api", apiRouter);
+app.use("/user", userRouter);
+app.use("/transaction", transactionRouter);
+app.use("/admin", adminRouter);
 // app.use("/", webRouter);
 
 app.use((req, res) => {

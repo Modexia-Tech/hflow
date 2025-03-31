@@ -1,0 +1,84 @@
+const router = require("express").Router();
+const {
+  registerUser,
+  getUser,
+  addTransaction,
+  updateUser,
+} = require("@services/database");
+const hederaService = require("@services/hedera");
+
+const {
+  newTransactionSchema,
+} = require("@schemas/transaction");
+const {
+  decryptPrivateKey,
+  verifyPinPhone,
+} = require("@utils/encryption");
+
+router.post("/new", async (req, res) => {
+  try {
+    const { error } = newTransactionSchema.validate(req.body);
+    if (error) {
+      return res.status(400).send({ error: error.details[0].message });
+    }
+    const sender = await getUser(req.body.senderPhone);
+    if (!sender) {
+      return res.status(404).send({ error: "Sender not found" });
+    }
+    if (sender.failedAttempts >= 3) {
+      return res.status(403).send({ error: "Sender account locked" });
+    }
+    if (
+      !verifyPinPhone(req.body.senderPin, req.body.senderPhone, sender.pinHash)
+    ) {
+      await updateUser(req.body.senderPhone, {
+        failedAttempts: sender.failedAttempts + 1,
+      });
+      return res.status(403).send({
+        error: `Invalid pin: remaining attempts ${
+          3 - (sender.failedAttempts + 1)
+        }`,
+      });
+    }
+
+    const receiver = await getUser(req.body.receiverPhone);
+    if (!receiver) {
+      return res.status(404).send({ error: "Receiver not found" });
+    }
+
+    if (sender.phone === receiver.phone) {
+      return res.status(400).send({ error: "Cannot send to self" });
+    }
+
+    const senderPrivateKey = decryptPrivateKey(
+      sender.encryptedPrivateKey,
+      req.body.senderPin,
+    );
+    const { status, txId, hashscanUrl, newBalance } = await hederaService
+      .sendHBAR(
+        senderPrivateKey,
+        sender.hederaAccountId,
+        receiver.hederaAccountId,
+        req.body.amount,
+      );
+    const transactionId = await addTransaction(
+      req.body.senderPhone,
+      req.body.receiverPhone,
+      req.body.amount,
+      txId,
+      status.toLowerCase(),
+    );
+    if (!transactionId) {
+      return res.status(500).send({ error: "Failed to log transaction" });
+    }
+    return res.status(200).send({
+      message: `Transaction successful of id: ${txId}`,
+      newBalance,
+      hashscanUrl,
+    });
+  } catch (err) {
+    res.status(400).send({ error: err.message });
+  }
+});
+
+module.exports = router;
