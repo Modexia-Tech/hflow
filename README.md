@@ -56,7 +56,7 @@ curl -X POST http://localhost:5000/ussd -d "phone=+254712345678&text=1*10*0.0.45
 
 ```mermaid
 flowchart TB
-    User -->|USSD *384*2005#| Backend
+    User -->|USSD \*384\*2005#| Backend
     Backend -->|Hedera SDK| Hedera
     Backend --> DB[(SQLite)]
     Web --> Backend
