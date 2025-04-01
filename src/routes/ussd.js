@@ -80,7 +80,6 @@ What would you like us to help you with today?
         `END successfully created your account of id ${accountId}\nWelcome to HFLOW your number one solution to all your payment needs : )`;
       break;
 
-    /* Main Menu Option 3 */
     case text === "2":
       response = `CON Enter your pin:`;
       break;
@@ -88,14 +87,13 @@ What would you like us to help you with today?
       if (!user) {
         return res.status(404).send("END Please create an account first");
       }
-      if (!verifyPinPhone(user.phone, ussdPassedInput[1], pinHash)) {
+      if (!verifyPinPhone(user.phone, ussdPassedInput[1], user.pinHash)) {
         return res.status(403).send("END Invalid pin");
       }
       const balance = await hederaService.getBalance(user.hederaAccountId);
       response = `END Your balance is ${balance.hbars} HBAR`;
       break;
 
-    /* Main Menu Option 3 */
     case text === "3":
       response = `CON Enter receivers phone number:`;
       break;
