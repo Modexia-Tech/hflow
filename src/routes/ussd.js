@@ -38,6 +38,7 @@ What would you like us to help you with today?
     case text === "1":
       if (user) {
         response = "END You already have an account";
+        return res.send(response);
       }
       response = `CON Please Enter your Full Name:`;
       break;
