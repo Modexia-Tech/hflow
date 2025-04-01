@@ -1,580 +1,1035 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
+<html lang="en" class="dark">
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard | Hflow - USSD Crypto Wallet</title>
+    <title>My Hflow Wallet</title>
     <!-- Flowbite CSS -->
-    <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css"
-      rel="stylesheet"
-    />
-    <!-- Font Awesome -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-    >
-    <!-- Chart.js -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Custom colors matching your scheme -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        oxford: '#050D2A',
+                        electric: '#00A3FF',
+                        teal: '#00F5D4',
+                        cyan: '#0FF0FC',
+                        navy: '#0A1435',
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-      .sidebar {
-        transition: all 0.3s ease;
-      }
-      .dashboard-card {
-        transition: all 0.3s ease;
-      }
-      .dashboard-card:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-      }
-      .active-nav-item {
-        background-color: #eef2ff;
-        color: #4f46e5;
-        border-left: 4px solid #4f46e5;
-      }
-      .active-nav-item i {
-        color: #4f46e5;
-      }
-      .hbar-price-change.positive {
-        color: #10b981;
-      }
-      .hbar-price-change.negative {
-        color: #ef4444;
-      }
+        .gradient-bg {
+            background: linear-gradient(135deg, rgba(0,163,255,0.1) 0%, rgba(0,245,212,0.1) 100%);
+        }
+        .glow-effect {
+            box-shadow: 0 0 10px rgba(15, 240, 252, 0.3);
+        }
+        .menu-item.active {
+            background: linear-gradient(90deg, rgba(0,163,255,0.2) 0%, rgba(0,245,212,0.2) 100%);
+            border-left: 4px solid #00A3FF;
+        }
     </style>
-  </head>
-  <body class="bg-gray-50">
+</head>
+<body class="bg-gray-50 dark:bg-oxford min-h-screen">
     <!-- Sidebar -->
-    <div
-      class="fixed top-0 left-0 h-screen w-64 bg-white shadow-lg sidebar hidden md:block"
-    >
-      <div class="p-4 flex items-center space-x-3 border-b">
-        <div
-          class="w-10 h-10 bg-indigo-600 rounded-full flex items-center justify-center text-white font-bold"
-        >
-          HP
+    <aside class="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0 bg-navy border-r border-gray-200 dark:border-gray-700">
+        <div class="h-full px-3 py-4 overflow-y-auto">
+            <div class="flex items-center ps-2.5 mb-8 mt-2">
+                <img src="https://via.placeholder.com/40" class="h-8 me-3 rounded-full" alt="Hflow Logo" />
+                <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">Hflow Wallet</span>
+            </div>
+            <div class="px-4 py-3 mb-4 rounded-lg bg-gray-100 dark:bg-gray-700">
+                <p class="text-sm text-gray-500 dark:text-gray-400">Logged in as</p>
+                <p class="text-sm font-medium text-gray-900 dark:text-white truncate" id="user-phone">+254712345678</p>
+            </div>
+            <ul class="space-y-2 font-medium">
+                <li>
+                    <a href="#" id="dashboard-link" class="menu-item active flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                        <svg class="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 21">
+                            <path d="M16.975 11H10V4.025a1 1 0 0 0-1.066-.998 8.5 8.5 0 1 0 9.039 9.039.999.999 0 0 0-1-1.066h.002Z"/>
+                            <path d="M12.5 0c-.157 0-.311.01-.565.027A1 1 0 0 0 11 1.02V10h8.975a1 1 0 0 0 1-.935c.013-.188.028-.374.028-.565A8.51 8.51 0 0 0 12.5 0Z"/>
+                        </svg>
+                        <span class="ms-3">Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" id="send-link" class="menu-item flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                        <svg class="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 20">
+                            <path d="M17 9a1 1 0 0 0-1-1h-5.14a2 2 0 0 1-1.42.59l-4.4-4.41A2 2 0 0 0 2 6.22V17a2 2 0 0 0 2 2h10a2 2 0 0 0 1.59-.74l4.4-4.41A2 2 0 0 1 17 14.14V9Z"/>
+                            <path d="M14 2a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v2h12V2Z"/>
+                        </svg>
+                        <span class="flex-1 ms-3 whitespace-nowrap">Send HBAR</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" id="transactions-link" class="menu-item flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                        <svg class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M5 5V.13a2.96 2.96 0 0 0-1.293.749L.879 3.707A2.96 2.96 0 0 0 .13 5H5Z"/>
+                            <path d="M6.737 11.061a2.961 2.961 0 0 1 .81-1.515l6.117-6.116A4.839 4.839 0 0 1 16 2.141V2a1.97 1.97 0 0 0-1.933-2H7v5a2 2 0 0 1-2 2H0v11a1.969 1.969 0 0 0 1.933 2h12.134A1.97 1.97 0 0 0 16 18v-3.093l-1.546 1.546c-.413.413-.94.695-1.513.81l-3.4.679a2.947 2.947 0 0 1-1.85-.227 2.96 2.96 0 0 1-1.635-3.257l.681-3.397Z"/>
+                            <path d="M8.961 16a.93.93 0 0 0 .189-.019l3.4-.679a.961.961 0 0 0 .49-.263l6.118-6.117a2.884 2.884 0 0 0-4.079-4.078l-6.117 6.117a.96.96 0 0 0-.263.491l-.679 3.4A.961.961 0 0 0 8.961 16Zm7.477-9.8a.958.958 0 0 1 .68-.281.961.961 0 0 1 .682 1.644l-.315.315-1.36-1.36.313-.318Zm-5.911 5.911 4.236-4.236 1.359 1.359-4.236 4.237-1.7.339.341-1.699Z"/>
+                        </svg>
+                        <span class="flex-1 ms-3 whitespace-nowrap">Transactions</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" id="receive-link" class="menu-item flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                        <svg class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 20">
+                            <path d="M17 9a1 1 0 0 0-1-1h-5.14a2 2 0 0 1-1.42.59l-4.4-4.41A2 2 0 0 0 2 6.22V17a2 2 0 0 0 2 2h10a2 2 0 0 0 1.59-.74l4.4-4.41A2 2 0 0 1 17 14.14V9Z"/>
+                            <path d="M14 2a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v2h12V2Z"/>
+                        </svg>
+                        <span class="flex-1 ms-3 whitespace-nowrap">Receive HBAR</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" id="profile-link" class="menu-item flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                        <svg class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 18">
+                            <path d="M14 2a3.963 3.963 0 0 0-1.4.267 6.439 6.439 0 0 1-1.331 6.638A4 4 0 1 0 14 2Zm1 9h-1.264A6.957 6.957 0 0 1 15 15v2a2.97 2.97 0 0 1-.184 1H19a1 1 0 0 0 1-1v-1a5.006 5.006 0 0 0-5-5ZM6.5 9a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9ZM8 10H5a5.006 5.006 0 0 0-5 5v2a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-2a5.006 5.006 0 0 0-5-5Z"/>
+                        </svg>
+                        <span class="flex-1 ms-3 whitespace-nowrap">Profile</span>
+                    </a>
+                </li>
+            </ul>
         </div>
-        <span class="font-bold text-lg">Hflow</span>
-      </div>
-      <nav class="p-4 space-y-1">
-        <a
-          href="#"
-          class="nav-item flex items-center space-x-3 p-3 rounded-lg active-nav-item"
-        >
-          <i class="fas fa-home w-5 text-gray-500"></i>
-          <span>Dashboard</span>
-        </a>
-        <a
-          href="#"
-          class="nav-item flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-100"
-        >
-          <i class="fas fa-exchange-alt w-5 text-gray-500"></i>
-          <span>Transactions</span>
-        </a>
-        <a
-          href="#"
-          class="nav-item flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-100"
-        >
-          <i class="fas fa-wallet w-5 text-gray-500"></i>
-          <span>Wallet</span>
-        </a>
-        <a
-          href="#"
-          class="nav-item flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-100"
-        >
-          <i class="fas fa-chart-line w-5 text-gray-500"></i>
-          <span>Market</span>
-        </a>
-        <a
-          href="#"
-          class="nav-item flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-100"
-        >
-          <i class="fas fa-user w-5 text-gray-500"></i>
-          <span>Profile</span>
-        </a>
-        <a
-          href="#"
-          class="nav-item flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-100"
-        >
-          <i class="fas fa-cog w-5 text-gray-500"></i>
-          <span>Settings</span>
-        </a>
-      </nav>
-      <div class="absolute bottom-0 left-0 right-0 p-4 border-t">
-        <button
-          class="w-full flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-100 text-gray-700"
-        >
-          <i class="fas fa-sign-out-alt w-5"></i>
-          <span>Log Out</span>
-        </button>
-      </div>
-    </div>
-
-    <!-- Mobile Header -->
-    <header
-      class="md:hidden bg-white shadow-sm fixed top-0 left-0 right-0 z-10"
-    >
-      <div class="flex items-center justify-between p-4">
-        <button id="mobileMenuBtn">
-          <i class="fas fa-bars text-gray-600 text-xl"></i>
-        </button>
-        <div class="flex items-center space-x-2">
-          <div
-            class="w-8 h-8 bg-indigo-600 rounded-full flex items-center justify-center text-white text-xs font-bold"
-          >
-            HP
-          </div>
-          <span class="font-bold">Hflow</span>
-        </div>
-        <div class="w-8"></div>
-        <!-- Spacer -->
-      </div>
-    </header>
+    </aside>
 
     <!-- Main Content -->
-    <main class="md:ml-64 pt-16 md:pt-0">
-      <div class="p-6">
-        <!-- Welcome Banner -->
-        <div class="bg-indigo-600 text-white rounded-xl p-6 mb-6">
-          <div
-            class="flex flex-col md:flex-row md:items-center md:justify-between"
-          >
-            <div>
-              <h1 class="text-2xl font-bold mb-2">Welcome back, John!</h1>
-              <p class="text-indigo-100">
-                Track your HBAR transactions and manage your crypto wallet
-              </p>
+    <div class="p-4 sm:ml-64">
+        <!-- Top Nav -->
+        <div class="flex justify-between items-center mb-6">
+            <h1 class="text-2xl font-bold dark:text-white" id="page-title">Dashboard</h1>
+            <div class="flex items-center space-x-4">
+                <button id="theme-toggle" type="button" class="text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5">
+                    <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+                    <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+                </button>
+                <button id="logout-btn" type="button" class="text-white bg-gradient-to-r from-electric to-teal hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
+                    Logout
+                </button>
             </div>
-            <div class="mt-4 md:mt-0">
-              <button
-                class="bg-white text-indigo-600 px-4 py-2 rounded-lg font-medium hover:bg-indigo-50 transition"
-              >
-                <i class="fas fa-plus mr-2"></i> Buy HBAR
-              </button>
-            </div>
-          </div>
         </div>
 
         <!-- Stats Cards -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
-          <!-- HBAR Balance -->
-          <div class="dashboard-card bg-white rounded-xl p-6 shadow-sm">
-            <div class="flex items-center justify-between mb-4">
-              <h3 class="text-gray-500 font-medium">HBAR Balance</h3>
-              <i class="fas fa-wallet text-indigo-500"></i>
-            </div>
-            <div class="flex items-end space-x-2">
-              <span class="text-2xl font-bold">5,342.50</span>
-              <span class="text-gray-500">HBAR</span>
-            </div>
-            <div class="mt-2 text-sm text-gray-500">
-              ≈ $1,234.56
-            </div>
-          </div>
-
-          <!-- Local Currency Balance -->
-          <div class="dashboard-card bg-white rounded-xl p-6 shadow-sm">
-            <div class="flex items-center justify-between mb-4">
-              <h3 class="text-gray-500 font-medium">KES Balance</h3>
-              <i class="fas fa-money-bill-wave text-green-500"></i>
-            </div>
-            <div class="flex items-end space-x-2">
-              <span class="text-2xl font-bold">124,560.00</span>
-              <span class="text-gray-500">KES</span>
-            </div>
-            <div class="mt-2 text-sm text-gray-500">
-              ≈ $1,234.56
-            </div>
-          </div>
-
-          <!-- HBAR Price -->
-          <div class="dashboard-card bg-white rounded-xl p-6 shadow-sm">
-            <div class="flex items-center justify-between mb-4">
-              <h3 class="text-gray-500 font-medium">HBAR Price</h3>
-              <i class="fas fa-chart-line text-blue-500"></i>
-            </div>
-            <div class="flex items-end space-x-2">
-              <span class="text-2xl font-bold">$0.2315</span>
-              <span class="text-sm hbar-price-change positive">
-                <i class="fas fa-caret-up mr-1"></i>2.34%
-              </span>
-            </div>
-            <div class="mt-2 text-sm text-gray-500">
-              24h change
-            </div>
-          </div>
-
-          <!-- Recent Transactions -->
-          <div class="dashboard-card bg-white rounded-xl p-6 shadow-sm">
-            <div class="flex items-center justify-between mb-4">
-              <h3 class="text-gray-500 font-medium">Recent Activity</h3>
-              <i class="fas fa-history text-purple-500"></i>
-            </div>
-            <div class="space-y-3">
-              <div class="flex items-center justify-between">
-                <div class="flex items-center space-x-2">
-                  <div
-                    class="w-8 h-8 bg-indigo-100 rounded-full flex items-center justify-center"
-                  >
-                    <i class="fas fa-arrow-down text-indigo-600 text-sm"></i>
-                  </div>
-                  <span class="text-sm font-medium">Received HBAR</span>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6" id="stats-cards">
+            <div class="p-6 gradient-bg rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-gray-500 dark:text-gray-400">Available Balance</p>
+                        <h3 class="text-2xl font-bold dark:text-white" id="user-balance">0 HBAR</h3>
+                    </div>
+                    <div class="p-3 rounded-full bg-electric bg-opacity-20 text-electric">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    </div>
                 </div>
-                <span class="text-sm font-medium text-green-500"
-                >+500 HBAR</span>
-              </div>
-              <div class="flex items-center justify-between">
-                <div class="flex items-center space-x-2">
-                  <div
-                    class="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center"
-                  >
-                    <i class="fas fa-arrow-up text-red-600 text-sm"></i>
-                  </div>
-                  <span class="text-sm font-medium">Sent HBAR</span>
+                <div class="mt-4">
+                    <span class="text-sm font-medium text-gray-500 dark:text-gray-400">≈ $0.00</span>
                 </div>
-                <span class="text-sm font-medium text-red-500">-200 HBAR</span>
-              </div>
             </div>
-          </div>
+
+            <div class="p-6 gradient-bg rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-gray-500 dark:text-gray-400">Total Received</p>
+                        <h3 class="text-2xl font-bold dark:text-white" id="total-received">0 HBAR</h3>
+                    </div>
+                    <div class="p-3 rounded-full bg-teal bg-opacity-20 text-teal">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    </div>
+                </div>
+                <div class="mt-4">
+                    <span class="text-sm font-medium text-gray-500 dark:text-gray-400">All time</span>
+                </div>
+            </div>
+
+            <div class="p-6 gradient-bg rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-gray-500 dark:text-gray-400">Total Sent</p>
+                        <h3 class="text-2xl font-bold dark:text-white" id="total-sent">0 HBAR</h3>
+                    </div>
+                    <div class="p-3 rounded-full bg-cyan bg-opacity-20 text-cyan">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg>
+                    </div>
+                </div>
+                <div class="mt-4">
+                    <span class="text-sm font-medium text-gray-500 dark:text-gray-400">All time</span>
+                </div>
+            </div>
         </div>
 
-        <!-- Charts and Exchange Rates -->
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
-          <!-- HBAR Price Chart -->
-          <div
-            class="lg:col-span-2 dashboard-card bg-white rounded-xl p-6 shadow-sm"
-          >
-            <div class="flex items-center justify-between mb-4">
-              <h3 class="text-lg font-bold">HBAR Price (7 Days)</h3>
-              <div class="flex space-x-2">
-                <button
-                  class="px-3 py-1 text-xs bg-indigo-100 text-indigo-700 rounded-full"
-                >
-                  1W
-                </button>
-                <button
-                  class="px-3 py-1 text-xs bg-gray-100 text-gray-700 rounded-full"
-                >
-                  1M
-                </button>
-                <button
-                  class="px-3 py-1 text-xs bg-gray-100 text-gray-700 rounded-full"
-                >
-                  1Y
-                </button>
-              </div>
-            </div>
-            <div class="h-64">
-              <canvas id="priceChart"></canvas>
-            </div>
-          </div>
+        <!-- Main Content Area -->
+        <div id="content-area">
+            <!-- Dashboard Content -->
+            <div id="dashboard-content">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+                    <!-- Quick Actions -->
+                    <div class="p-6 bg-white rounded-lg shadow dark:bg-gray-800">
+                        <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Quick Actions</h2>
+                        <div class="grid grid-cols-2 gap-4">
+                            <a href="#" id="quick-send" class="p-4 text-center rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                                <div class="mx-auto w-10 h-10 mb-2 rounded-full bg-electric bg-opacity-20 text-electric flex items-center justify-center">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg>
+                                </div>
+                                <span class="text-sm font-medium text-gray-900 dark:text-white">Send</span>
+                            </a>
+                            <a href="#" id="quick-receive" class="p-4 text-center rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                                <div class="mx-auto w-10 h-10 mb-2 rounded-full bg-teal bg-opacity-20 text-teal flex items-center justify-center">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6"></path></svg>
+                                </div>
+                                <span class="text-sm font-medium text-gray-900 dark:text-white">Receive</span>
+                            </a>
+                            <a href="#" id="quick-buy" class="p-4 text-center rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                                <div class="mx-auto w-10 h-10 mb-2 rounded-full bg-cyan bg-opacity-20 text-cyan flex items-center justify-center">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                                </div>
+                                <span class="text-sm font-medium text-gray-900 dark:text-white">Buy HBAR</span>
+                            </a>
+                            <a href="#" id="quick-history" class="p-4 text-center rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                                <div class="mx-auto w-10 h-10 mb-2 rounded-full bg-purple-500 bg-opacity-20 text-purple-500 flex items-center justify-center">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
+                                </div>
+                                <span class="text-sm font-medium text-gray-900 dark:text-white">History</span>
+                            </a>
+                        </div>
+                    </div>
 
-          <!-- Exchange Rates -->
-          <div class="dashboard-card bg-white rounded-xl p-6 shadow-sm">
-            <h3 class="text-lg font-bold mb-4">Exchange Rates</h3>
-            <div class="space-y-4">
-              <div class="flex items-center justify-between">
-                <div class="flex items-center space-x-2">
-                  <img
-                    src="https://cryptologos.cc/logos/hedera-hbar-logo.png"
-                    alt="HBAR"
-                    class="w-6 h-6"
-                  >
-                  <span class="font-medium">HBAR/USD</span>
+                    <!-- Recent Transactions -->
+                    <div class="p-6 bg-white rounded-lg shadow dark:bg-gray-800">
+                        <div class="flex justify-between items-center mb-4">
+                            <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Recent Transactions</h2>
+                            <a href="#" class="text-sm font-medium text-electric hover:underline">View all</a>
+                        </div>
+                        <div class="space-y-4">
+                            <div id="recent-tx-list">
+                                <!-- Transactions will be loaded here -->
+                                <div class="animate-pulse flex space-x-4">
+                                    <div class="flex-1 space-y-4 py-1">
+                                        <div class="h-4 bg-gray-200 dark:bg-gray-700 rounded w-3/4"></div>
+                                        <div class="space-y-2">
+                                            <div class="h-4 bg-gray-200 dark:bg-gray-700 rounded"></div>
+                                            <div class="h-4 bg-gray-200 dark:bg-gray-700 rounded w-5/6"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <span class="font-medium">$0.2315</span>
-              </div>
-              <div class="flex items-center justify-between">
-                <div class="flex items-center space-x-2">
-                  <img
-                    src="https://cryptologos.cc/logos/hedera-hbar-logo.png"
-                    alt="HBAR"
-                    class="w-6 h-6"
-                  >
-                  <span class="font-medium">HBAR/KES</span>
+
+                <!-- USSD Quick Access -->
+                <div class="p-6 bg-white rounded-lg shadow dark:bg-gray-800 mb-6">
+                    <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">USSD Quick Access</h2>
+                    <p class="text-gray-500 dark:text-gray-400 mb-4">Access your wallet anytime by dialing:</p>
+                    <div class="p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center">
+                                <svg class="w-6 h-6 text-gray-500 dark:text-gray-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
+                                <span class="font-mono text-lg font-bold text-gray-900 dark:text-white">*384*2005#</span>
+                            </div>
+                            <button id="copy-ussd" class="text-electric hover:text-teal">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path></svg>
+                            </button>
+                        </div>
+                    </div>
                 </div>
-                <span class="font-medium">KES 23.45</span>
-              </div>
-              <div class="flex items-center justify-between">
-                <div class="flex items-center space-x-2">
-                  <img
-                    src="https://cryptologos.cc/logos/bitcoin-btc-logo.png"
-                    alt="BTC"
-                    class="w-6 h-6"
-                  >
-                  <span class="font-medium">BTC/HBAR</span>
-                </div>
-                <span class="font-medium">21,543.21</span>
-              </div>
-              <div class="flex items-center justify-between">
-                <div class="flex items-center space-x-2">
-                  <img
-                    src="https://cryptologos.cc/logos/ethereum-eth-logo.png"
-                    alt="ETH"
-                    class="w-6 h-6"
-                  >
-                  <span class="font-medium">ETH/HBAR</span>
-                </div>
-                <span class="font-medium">1,234.56</span>
-              </div>
-              <div class="pt-4 border-t">
-                <p class="text-sm text-gray-500">
-                  Rates update every 60 seconds
-                </p>
-              </div>
             </div>
-          </div>
+
+            <!-- Send Content (Hidden by default) -->
+            <div id="send-content" class="hidden">
+                <div class="p-6 bg-white rounded-lg shadow dark:bg-gray-800 mb-6">
+                    <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Send HBAR</h2>
+                    <form id="send-form">
+                        <div class="mb-4">
+                            <label for="receiver-phone" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Recipient Phone Number</label>
+                            <input type="text" id="receiver-phone" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-electric focus:border-electric block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-cyan-500 dark:focus:border-cyan-500" placeholder="254712345678" required>
+                        </div>
+                        <div class="mb-4">
+                            <label for="send-amount" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Amount (HBAR)</label>
+                            <input type="number" step="0.01" min="0.01" id="send-amount" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-electric focus:border-electric block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-cyan-500 dark:focus:border-cyan-500" placeholder="10.00" required>
+                        </div>
+                        <div class="mb-4">
+                            <label for="send-note" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Note (Optional)</label>
+                            <input type="text" id="send-note" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-electric focus:border-electric block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-cyan-500 dark:focus:border-cyan-500" placeholder="Dinner money">
+                        </div>
+                        <div class="mb-4">
+                            <label for="send-pin" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your PIN</label>
+                            <input type="password" id="send-pin" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-electric focus:border-electric block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-cyan-500 dark:focus:border-cyan-500" placeholder="****" maxlength="4" required>
+                        </div>
+                        <button type="submit" class="text-white bg-gradient-to-r from-electric to-teal hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center w-full">Send HBAR</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Transactions Content (Hidden by default) -->
+            <div id="transactions-content" class="hidden">
+                <div class="p-6 bg-white rounded-lg shadow dark:bg-gray-800 mb-6">
+                    <div class="flex justify-between items-center mb-4">
+                        <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Transaction History</h2>
+                        <div class="flex space-x-2">
+                            <div class="relative">
+                                <input type="text" id="tx-search" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-electric focus:border-electric block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-cyan-500 dark:focus:border-cyan-500" placeholder="Search transactions...">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                                <tr>
+                                    <th scope="col" class="px-4 py-3">ID</th>
+                                    <th scope="col" class="px-4 py-3">Type</th>
+                                    <th scope="col" class="px-4 py-3">Amount</th>
+                                    <th scope="col" class="px-4 py-3">Counterparty</th>
+                                    <th scope="col" class="px-4 py-3">Status</th>
+                                    <th scope="col" class="px-4 py-3">Date</th>
+                                    <th scope="col" class="px-4 py-3">View</th>
+                                </tr>
+                            </thead>
+                            <tbody id="all-tx-table">
+                                <!-- All transactions will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="flex items-center justify-between pt-4" aria-label="Table navigation">
+                        <span class="text-sm font-normal text-gray-500 dark:text-gray-400">Showing <span class="font-semibold text-gray-900 dark:text-white">1-10</span> of <span class="font-semibold text-gray-900 dark:text-white" id="total-tx-count">0</span></span>
+                        <ul class="inline-flex -space-x-px text-sm h-8">
+                            <li>
+                                <a href="#" class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Previous</a>
+                            </li>
+                            <li>
+                                <a href="#" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">1</a>
+                            </li>
+                            <li>
+                                <a href="#" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">2</a>
+                            </li>
+                            <li>
+                                <a href="#" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Next</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Receive Content (Hidden by default) -->
+            <div id="receive-content" class="hidden">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+                    <div class="p-6 bg-white rounded-lg shadow dark:bg-gray-800">
+                        <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Receive HBAR</h2>
+                        <div class="mb-6">
+                            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your Hedera Account ID</label>
+                            <div class="flex items-center">
+                                <input type="text" id="hedera-id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-l-lg focus:ring-electric focus:border-electric block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-cyan-500 dark:focus:border-cyan-500" readonly>
+                                <button id="copy-hedera-id" class="text-white bg-gradient-to-r from-electric to-teal hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-r-lg text-sm px-3 py-2.5 text-center">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path></svg>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="mb-6">
+                            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">QR Code</label>
+                            <div class="p-4 bg-white rounded border border-gray-200 dark:bg-gray-700 dark:border-gray-600 flex justify-center">
+                                <div id="qr-code" class="w-48 h-48 flex items-center justify-center">
+                                    <!-- QR code will be generated here -->
+                                    <div class="text-gray-500 dark:text-gray-400 text-center">
+                                        <svg class="w-12 h-12 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"></path></svg>
+                                        <p class="text-xs">QR Code will appear here</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Share Link</label>
+                            <div class="flex">
+                                <input type="text" id="share-link" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-l-lg focus:ring-electric focus:border-electric block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-cyan-500 dark:focus:border-cyan-500" readonly>
+                                <button id="copy-share-link" class="text-white bg-gradient-to-r from-electric to-teal hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-r-lg text-sm px-3 py-2.5 text-center">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path></svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6 bg-white rounded-lg shadow dark:bg-gray-800">
+                        <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Receive via USSD</h2>
+                        <p class="text-gray-500 dark:text-gray-400 mb-6">Share this USSD code with the sender:</p>
+                        <div class="p-4 bg-gray-50 dark:bg-gray-700 rounded-lg mb-6">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <svg class="w-6 h-6 text-gray-500 dark:text-gray-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
+                                    <span class="font-mono text-lg font-bold text-gray-900 dark:text-white">*384*2005#</span>
+                                </div>
+                                <button id="copy-ussd-receive" class="text-electric hover:text-teal">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path></svg>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                            <h3 class="text-md font-semibold text-gray-900 dark:text-white mb-2">Instructions for Sender</h3>
+                            <ol class="list-decimal list-inside text-gray-500 dark:text-gray-400 space-y-2">
+                                <li>Dial *384*2005# on their phone</li>
+                                <li>Select "Send HBAR" from the menu</li>
+                                <li>Enter your phone number: <span class="font-medium text-gray-900 dark:text-white" id="receive-phone-display">254712345678</span></li>
+                                <li>Enter the amount to send</li>
+                                <li>Confirm the transaction with their PIN</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Profile Content (Hidden by default) -->
+            <div id="profile-content" class="hidden">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+                    <div class="lg:col-span-2">
+                        <div class="p-6 bg-white rounded-lg shadow dark:bg-gray-800">
+                            <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Profile Information</h2>
+                            <form id="profile-form">
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                                    <div>
+                                        <label for="profile-phone" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Phone Number</label>
+                                        <input type="text" id="profile-phone" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-electric focus:border-electric block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-cyan-500 dark:focus:border-cyan-500" readonly>
+                                    </div>
+                                    <div>
+                                        <label for="profile-account" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Hedera Account ID</label>
+                                        <input type="text" id="profile-account" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-electric focus:border-electric block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-cyan-500 dark:focus:border-cyan-500" readonly>
+                                    </div>
+                                </div>
+                                <div class="mb-4">
+                                    <label for="profile-name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Full Name</label>
+                                    <input type="text" id="profile-name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-electric focus:border-electric block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-cyan-500 dark:focus:border-cyan-500" required>
+                                </div>
+                                <div class="mb-4">
+                                    <label for="profile-email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email (Optional)</label>
+                                    <input type="email" id="profile-email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-electric focus:border-electric block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-cyan-500 dark:focus:border-cyan-500">
+                                </div>
+                                <button type="submit" class="text-white bg-gradient-to-r from-electric to-teal hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Update Profile</button>
+                            </form>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="p-6 bg-white rounded-lg shadow dark:bg-gray-800">
+                            <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Security</h2>
+                            <div class="space-y-4">
+                                <div class="p-4 border border-gray-200 rounded-lg dark:border-gray-700">
+                                    <div class="flex justify-between items-center mb-2">
+                                        <h3 class="text-md font-medium text-gray-900 dark:text-white">Change PIN</h3>
+                                        <button id="change-pin-btn" class="text-electric hover:text-teal text-sm font-medium">Change</button>
+                                    </div>
+                                    <p class="text-sm text-gray-500 dark:text-gray-400">Update your 4-digit transaction PIN</p>
+                                </div>
+                                <div class="p-4 border border-gray-200 rounded-lg dark:border-gray-700">
+                                    <div class="flex justify-between items-center mb-2">
+                                        <h3 class="text-md font-medium text-gray-900 dark:text-white">Two-Factor Authentication</h3>
+                                        <label class="relative inline-flex items-center cursor-pointer">
+                                            <input type="checkbox" value="" class="sr-only peer" id="2fa-toggle">
+                                            <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-cyan-300 dark:peer-focus:ring-cyan-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-cyan-500"></div>
+                                        </label>
+                                    </div>
+                                    <p class="text-sm text-gray-500 dark:text-gray-400">Add extra security to your account</p>
+                                </div>
+                                <div class="p-4 border border-red-200 bg-red-50 rounded-lg dark:border-red-800 dark:bg-red-900/20">
+                                    <div class="flex justify-between items-center mb-2">
+                                        <h3 class="text-md font-medium text-red-800 dark:text-red-200">Danger Zone</h3>
+                                    </div>
+                                    <p class="text-sm text-red-600 dark:text-red-300 mb-3">These actions are irreversible</p>
+                                    <button id="delete-account-btn" class="w-full text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Delete Account</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+    </div>
 
-        <!-- Recent Transactions and Quick Actions -->
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <!-- Recent Transactions -->
-          <div
-            class="lg:col-span-2 dashboard-card bg-white rounded-xl shadow-sm"
-          >
-            <div class="p-6 border-b">
-              <h3 class="text-lg font-bold">Recent Transactions</h3>
-            </div>
-            <div class="divide-y">
-              <!-- Transaction Item -->
-              <div class="p-4 hover:bg-gray-50">
-                <div class="flex items-center justify-between">
-                  <div class="flex items-center space-x-3">
-                    <div
-                      class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center"
-                    >
-                      <i class="fas fa-arrow-down text-green-600"></i>
-                    </div>
-                    <div>
-                      <p class="font-medium">Received HBAR</p>
-                      <p class="text-sm text-gray-500">From: 0.0.1234</p>
-                    </div>
-                  </div>
-                  <div class="text-right">
-                    <p class="font-medium text-green-600">+500 HBAR</p>
-                    <p class="text-sm text-gray-500">Today, 10:30 AM</p>
-                  </div>
+    <!-- Change PIN Modal -->
+    <div id="change-pin-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+        <div class="relative p-4 w-full max-w-md max-h-full">
+            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+                        Change Your PIN
+                    </h3>
+                    <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="change-pin-modal">
+                        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                        </svg>
+                        <span class="sr-only">Close modal</span>
+                    </button>
                 </div>
-              </div>
-              <!-- Transaction Item -->
-              <div class="p-4 hover:bg-gray-50">
-                <div class="flex items-center justify-between">
-                  <div class="flex items-center space-x-3">
-                    <div
-                      class="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center"
-                    >
-                      <i class="fas fa-arrow-up text-red-600"></i>
+                <form id="change-pin-form" class="p-4 md:p-5">
+                    <div class="grid gap-4 mb-4">
+                        <div>
+                            <label for="current-pin" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Current PIN</label>
+                            <input type="password" id="current-pin" maxlength="4" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-electric focus:border-electric block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="••••" required>
+                        </div>
+                        <div>
+                            <label for="new-pin" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">New PIN</label>
+                            <input type="password" id="new-pin" maxlength="4" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-electric focus:border-electric block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="••••" required>
+                        </div>
+                        <div>
+                            <label for="confirm-pin" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Confirm New PIN</label>
+                            <input type="password" id="confirm-pin" maxlength="4" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-electric focus:border-electric block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="••••" required>
+                        </div>
                     </div>
-                    <div>
-                      <p class="font-medium">Sent HBAR</p>
-                      <p class="text-sm text-gray-500">To: 0.0.5678</p>
-                    </div>
-                  </div>
-                  <div class="text-right">
-                    <p class="font-medium text-red-600">-200 HBAR</p>
-                    <p class="text-sm text-gray-500">Yesterday, 3:45 PM</p>
-                  </div>
-                </div>
-              </div>
-              <!-- Transaction Item -->
-              <div class="p-4 hover:bg-gray-50">
-                <div class="flex items-center justify-between">
-                  <div class="flex items-center space-x-3">
-                    <div
-                      class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center"
-                    >
-                      <i class="fas fa-exchange-alt text-blue-600"></i>
-                    </div>
-                    <div>
-                      <p class="font-medium">Converted HBAR</p>
-                      <p class="text-sm text-gray-500">To KES</p>
-                    </div>
-                  </div>
-                  <div class="text-right">
-                    <p class="font-medium text-gray-600">-50 HBAR</p>
-                    <p class="text-sm text-gray-500">Mar 28, 2024</p>
-                  </div>
-                </div>
-              </div>
+                    <button type="submit" class="text-white bg-gradient-to-r from-electric to-teal hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center w-full">Update PIN</button>
+                </form>
             </div>
-            <div class="p-4 border-t text-center">
-              <a
-                href="#"
-                class="text-indigo-600 hover:text-indigo-800 font-medium"
-              >View all transactions</a>
-            </div>
-          </div>
-
-          <!-- Quick Actions -->
-          <div class="dashboard-card bg-white rounded-xl p-6 shadow-sm">
-            <h3 class="text-lg font-bold mb-4">Quick Actions</h3>
-            <div class="space-y-3">
-              <button
-                class="w-full flex items-center space-x-3 p-4 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition"
-              >
-                <i class="fas fa-plus"></i>
-                <span>Buy HBAR</span>
-              </button>
-              <button
-                class="w-full flex items-center space-x-3 p-4 bg-white border border-indigo-600 text-indigo-600 rounded-lg hover:bg-indigo-50 transition"
-              >
-                <i class="fas fa-arrow-up"></i>
-                <span>Send HBAR</span>
-              </button>
-              <button
-                class="w-full flex items-center space-x-3 p-4 bg-white border border-indigo-600 text-indigo-600 rounded-lg hover:bg-indigo-50 transition"
-              >
-                <i class="fas fa-exchange-alt"></i>
-                <span>Convert</span>
-              </button>
-              <button
-                class="w-full flex items-center space-x-3 p-4 bg-white border border-indigo-600 text-indigo-600 rounded-lg hover:bg-indigo-50 transition"
-              >
-                <i class="fas fa-qrcode"></i>
-                <span>Receive HBAR</span>
-              </button>
-            </div>
-
-            <!-- Buy HBAR Form (Initially hidden) -->
-            <div id="buyHbarForm" class="mt-6 hidden">
-              <div class="space-y-4">
-                <div>
-                  <label class="block text-sm font-medium text-gray-700 mb-1"
-                  >Amount (KES)</label>
-                  <input
-                    type="number"
-                    class="w-full p-3 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
-                    placeholder="1000"
-                  >
-                </div>
-                <div>
-                  <label class="block text-sm font-medium text-gray-700 mb-1"
-                  >You'll receive</label>
-                  <div class="w-full p-3 bg-gray-100 rounded-lg">
-                    <span class="font-medium">4,320.25 HBAR</span>
-                    <span class="text-sm text-gray-500 ml-2">≈ $1,000.00</span>
-                  </div>
-                </div>
-                <button
-                  class="w-full bg-indigo-600 text-white py-3 rounded-lg font-medium hover:bg-indigo-700 transition"
-                >
-                  Confirm Purchase
-                </button>
-              </div>
-            </div>
-          </div>
         </div>
-      </div>
-    </main>
+    </div>
+
+    <!-- Delete Account Modal -->
+    <div id="delete-account-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+        <div class="relative p-4 w-full max-w-md max-h-full">
+            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+                        Delete Your Account
+                    </h3>
+                    <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="delete-account-modal">
+                        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                        </svg>
+                        <span class="sr-only">Close modal</span>
+                    </button>
+                </div>
+                <form id="delete-account-form" class="p-4 md:p-5">
+                    <p class="text-red-600 dark:text-red-400 mb-4">Warning: This action cannot be undone. All your data will be permanently deleted.</p>
+                    <div class="mb-4">
+                        <label for="delete-pin" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Enter your PIN to confirm</label>
+                        <input type="password" id="delete-pin" maxlength="4" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-electric focus:border-electric block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="••••" required>
+                    </div>
+                    <div class="flex justify-end space-x-2">
+                        <button type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600" data-modal-toggle="delete-account-modal">Cancel</button>
+                        <button type="submit" class="text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-500 dark:hover:bg-red-600 dark:focus:ring-red-900">Delete Account</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
     <!-- Flowbite JS -->
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"
-    ></script>
-    <!-- Font Awesome -->
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js"
-    ></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
+    <!-- QR Code Generator -->
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.1/build/qrcode.min.js"></script>
+    <!-- Custom JS -->
     <script>
-      // Mobile menu toggle
-      document.getElementById("mobileMenuBtn").addEventListener(
-        "click",
-        function () {
-          document.querySelector(".sidebar").classList.toggle("hidden");
-        },
-      );
+        // Theme toggle
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+        const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
 
-      // Initialize price chart
-      const ctx = document.getElementById("priceChart").getContext(
-        "2d",
-      );
-      const priceChart = new Chart(ctx, {
-        type: "line",
-        data: {
-          labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
-          datasets: [{
-            label: "HBAR Price (USD)",
-            data: [0.215, 0.221, 0.225, 0.218, 0.227, 0.230, 0.2315],
-            borderColor: "#4f46e5",
-            backgroundColor: "rgba(79, 70, 229, 0.1)",
-            borderWidth: 2,
-            fill: true,
-            tension: 0.4,
-          }],
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: {
-            legend: {
-              display: false,
-            },
-          },
-          scales: {
-            y: {
-              beginAtZero: false,
-              grid: {
-                drawBorder: false,
-              },
-            },
-            x: {
-              grid: {
-                display: false,
-              },
-            },
-          },
-        },
-      });
-
-      // Toggle buy HBAR form
-      document.querySelectorAll("button").forEach((button) => {
-        if (button.textContent.includes("Buy HBAR")) {
-          button.addEventListener("click", function (e) {
-            if (e.target.closest("#buyHbarForm") === null) {
-              document.getElementById("buyHbarForm").classList.toggle(
-                "hidden",
-              );
-            }
-          });
-        }
-      });
-
-      // Simulate live price updates
-      function updatePrices() {
-        // Random price fluctuation
-        const change = (Math.random() - 0.5) * 0.01;
-        const currentPrice = parseFloat(
-          document.querySelector(
-            ".dashboard-card:nth-child(3) .text-2xl",
-          ).textContent.replace("$", ""),
-        );
-        const newPrice = currentPrice * (1 + change);
-
-        // Update UI
-        document.querySelector(".dashboard-card:nth-child(3) .text-2xl")
-          .textContent = "$" + newPrice.toFixed(4);
-        const changeElement = document.querySelector(
-          ".hbar-price-change",
-        );
-
-        if (change >= 0) {
-          changeElement.innerHTML =
-            '<i class="fas fa-caret-up mr-1"></i>' +
-            (change * 100).toFixed(2) + "%";
-          changeElement.classList.remove("negative");
-          changeElement.classList.add("positive");
+        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            themeToggleLightIcon.classList.remove('hidden');
         } else {
-          changeElement.innerHTML =
-            '<i class="fas fa-caret-down mr-1"></i>' +
-            (Math.abs(change) * 100).toFixed(2) + "%";
-          changeElement.classList.remove("positive");
-          changeElement.classList.add("negative");
+            themeToggleDarkIcon.classList.remove('hidden');
         }
-      }
 
-      // Update prices every 10 seconds
-      setInterval(updatePrices, 10000);
+        themeToggleBtn.addEventListener('click', function() {
+            themeToggleDarkIcon.classList.toggle('hidden');
+            themeToggleLightIcon.classList.toggle('hidden');
+
+            if (localStorage.getItem('color-theme')) {
+                if (localStorage.getItem('color-theme') === 'light') {
+                    document.documentElement.classList.add('dark');
+                    localStorage.setItem('color-theme', 'dark');
+                } else {
+                    document.documentElement.classList.remove('dark');
+                    localStorage.setItem('color-theme', 'light');
+                }
+            } else {
+                if (document.documentElement.classList.contains('dark')) {
+                    document.documentElement.classList.remove('dark');
+                    localStorage.setItem('color-theme', 'light');
+                } else {
+                    document.documentElement.classList.add('dark');
+                    localStorage.setItem('color-theme', 'dark');
+                }
+            }
+        });
+
+        // Sidebar navigation
+        const menuItems = document.querySelectorAll('.menu-item');
+        const contentSections = {
+            'dashboard-link': 'dashboard-content',
+            'send-link': 'send-content',
+            'transactions-link': 'transactions-content',
+            'receive-link': 'receive-content',
+            'profile-link': 'profile-content'
+        };
+
+        menuItems.forEach(item => {
+            item.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Update active state
+                menuItems.forEach(i => i.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Update page title
+                const pageTitle = document.getElementById('page-title');
+                pageTitle.textContent = this.querySelector('span').textContent;
+                
+                // Show the correct content section
+                Object.values(contentSections).forEach(section => {
+                    document.getElementById(section).classList.add('hidden');
+                });
+                
+                const sectionId = contentSections[this.id];
+                document.getElementById(sectionId).classList.remove('hidden');
+                
+                // Load data if needed
+                if (sectionId === 'dashboard-content') {
+                    loadDashboardData();
+                } else if (sectionId === 'transactions-content') {
+                    loadTransactions();
+                } else if (sectionId === 'receive-content') {
+                    loadReceiveData();
+                } else if (sectionId === 'profile-content') {
+                    loadProfileData();
+                }
+            });
+        });
+
+        // Quick actions
+        document.getElementById('quick-send').addEventListener('click', function(e) {
+            e.preventDefault();
+            menuItems.forEach(i => i.classList.remove('active'));
+            document.getElementById('send-link').classList.add('active');
+            document.getElementById('page-title').textContent = 'Send HBAR';
+            
+            Object.values(contentSections).forEach(section => {
+                document.getElementById(section).classList.add('hidden');
+            });
+            document.getElementById('send-content').classList.remove('hidden');
+        });
+
+        document.getElementById('quick-receive').addEventListener('click', function(e) {
+            e.preventDefault();
+            menuItems.forEach(i => i.classList.remove('active'));
+            document.getElementById('receive-link').classList.add('active');
+            document.getElementById('page-title').textContent = 'Receive HBAR';
+            
+            Object.values(contentSections).forEach(section => {
+                document.getElementById(section).classList.add('hidden');
+            });
+            document.getElementById('receive-content').classList.remove('hidden');
+            loadReceiveData();
+        });
+
+        document.getElementById('quick-history').addEventListener('click', function(e) {
+            e.preventDefault();
+            menuItems.forEach(i => i.classList.remove('active'));
+            document.getElementById('transactions-link').classList.add('active');
+            document.getElementById('page-title').textContent = 'Transaction History';
+            
+            Object.values(contentSections).forEach(section => {
+                document.getElementById(section).classList.add('hidden');
+            });
+            document.getElementById('transactions-content').classList.remove('hidden');
+            loadTransactions();
+        });
+
+        // Logout
+        document.getElementById('logout-btn').addEventListener('click', function() {
+            localStorage.removeItem('token');
+           // window.location.href = '/login.html';
+        });
+
+        // Check authentication
+        const token = localStorage.getItem('token');
+        if (!token) {
+          //  window.location.href = '/login.html';
+        }
+
+        // Initialize dashboard
+        loadDashboardData();
+
+        // Load user data
+        async function loadUserData() {
+            try {
+                const response = await fetch('/user/accountInfo', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                const userData = await response.json();
+                
+                // Update UI with user data
+                document.getElementById('user-phone').textContent = userData.phone || '+254712345678';
+                document.getElementById('user-balance').textContent = `${userData.hbars || 0} HBAR`;
+                document.getElementById('profile-phone').value = userData.phone || '';
+                document.getElementById('profile-account').value = userData.hederaAccountId || '0.0.1234';
+                document.getElementById('profile-name').value = userData.fullName || '';
+                document.getElementById('hedera-id').value = userData.hederaAccountId || '0.0.1234';
+                document.getElementById('receive-phone-display').textContent = userData.phone || '254712345678';
+                
+                return userData;
+            } catch (error) {
+                console.error('Error loading user data:', error);
+                showToast('Failed to load user data', 'error');
+            }
+        }
+
+        // Load dashboard data
+        async function loadDashboardData() {
+            const userData = await loadUserData();
+            
+            // Fetch recent transactions
+            try {
+                const response = await fetch('/user/transactions?limit=3', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                const transactions = await response.json();
+                populateRecentTransactions(transactions);
+            } catch (error) {
+                console.error('Error loading transactions:', error);
+                showToast('Failed to load recent transactions', 'error');
+            }
+        }
+
+        // Populate recent transactions
+        function populateRecentTransactions(transactions) {
+            const container = document.getElementById('recent-tx-list');
+            container.innerHTML = '';
+            
+            if (transactions.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-4">
+                        <svg class="w-12 h-12 mx-auto text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
+                        <p class="mt-2 text-gray-500 dark:text-gray-400">No transactions yet</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            transactions.forEach(tx => {
+                const isSender = tx.senderPhone === document.getElementById('user-phone').textContent.replace('+', '');
+                const counterparty = isSender ? tx.receiverPhone : tx.senderPhone;
+                
+                const transactionEl = document.createElement('div');
+                transactionEl.className = 'p-4 border border-gray-200 rounded-lg dark:border-gray-700 flex items-center justify-between';
+                transactionEl.innerHTML = `
+                    <div class="flex items-center">
+                        <div class="p-2 rounded-full ${isSender ? 'bg-red-100 text-red-600 dark:bg-red-900/20 dark:text-red-400' : 'bg-green-100 text-green-600 dark:bg-green-900/20 dark:text-green-400'}">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="${isSender ? 'M12 19l9 2-9-18-9 18 9-2zm0 0v-8' : 'M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6'}"></path>
+                            </svg>
+                        </div>
+                        <div class="ms-3">
+                            <h3 class="text-sm font-medium text-gray-900 dark:text-white">${isSender ? 'Sent' : 'Received'} ${tx.amount} HBAR</h3>
+                            <p class="text-xs text-gray-500 dark:text-gray-400">${isSender ? 'To' : 'From'}: ${counterparty}</p>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-sm font-medium ${isSender ? 'text-red-600 dark:text-red-400' : 'text-green-600 dark:text-green-400'}">${isSender ? '-' : '+'}${tx.amount}</p>
+                        <p class="text-xs text-gray-500 dark:text-gray-400">${new Date(tx.timestamp).toLocaleDateString()}</p>
+                    </div>
+                `;
+                container.appendChild(transactionEl);
+            });
+        }
+
+        // Load transactions
+        async function loadTransactions() {
+            try {
+                const response = await fetch('/user/transactions', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                const transactions = await response.json();
+                populateAllTransactions(transactions);
+                document.getElementById('total-tx-count').textContent = transactions.length;
+                
+                // Calculate total sent/received
+                const userPhone = document.getElementById('user-phone').textContent.replace('+', '');
+                let totalSent = 0;
+                let totalReceived = 0;
+                
+                transactions.forEach(tx => {
+                    if (tx.senderPhone === userPhone) {
+                        totalSent += parseFloat(tx.amount);
+                    } else if (tx.receiverPhone === userPhone) {
+                        totalReceived += parseFloat(tx.amount);
+                    }
+                });
+                
+                document.getElementById('total-sent').textContent = `${totalSent.toFixed(2)} HBAR`;
+                document.getElementById('total-received').textContent = `${totalReceived.toFixed(2)} HBAR`;
+            } catch (error) {
+                console.error('Error loading transactions:', error);
+                showToast('Failed to load transactions', 'error');
+            }
+        }
+
+        // Populate all transactions
+        function populateAllTransactions(transactions) {
+            const tableBody = document.getElementById('all-tx-table');
+            tableBody.innerHTML = '';
+            
+            if (transactions.length === 0) {
+                tableBody.innerHTML = `
+                    <tr class="bg-white dark:bg-gray-800">
+                        <td colspan="7" class="px-4 py-4 text-center text-gray-500 dark:text-gray-400">No transactions found</td>
+                    </tr>
+                `;
+                return;
+            }
+            
+            const userPhone = document.getElementById('user-phone').textContent.replace('+', '');
+            
+            transactions.forEach(tx => {
+                const isSender = tx.senderPhone === userPhone;
+                const counterparty = isSender ? tx.receiverPhone : tx.senderPhone;
+                
+                const row = document.createElement('tr');
+                row.className = 'bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600';
+                row.innerHTML = `
+                    <td class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">${tx.id}</td>
+                    <td class="px-4 py-3">
+                        <span class="${isSender ? 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200' : 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'} text-xs font-medium px-2 py-0.5 rounded">
+                            ${isSender ? 'Sent' : 'Received'}
+                        </span>
+                    </td>
+                    <td class="px-4 py-3 ${isSender ? 'text-red-600 dark:text-red-400' : 'text-green-600 dark:text-green-400'}">${isSender ? '-' : '+'}${tx.amount}</td>
+                    <td class="px-4 py-3">${counterparty}</td>
+                    <td class="px-4 py-3">
+                        <span class="${tx.status === 'success' ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200' : 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200'} text-xs font-medium px-2 py-0.5 rounded">
+                            ${tx.status.charAt(0).toUpperCase() + tx.status.slice(1)}
+                        </span>
+                    </td>
+                    <td class="px-4 py-3">${new Date(tx.timestamp).toLocaleString()}</td>
+                    <td class="px-4 py-3">
+                        <a href="https://hashscan.io/testnet/transaction/${tx.txHash}" target="_blank" class="font-medium text-electric hover:underline">View</a>
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+
+        // Load receive data
+        async function loadReceiveData() {
+            const userData = await loadUserData();
+            
+            // Generate QR code
+            const qrCodeElement = document.getElementById('qr-code');
+            qrCodeElement.innerHTML = '';
+            
+            QRCode.toCanvas(qrCodeElement, userData.hederaAccountId || '0.0.1234', {
+                width: 180,
+                color: {
+                    dark: document.documentElement.classList.contains('dark') ? '#00F5D4' : '#00A3FF',
+                    light: document.documentElement.classList.contains('dark') ? '#0A1435' : '#FFFFFF'
+                }
+            }, function(error) {
+                if (error) {
+                    qrCodeElement.innerHTML = `
+                        <div class="text-gray-500 dark:text-gray-400 text-center">
+                            <svg class="w-12 h-12 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"></path></svg>
+                            <p class="text-xs">Failed to generate QR code</p>
+                        </div>
+                    `;
+                }
+            });
+            
+            // Set share link
+            document.getElementById('share-link').value = `https://hflow.com/receive?account=${userData.hederaAccountId || '0.0.1234'}`;
+        }
+
+        // Load profile data
+        async function loadProfileData() {
+            await loadUserData();
+        }
+
+        // Copy to clipboard functions
+        document.getElementById('copy-ussd').addEventListener('click', function() {
+            copyToClipboard('*384*2005#', 'USSD code copied to clipboard');
+        });
+
+        document.getElementById('copy-ussd-receive').addEventListener('click', function() {
+            copyToClipboard('*384*2005#', 'USSD code copied to clipboard');
+        });
+
+        document.getElementById('copy-hedera-id').addEventListener('click', function() {
+            const hederaId = document.getElementById('hedera-id').value;
+            copyToClipboard(hederaId, 'Hedera ID copied to clipboard');
+        });
+
+        document.getElementById('copy-share-link').addEventListener('click', function() {
+            const shareLink = document.getElementById('share-link').value;
+            copyToClipboard(shareLink, 'Share link copied to clipboard');
+        });
+
+        function copyToClipboard(text, successMessage) {
+            navigator.clipboard.writeText(text).then(() => {
+                showToast(successMessage, 'success');
+            }).catch(err => {
+                console.error('Failed to copy text: ', err);
+                showToast('Failed to copy', 'error');
+            });
+        }
+
+        // Form submissions
+        document.getElementById('send-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const receiverPhone = document.getElementById('receiver-phone').value;
+            const amount = document.getElementById('send-amount').value;
+            const note = document.getElementById('send-note').value;
+            const pin = document.getElementById('send-pin').value;
+            
+            try {
+                const response = await fetch('/transaction/new', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({
+                        receiverPhone: receiverPhone,
+                        amount: parseFloat(amount),
+                        pin: pin
+                    })
+                });
+                
+                const result = await response.json();
+                
+                if (response.ok) {
+                    showToast(`Successfully sent ${amount} HBAR`, 'success');
+                    this.reset();
+                    loadDashboardData();
+                } else {
+                    showToast(result.error || 'Failed to send HBAR', 'error');
+                }
+            } catch (error) {
+                console.error('Error sending HBAR:', error);
+                showToast('Failed to send HBAR', 'error');
+            }
+        });
+
+        document.getElementById('profile-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const fullName = document.getElementById('profile-name').value;
+            const email = document.getElementById('profile-email').value;
+            
+            try {
+                // This would be a PUT request to update user profile
+                showToast('Profile updated successfully', 'success');
+            } catch (error) {
+                console.error('Error updating profile:', error);
+                showToast('Failed to update profile', 'error');
+            }
+        });
+
+        // Change PIN modal
+        const changePinModal = new FlowbiteModal(document.getElementById('change-pin-modal'));
+        
+        document.getElementById('change-pin-btn').addEventListener('click', function() {
+            changePinModal.show();
+        });
+
+        document.getElementById('change-pin-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const currentPin = document.getElementById('current-pin').value;
+            const newPin = document.getElementById('new-pin').value;
+            const confirmPin = document.getElementById('confirm-pin').value;
+            
+            if (newPin !== confirmPin) {
+                showToast('PINs do not match', 'error');
+                return;
+            }
+            
+            try {
+                // This would be a request to change PIN
+                showToast('PIN changed successfully', 'success');
+                changePinModal.hide();
+                this.reset();
+            } catch (error) {
+                console.error('Error changing PIN:', error);
+                showToast('Failed to change PIN', 'error');
+            }
+        });
+
+        // Delete account modal
+        const deleteAccountModal = new FlowbiteModal(document.getElementById('delete-account-modal'));
+        
+        document.getElementById('delete-account-btn').addEventListener('click', function() {
+            deleteAccountModal.show();
+        });
+
+        document.getElementById('delete-account-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const pin = document.getElementById('delete-pin').value;
+            
+            try {
+                // This would be a request to delete account
+                showToast('Account deleted successfully', 'success');
+                deleteAccountModal.hide();
+                this.reset();
+                
+                // Logout and redirect
+                localStorage.removeItem('token');
+                setTimeout(() => {
+                    window.location.href = '/';
+                }, 1500);
+            } catch (error) {
+                console.error('Error deleting account:', error);
+                showToast('Failed to delete account', 'error');
+            }
+        });
+
+        // Search functionality
+        document.getElementById('tx-search').addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            const rows = document.querySelectorAll('#all-tx-table tr');
+            
+            rows.forEach(row => {
+                const text = row.textContent.toLowerCase();
+                row.style.display = text.includes(searchTerm) ? '' : 'none';
+            });
+        });
+
+        // Toast notification
+        function showToast(message, type = 'success') {
+            const toast = document.createElement('div');
+            toast.className = `fixed top-4 right-4 flex items-center w-full max-w-xs p-4 mb-4 text-gray-500 bg-white rounded-lg shadow dark:text-gray-400 dark:bg-gray-800 ${type === 'success' ? 'border-green-500' : 'border-red-500'} border-l-4`;
+            toast.innerHTML = `
+                <div class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 ${type === 'success' ? 'text-green-500 bg-green-100' : 'text-red-500 bg-red-100'} rounded-lg dark:bg-gray-700 dark:text-green-400">
+                    <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"/>
+                    </svg>
+                    <span class="sr-only">${type === 'success' ? 'Success' : 'Error'} icon</span>
+                </div>
+                <div class="ms-3 text-sm font-normal">${message}</div>
+                <button type="button" class="ms-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex items-center justify-center h-8 w-8 dark:text-gray-500 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700" data-dismiss-target="#toast-success" aria-label="Close">
+                    <span class="sr-only">Close</span>
+                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                    </svg>
+                </button>
+            `;
+            
+            document.body.appendChild(toast);
+            
+            // Auto remove after 3 seconds
+            setTimeout(() => {
+                toast.remove();
+            }, 3000);
+            
+            // Also allow manual close
+            toast.querySelector('button').addEventListener('click', () => {
+                toast.remove();
+            });
+        }
     </script>
-  </body>
+</body>
 </html>
