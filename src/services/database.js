@@ -131,7 +131,7 @@ const getUser = async (phone) => {
         `SELECT * FROM users WHERE phone = ?`,
         [phone],
         (err, row) => {
-          if (err) reject(err);
+          if (err) reject(new Error(err));
           resolve(row || null);
         },
       );
@@ -255,7 +255,7 @@ const addTransaction = async (
         [senderPhone, receiverPhone, amount, txHash, status],
         (err, row) => {
           if (err) {
-            reject(Error("Failed to log transaction"));
+            reject(new Error("Failed to log transaction"));
           }
           resolve(row);
         },
