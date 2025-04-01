@@ -193,6 +193,14 @@ What would you like us to help you with today?
         from: "HFlow",
       });
       break;
+    case text === "5":
+      response = "END For support contact us on hflow.onrender.com/contact";
+      msgResult = await africastalking.SMS.send({
+        to: phoneNumber,
+        message: `For support contact us on hflow.onrender.com/contact`,
+        from: "HFlow",
+      });
+      break;
 
     default:
       response = "END Invalid choice please try again";
