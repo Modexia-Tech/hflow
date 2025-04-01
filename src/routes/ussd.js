@@ -87,7 +87,7 @@ What would you like us to help you with today?
       if (!user) {
         return res.status(404).send("END Please create an account first");
       }
-      if (!verifyPinPhone(user.phone, ussdPassedInput[1], user.pinHash)) {
+      if (!verifyPinPhone(ussdPassedInput[1], user.phone, user.pinHash)) {
         return res.status(403).send("END Invalid pin");
       }
       const balance = await hederaService.getBalance(user.hederaAccountId);
