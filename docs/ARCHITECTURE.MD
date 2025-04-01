@@ -18,12 +18,12 @@ flowchart TD
 
 - **Provider**: Africa's Talking/
 - **Role**:
-  - Handles USSD sessions via `*123#` shortcode.
+  - Handles USSD sessions via `*384*2005#` shortcode.
   - Forwards payloads to Hflow backend.
 - **Flow**:
   ```mermaid
   sequenceDiagram
-      User->>+Africa's Talking: Dial *123#
+      User->>+Africa's Talking: Dial \*384\*2005#
       Africa's Talking->>+Hflow: POST /ussd/start
       Hflow-->>-Africa's Talking: "CON Welcome..."
       Africa's Talking-->>-User: Display menu
@@ -36,19 +36,17 @@ flowchart TD
 #### **Express.js Server**
 
 - **Routes**:
-  - `POST /ussd/start` → Initiate session
-  - `POST /ussd/continue` → Handle menu navigation
-  - `GET /api/balance` → Fetch HBAR/KES balance
+  - `POST /ussd/` → handles ussd interaction with Africa's Talking
+  - `POST /user/` → handles api based interaction with user 
+  - `GET /transaction/` → handles api based interaction with transactions
 
 #### **Key Modules**:
 
 | Module          | Purpose                   | Tech                   |
 | --------------- | ------------------------- | ---------------------- |
-| `ussdRouter`    | Menu navigation logic     | Node.js, State machine |
-| `hederaService` | HBAR transactions         | Hedera SDK             |
-| `authService`   | PIN encryption/validation | CryptoJS, PBKDF2       |
-| `mpesaBridge`   | Convert HBAR↔KES↔M-Pesa   | REST API               |
-
+| `ussd`          | Menu navigation logic     | Node.js, State machine |
+| `hedera`        | HBAR transactions         | Hedera SDK             |
+| `auth`          | PIN encryption/validation | CryptoJS, PBKDF2       |
 ---
 
 ### **1.3 Data Layer**
@@ -107,7 +105,7 @@ flowchart TD
 
 ```mermaid
 flowchart LR
-    A[User dials *123#] --> B[Enter phone/PIN]
+    A[User dials \*384\*2005#] --> B[Enter phone/PIN]
     B --> C[Generate Hedera keys]
     C --> D[Encrypt private key]
     D --> E[Store keys in DB]
@@ -175,17 +173,5 @@ flowchart LR
     B --> C[Build Docker image]
     C --> D[Deploy to ECS]
 ```
-
----
-
-## **6. Monitoring**
-
-- **Logs**: ELK Stack (Elasticsearch, Logstash, Kibana).
-- **Alerts**: Prometheus + Grafana (track failed TXs).
-
----
-
-📄 **License**: Apache 2.0\
-📧 **Contact**: architects@hflow.com
 
 ---
