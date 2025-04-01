@@ -150,33 +150,29 @@ class HederaService {
   async sendHBAR(privateKeyStr, senderId, receiverId, amountHBAR) {
     const privateKey = PrivateKey.fromStringED25519(privateKeyStr);
     const senderAccountId = AccountId.fromString(senderId);
+    const receiverAccountId = AccountId.fromString(receiverId);
 
-    try {
-      const tx = await new TransferTransaction()
-        .addHbarTransfer(senderAccountId, Hbar.from(-amountHBAR))
-        .addHbarTransfer(receiverId, Hbar.from(amountHBAR))
-        .setTransactionMemo(`HPesa transfer to ${receiverId}`)
-        .freezeWith(this.client)
-        .sign(privateKey);
+    const tx = await new TransferTransaction()
+      .addHbarTransfer(senderAccountId, Hbar.from(-amountHBAR))
+      .addHbarTransfer(receiverAccountId, Hbar.from(amountHBAR))
+      .setTransactionMemo(`HPesa transfer to ${receiverId}`)
+      .freezeWith(this.client)
+      .sign(privateKey);
 
-      const txId = await tx.execute(this.client);
-      const receipt = await txId.getReceipt(this.client);
+    const txId = await tx.execute(this.client);
+    const receipt = await txId.getReceipt(this.client);
 
-      if (receipt.status !== Status.Success) {
-        throw new Error(`Transaction failed: ${receipt.status}`);
-      }
-
-      // Cleanup
-      privateKey._keyData.fill(0);
-
-      return {
-        status: "success",
-        txId: txId.toString(),
-        newBalance: await this.getBalance(senderId),
-      };
-    } finally {
-      privateKey._keyData.fill(0); // Ensure key is wiped
+    if (receipt.status !== Status.Success) {
+      throw new Error(`Transaction failed: ${receipt.status}`);
     }
+
+    return {
+      status: "success",
+      txId: txId.transactionId.toString(),
+      hashScanUrl:
+        `https://explorer.kabuto.sh/testnet/transaction/${txId.transactionId}`,
+      newBalance: await this.getBalance(senderId),
+    };
   }
 
   async getBalance(accountId) {
@@ -198,7 +194,9 @@ class HederaService {
     if (receipt.status !== Status.Success) {
       throw new Error(`Funding failed: ${receipt.status}`);
     }
-    return receipt;
+    return {
+      txId: tx.transactionId.toString(),
+    };
   }
   /**
    * Currency-converted funding

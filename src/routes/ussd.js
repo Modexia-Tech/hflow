@@ -105,22 +105,20 @@ What would you like us to help you with today?
       response = "CON Enter your pin:";
       break;
     case text.startsWith("3") && ussdPassedInput.length === 4:
-      const sender = await getUser(phoneNumber.replace("+", ""));
-      if (!sender) {
+      if (!user) {
         return res.status(404).send("END Please create an account first");
       }
-      if (sender.failedAttempts >= 3) {
+      if (user.failedAttempts >= 3) {
         return res.status(403).send("END Account locked, contact support");
       }
-      if (!verifyPinPhone(ussdPassedInput[3], sender.phone, sender.pinHash)) {
-        await updateUser(sender.phone, {
-          failedAttempts: sender.failedAttempts + 1,
+      if (!verifyPinPhone(ussdPassedInput[3], user.phone, user.pinHash)) {
+        await updateUser(user.phone, {
+          failedAttempts: user.failedAttempts + 1,
         });
         return res
           .status(403)
           .send(
-            `END Invalid pin: remaining attempts ${
-              3 - (sender.failedAttempts + 1)
+            `END Invalid pin: remaining attempts ${3 - (user.failedAttempts + 1)
             }`,
           );
       }
@@ -130,18 +128,18 @@ What would you like us to help you with today?
         return res.status(404).send("END Receiver not found");
       }
 
-      if (sender.phone === receiver.phone) {
+      if (user.phone === receiver.phone) {
         return res.status(400).send("END You cannot send money to yourself");
       }
 
       const senderPrivateKey = decryptPrivateKey(
-        sender.encryptedPrivateKey,
+        user.encryptedPrivateKey,
         ussdPassedInput[3],
       );
-      const { status, txId, hashscanUrl, newBalance } = await hederaService
+      const { status, txId, hashScanUrl, newBalance } = await hederaService
         .sendHBAR(
           senderPrivateKey,
-          sender.hederaAccountId,
+          user.hederaAccountId,
           receiver.hederaAccountId,
           Number(ussdPassedInput[2]),
         );

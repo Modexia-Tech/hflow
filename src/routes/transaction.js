@@ -54,7 +54,7 @@ router.post("/new", async (req, res) => {
       sender.encryptedPrivateKey,
       req.body.senderPin,
     );
-    const { status, txId, hashscanUrl, newBalance } = await hederaService
+    const { status, txId, hashScanUrl, newBalance } = await hederaService
       .sendHBAR(
         senderPrivateKey,
         sender.hederaAccountId,
@@ -74,7 +74,7 @@ router.post("/new", async (req, res) => {
     return res.status(200).send({
       message: `Transaction successful of id: ${txId}`,
       newBalance,
-      hashscanUrl,
+      hashScanUrl,
     });
   } catch (err) {
     res.status(400).send({ error: err.message });
