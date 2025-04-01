@@ -1,12 +1,13 @@
 require("dotenv").config();
 const { Database } = require("@sqlitecloud/drivers");
+const { APP_FOLDER } = require("@/constants");
 
 let db;
 if (!process.env.HFLOW_DB) {
   const sqlite3 = require("sqlite3");
   const path = require("path");
   db = new sqlite3.Database(
-    path.resolve(__dirname, "hflow.db"),
+    path.resolve(APP_FOLDER, "hflow.db"),
     sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE,
     (err) => {
       if (err) console.error("[DB ERROR]: Database error:", err);
