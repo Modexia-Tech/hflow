@@ -247,13 +247,21 @@ const addTransaction = async (
   status,
 ) => {
   try {
-    const result = db.run(
-      `INSERT INTO transactions 
+    const result = await new Promise((resolve, reject) => {
+      db.run(
+        `INSERT INTO transactions 
        (senderPhone, receiverPhone, amount, txHash, status)
        VALUES (?, ?, ?, ?, ?)`,
-      [senderPhone, receiverPhone, amount, txHash, status],
-    );
-    return result.lastID;
+        [senderPhone, receiverPhone, amount, txHash, status],
+        (err, row) => {
+          if (err) {
+            reject(Error("Failed to log transaction"));
+          }
+          resolve(row);
+        },
+      );
+    });
+    return result;
   } catch (err) {
     if (err.message.includes("UNIQUE constraint failed")) {
       throw new Error("Transaction with this hash already exists");

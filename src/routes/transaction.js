@@ -16,13 +16,13 @@ const {
 } = require("@utils/encryption");
 const { verifyToken, requireRole } = require("@middleware/auth");
 
-router.post("/new", async (req, res) => {
+router.post("/new", verifyToken, requireRole("user"), async (req, res) => {
   try {
     const { error } = newTransactionSchema.validate(req.body);
     if (error) {
       return res.status(400).send({ error: error.details[0].message });
     }
-    const sender = await getUser(req.body.senderPhone);
+    const sender = await getUser(req.user.phone);
     if (!sender) {
       return res.status(404).send({ error: "Sender not found" });
     }
@@ -30,9 +30,9 @@ router.post("/new", async (req, res) => {
       return res.status(403).send({ error: "Sender account locked" });
     }
     if (
-      !verifyPinPhone(req.body.senderPin, req.body.senderPhone, sender.pinHash)
+      !verifyPinPhone(req.body.pin, sender.phone, sender.pinHash)
     ) {
-      await updateUser(req.body.senderPhone, {
+      await updateUser(sender.phone, {
         failedAttempts: sender.failedAttempts + 1,
       });
       return res.status(403).send({
@@ -52,7 +52,7 @@ router.post("/new", async (req, res) => {
 
     const senderPrivateKey = decryptPrivateKey(
       sender.encryptedPrivateKey,
-      req.body.senderPin,
+      req.body.pin,
     );
     const { status, txId, hashScanUrl, newBalance } = await hederaService
       .sendHBAR(
@@ -62,7 +62,7 @@ router.post("/new", async (req, res) => {
         req.body.amount,
       );
     const transactionId = await addTransaction(
-      req.body.senderPhone,
+      sender.phone,
       req.body.receiverPhone,
       req.body.amount,
       txId,
