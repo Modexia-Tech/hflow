@@ -1,139 +1,149 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Page Not Found | Hflow</title>
-    <!-- Flowbite CSS -->
-    <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css"
-      rel="stylesheet"
-    />
-    <!-- Custom CSS -->
-    <style>
-      body {
-        background-color: #f8fafc;
-        font-family: "Inter", sans-serif;
-      }
-      .hflow-gradient {
-        background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
-      }
-      .animation-float {
-        animation: float 6s ease-in-out infinite;
-      }
-      @keyframes float {
-        0%, 100% {
-          transform: translateY(0);
-        }
-        50% {
-          transform: translateY(-20px);
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page Not Found | HFlow - USSD Hedera Wallet</title>
+  <!-- Tailwind CSS + Flowbite CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'oxford-blue': '#050D2A',
+            'electric-blue': '#00A3FF',
+            'cyber-teal': '#00F5D4',
+            'neon-cyan': '#0FF0FC',
+            'midnight-navy': '#0A1435',
+          },
+          backgroundImage: {
+            'gradient-tech': 'linear-gradient(45deg, #00A3FF 0%, #00F5D4 100%)',
+            'circuit-pattern': "url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPjxkZWZzPjxwYXR0ZXJuIGlkPSJwYXR0ZXJuIiB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiIHBhdHRlcm5UcmFuc2Zvcm09InJvdGF0ZSg0NSkiPjxyZWN0IHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjAzKSIvPjxwYXRoIGQ9Ik0gMjAsMCBMMCAwIDAsMjAgWiIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJyZ2JhKDAwLDE2MywyNTQsMC4xKSIgc3Ryb2tlLXdpZHRoPSIxIi8+PC9wYXR0ZXJuPjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI3BhdHRlcm4pIi8+PC9zdmc+')"
+          }
         }
       }
-    </style>
-  </head>
-  <body class="flex items-center justify-center min-h-screen">
-    <div class="container mx-auto px-4 py-16 text-center">
-      <div class="max-w-2xl mx-auto">
-        <!-- Animated 404 Graphic -->
-        <div class="animation-float mb-8">
-          <svg
-            class="w-48 h-48 mx-auto"
-            viewBox="0 0 200 200"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <circle cx="100" cy="100" r="90" fill="#EFF6FF" />
-            <path
-              d="M100 50V150"
-              stroke="#3B82F6"
-              stroke-width="8"
-              stroke-linecap="round"
-            />
-            <path
-              d="M50 100H150"
-              stroke="#3B82F6"
-              stroke-width="8"
-              stroke-linecap="round"
-            />
-            <circle cx="100" cy="100" r="30" fill="#8B5CF6" />
-            <text
-              x="100"
-              y="110"
-              font-family="Arial"
-              font-size="24"
-              font-weight="bold"
-              fill="white"
-              text-anchor="middle"
-            >
-              404
-            </text>
-          </svg>
+    }
+  </script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #050D2A;
+      color: #E0E5EC;
+      background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPjxkZWZzPjxwYXR0ZXJuIGlkPSJwYXR0ZXJuIiB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiIHBhdHRlcm5UcmFuc2Zvcm09InJvdGF0ZSg0NSkiPjxyZWN0IHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjAzKSIvPjxwYXRoIGQ9Ik0gMjAsMCBMMCAwIDAsMjAgWiIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJyZ2JhKDAwLDE2MywyNTQsMC4xKSIgc3Ryb2tlLXdpZHRoPSIxIi8+PC9wYXR0ZXJuPjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI3BhdHRlcm4pIi8+PC9zdmc+');
+    }
+    .error-code {
+      text-shadow: 0 0 20px rgba(0, 243, 255, 0.5);
+    }
+    .ussd-code {
+      font-family: monospace;
+      letter-spacing: 2px;
+    }
+    .glow-button {
+      transition: all 0.3s ease;
+    }
+    .glow-button:hover {
+      box-shadow: 0 0 15px rgba(0, 243, 255, 0.3);
+    }
+  </style>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="min-h-screen flex flex-col">
+  <!-- Navbar -->
+  <nav class="bg-midnight-navy border-b border-gray-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between h-16 items-center">
+        <div class="flex items-center">
+          <a href="index.html" class="text-2xl font-bold bg-gradient-to-r from-electric-blue to-cyber-teal bg-clip-text text-transparent">HFLOW</a>
         </div>
-
-        <!-- Message -->
-        <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
-          Page Not Found
-        </h1>
-        <p class="text-lg text-gray-600 mb-8">
-          Oops! The page you're looking for doesn't exist or has been moved.
-          <br>
-          Try returning to our homepage or contact support if the problem
-          persists.
-        </p>
-
-        <!-- Actions -->
-        <div class="flex flex-col sm:flex-row justify-center gap-4">
-          <a
-            href="/"
-            class="hflow-gradient text-white font-medium rounded-lg px-6 py-3 text-center hover:opacity-90 transition"
-          >
-            Return Home
-          </a>
-          <a
-            href="/contact"
-            class="bg-white border border-gray-300 text-gray-700 font-medium rounded-lg px-6 py-3 hover:bg-gray-50 transition"
-          >
-            Contact Support
-          </a>
-        </div>
-
-        <!-- USSD Reminder -->
-        <div class="mt-12 p-4 bg-blue-50 rounded-lg inline-block">
-          <p class="text-gray-700">
-            <span class="font-semibold">Remember:</span> You can always access
-            Hflow via USSD by dialing
-            <span class="font-mono bg-gray-100 px-2 py-1 rounded"
-            >*384*2005#</span>
-          </p>
+        <div class="hidden md:block">
+          <div class="ml-10 flex items-center space-x-4">
+            <a href="index.html" class="hover:text-cyber-teal px-3 py-2">Home</a>
+            <a href="signup.html" class="hover:text-cyber-teal px-3 py-2">Sign Up</a>
+            <a href="faq.html" class="hover:text-cyber-teal px-3 py-2">FAQ</a>
+            <a href="contact.html" class="hover:text-cyber-teal px-3 py-2">Contact</a>
+            <a href="*384*2005#" class="ml-4 bg-gradient-tech hover:opacity-90 text-oxford-blue font-bold py-2 px-6 rounded-full">
+              Dial *384*2005#
+            </a>
+          </div>
         </div>
       </div>
     </div>
+  </nav>
 
-    <!-- Flowbite JS -->
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"
-    ></script>
-    <!-- Custom JS -->
-    <script>
-      // Add animation to buttons on hover
-      document.querySelectorAll("a").forEach((link) => {
-        link.addEventListener("mouseenter", () => {
-          link.classList.add(
-            "transition",
-            "transform",
-            "hover:-translate-y-1",
-          );
-        });
-        link.addEventListener("mouseleave", () => {
-          link.classList.remove("transform", "hover:-translate-y-1");
-        });
-      });
+  <!-- Main Content -->
+  <main class="flex-grow flex items-center justify-center p-4">
+    <div class="text-center max-w-2xl">
+      <!-- Animated 404 -->
+      <div class="mb-8 animate-bounce">
+        <span class="error-code text-9xl font-bold bg-gradient-to-r from-electric-blue to-cyber-teal bg-clip-text text-transparent">404</span>
+      </div>
+      
+      <h1 class="text-3xl md:text-4xl font-bold mb-6">
+        Lost in the <span class="text-electric-blue">Digital Void</span>
+      </h1>
+      
+      <p class="text-xl text-gray-300 mb-8 max-w-lg mx-auto">
+        The page you're looking for doesn't exist. Maybe it was swallowed by a black hole, 
+        or perhaps you mistyped the URL. Either way, let's get you back on track.
+      </p>
+      
+      <div class="grid md:grid-cols-2 gap-4 max-w-md mx-auto">
+        <!-- Home Button -->
+        <a href="index.html" class="glow-button bg-gradient-tech hover:opacity-90 text-oxford-blue font-bold py-3 px-6 rounded-lg transition-all">
+          Beam Me Home
+        </a>
+        
+        <!-- USSD Button -->
+        <a href="*384*2005#" class="glow-button border-2 border-electric-blue hover:bg-electric-blue hover:text-oxford-blue text-electric-blue font-bold py-3 px-6 rounded-lg transition-all">
+          <span class="ussd-code">*384*2005#</span>
+        </a>
+      </div>
+      
+      <!-- Techy Divider -->
+      <div class="flex items-center my-8">
+        <div class="flex-grow border-t border-gray-700"></div>
+        <span class="px-4 text-gray-500">OR</span>
+        <div class="flex-grow border-t border-gray-700"></div>
+      </div>
+      
+      <!-- Search -->
+      <div class="max-w-md mx-auto">
+        <p class="text-gray-400 mb-3">Try searching:</p>
+        <div class="relative">
+          <input type="text" placeholder="Search HFlow..." class="w-full bg-midnight-navy border border-gray-700 text-white text-sm rounded-lg focus:ring-electric-blue focus:border-electric-blue p-3 pl-10">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500 absolute left-3 top-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+        </div>
+      </div>
+    </div>
+  </main>
 
-      // Log 404 errors (optional)
-      console.warn(
-        "404 Page Not Found - Path:",
-        window.location.pathname,
-      );
-    </script>
-  </body>
+  <!-- Circuit Pattern Footer -->
+  <footer class="bg-midnight-navy py-8 border-t border-gray-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <p class="text-gray-500 text-sm">
+        © 2023 Hflow. All rights reserved. 
+        <a href="index.html" class="text-electric-blue hover:underline">Home</a> | 
+        <a href="contact.html" class="text-cyber-teal hover:underline">Contact Support</a>
+      </p>
+    </div>
+  </footer>
+
+  <!-- Flowbite JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
+  
+  <!-- Simple Search Functionality -->
+  <script>
+    document.querySelector('input[type="text"]').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        alert('Search would redirect to results for: ' + this.value);
+        // In production: window.location.href = '/search?q=' + encodeURIComponent(this.value);
+      }
+    });
+  </script>
+</body>
 </html>
