@@ -26,7 +26,7 @@ router.post("/", async (req, res) => {
   const ussdPassedInput = text.split("*");
   switch (true) {
     case text === "":
-      response = `CON Hy from the Hpesa team.
+      response = `CON Hy from the Hflow team.
 What would you like us to help you with today?
 1. Create an account
 2. My Balance
