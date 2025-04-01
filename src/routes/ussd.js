@@ -8,10 +8,7 @@ const {
 } = require("@services/database");
 const hederaService = require("@services/hedera");
 const AfricasTalking = require("africastalking");
-const {
-  decryptPrivateKey,
-  verifyPinPhone,
-} = require("@utils/encryption");
+const { decryptPrivateKey, verifyPinPhone } = require("@utils/encryption");
 
 const africastalking = AfricasTalking({
   apiKey: process.env.AT_API_KEY,
@@ -68,7 +65,7 @@ What would you like us to help you with today?
       const { accountId, publicKey, encryptedPrivateKey, pinHash } =
         await hederaService.createUserWallet(
           phoneNumber.replace("+", ""),
-          ussdPassedInput[3],
+          ussdPassedInput[3]
         );
       const result = await registerUser(
         phoneNumber.replace("+", ""),
@@ -76,7 +73,7 @@ What would you like us to help you with today?
         encryptedPrivateKey,
         publicKey,
         accountId,
-        pinHash,
+        pinHash
       );
       if (!result) {
         response = "END Failed to create account please try again later";
@@ -84,12 +81,10 @@ What would you like us to help you with today?
 
       msgResult = await africastalking.SMS.send({
         to: phoneNumber,
-        message:
-          `Welcome to HFlow your account has been created successfully\nYour account id is ${accountId}`,
+        message: `Welcome to HFlow your account has been created successfully\nYour account id is ${accountId}`,
         from: "HFlow",
       });
-      response =
-        `END successfully created your account of id ${accountId}\nWelcome to HFLOW your number one solution to all your payment needs : )`;
+      response = `END successfully created your account of id ${accountId}\nWelcome to HFLOW your number one solution to all your payment needs : )`;
       break;
 
     case text === "2":
@@ -135,8 +130,9 @@ What would you like us to help you with today?
         return res
           .status(403)
           .send(
-            `END Invalid pin: remaining attempts ${3 - (user.failedAttempts + 1)
-            }`,
+            `END Invalid pin: remaining attempts ${
+              3 - (user.failedAttempts + 1)
+            }`
           );
       }
 
@@ -151,14 +147,14 @@ What would you like us to help you with today?
 
       const senderPrivateKey = decryptPrivateKey(
         user.encryptedPrivateKey,
-        ussdPassedInput[3],
+        ussdPassedInput[3]
       );
-      const { status, txId, hashScanUrl, newBalance } = await hederaService
-        .sendHBAR(
+      const { status, txId, hashScanUrl, newBalance } =
+        await hederaService.sendHBAR(
           senderPrivateKey,
           user.hederaAccountId,
           receiver.hederaAccountId,
-          Number(ussdPassedInput[2]),
+          Number(ussdPassedInput[2])
         );
 
       const transactionId = await addTransaction(
@@ -166,30 +162,27 @@ What would you like us to help you with today?
         receiver.phone,
         Number(ussdPassedInput[2]),
         txId,
-        status.toLowerCase(),
+        status.toLowerCase()
       );
 
       msgResult = await africastalking.SMS.send({
         to: phoneNumber,
-        message: `${txId}\n confirmed. ${ussdPassedInput[2]
-          } sent to ${receiver.fullName}.\n New balance: ${newBalance.hbars} HBAR`,
+        message: `${txId}\n confirmed. ${ussdPassedInput[2]} sent to ${receiver.fullName}.\n New balance: ${newBalance.hbars} HBAR`,
         from: "HFlow",
       });
-            msgResult = await africastalking.SMS.send({
-        to: receiver.phone,
-        message: `${txId}\n confirmed. You have received ${ussdPassedInput[2]} hbar from ${user.fullName}`,
+      msgResult = await africastalking.SMS.send({
+        to: "+" + receiver.phone,
+        message: `${txId} confirmed.\n You have received ${ussdPassedInput[2]} hbar from ${user.fullName}`,
         from: "HFlow",
       });
-      response =
-        `END Transaction successful of id: ${txId} new balance: ${newBalance.hbars} HBAR`;
+      response = `END Transaction successful of id: ${txId} new balance: ${newBalance.hbars} HBAR`;
       break;
     case text === "4":
       const transactions = await getUserTransactions(user.phone);
       response = "END You will receive a message of your transactions shortly";
       let transactionsMsg = "";
       transactions.forEach((transaction) => {
-        transactionsMsg +=
-          `TransactionID: ${transaction.txHash}\nTo: ${transaction.receiverPhone}\nAmount: ${transaction.amount}\timestamp: ${transaction.timestamp}\n\n`;
+        transactionsMsg += `TransactionID: ${transaction.txHash}\nTo: ${transaction.receiverPhone}\nAmount: ${transaction.amount}\timestamp: ${transaction.timestamp}\n\n`;
       });
       msgResult = await africastalking.SMS.send({
         to: phoneNumber,
