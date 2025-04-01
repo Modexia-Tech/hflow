@@ -1,254 +1,149 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login | Hflow - Crypto Banking for Africa</title>
-    <!-- Flowbite CSS -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
-    <!-- Custom Hflow Styling -->
-    <style>
-        :root {
-            --hflow-primary: #4f46e5;
-            --hflow-secondary: #8b5cf6;
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up | HFlow - USSD Hedera Wallet</title>
+  <!-- Tailwind CSS + Flowbite CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'oxford-blue': '#050D2A',
+            'electric-blue': '#00A3FF',
+            'cyber-teal': '#00F5D4',
+            'neon-cyan': '#0FF0FC',
+            'midnight-navy': '#0A1435',
+          },
+          backgroundImage: {
+            'gradient-tech': 'linear-gradient(45deg, #00A3FF 0%, #00F5D4 100%)',
+          }
         }
-        
-        body {
-            background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-        }
-        
-        .hflow-gradient-bg {
-            background: linear-gradient(135deg, var(--hflow-primary) 0%, var(--hflow-secondary) 100%);
-        }
-        
-        .hflow-shadow {
-            box-shadow: 0 10px 25px -5px rgba(79, 70, 229, 0.1);
-        }
-        
-        .input-ring:focus {
-            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.3);
-        }
-        
-        @media (max-width: 640px) {
-            .mobile-ussd-banner {
-                display: flex !important;
-            }
-        }
-    </style>
+      }
+    }
+  </script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
+  <style>
+    body { 
+      background: url('https://images.unsplash.com/photo-1639762681057-408e52192e55?q=80&w=2232&auto=format&fit=crop') no-repeat center center fixed;
+      background-size: cover;
+    }
+    .signup-card {
+      backdrop-filter: blur(10px);
+      background: rgba(5, 13, 42, 0.8);
+    }
+  </style>
 </head>
 <body class="min-h-screen flex items-center justify-center p-4">
-    <div class="w-full max-w-md">
-        <!-- Logo Header -->
-        <div class="text-center mb-8">
-            <div class="h-16 w-16 mx-auto mb-4 rounded-full hflow-gradient-bg flex items-center justify-center">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-            </div>
-            <h1 class="text-2xl font-bold text-gray-900">Hflow Wallet</h1>
-            <p class="text-gray-500 mt-1">Banking for Africa's digital economy</p>
-        </div>
-
-        <!-- Login Card -->
-        <div class="bg-white rounded-xl shadow-lg hflow-shadow overflow-hidden">
-            <!-- USSD Banner (Mobile Only) -->
-            <div class="mobile-ussd-banner hidden bg-blue-50 p-3 border-b border-blue-100">
-                <div class="flex items-center justify-center space-x-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                    </svg>
-                    <span class="text-sm font-medium text-blue-700">
-                        Prefer USSD? Dial <span class="font-mono bg-blue-100 px-2 py-0.5 rounded">*384*2005#</span>
-                    </span>
-                </div>
-            </div>
-
-            <!-- Login Form -->
-            <form id="loginForm" class="p-6 space-y-6">
-                <!-- Phone Number -->
-                <div>
-                    <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
-                    <div class="relative">
-                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                            <span class="text-gray-500">+254</span>
-                        </div>
-                        <input 
-                            type="tel" 
-                            id="phone" 
-                            name="phone" 
-                            placeholder="712345678" 
-                            pattern="[0-9]{9}" 
-                            title="Enter 9-digit Kenyan number without country code"
-                            class="pl-16 block w-full rounded-lg border-gray-300 shadow-sm input-ring focus:border-indigo-500 py-3 px-4 border"
-                            required
-                        >
-                    </div>
-                </div>
-
-                <!-- PIN -->
-                <div>
-                    <div class="flex justify-between items-center mb-1">
-                        <label for="pin" class="block text-sm font-medium text-gray-700">PIN</label>
-                        <a href="#" id="forgotPin" class="text-sm font-medium text-indigo-600 hover:text-indigo-500">Forgot PIN?</a>
-                    </div>
-                    <input 
-                        type="password" 
-                        id="pin" 
-                        name="pin" 
-                        placeholder="••••" 
-                        maxlength="6" 
-                        pattern="[0-9]{4,6}" 
-                        title="4-6 digit PIN"
-                        class="block w-full rounded-lg border-gray-300 shadow-sm input-ring focus:border-indigo-500 py-3 px-4 border"
-                        required
-                    >
-                </div>
-
-                <!-- Remember Device (Secure Cookie) -->
-                <div class="flex items-center">
-                    <input 
-                        type="checkbox" 
-                        id="rememberDevice" 
-                        name="rememberDevice"
-                        class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
-                    >
-                    <label for="rememberDevice" class="ml-2 block text-sm text-gray-700">
-                        Remember this device (30 days)
-                    </label>
-                </div>
-
-                <!-- Submit Button -->
-                <button 
-                    type="submit" 
-                    class="w-full hflow-gradient-bg text-white font-medium rounded-lg py-3 px-4 hover:opacity-90 transition duration-150 flex justify-center items-center"
-                    id="loginButton"
-                >
-                    <span id="buttonText">Login</span>
-                    <svg id="loadingSpinner" class="hidden h-5 w-5 ml-2 text-white animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                    </svg>
-                </button>
-            </form>
-
-            <!-- Divider -->
-            <div class="relative px-6">
-                <div class="absolute inset-0 flex items-center" aria-hidden="true">
-                    <div class="w-full border-t border-gray-200"></div>
-                </div>
-                <div class="relative flex justify-center">
-                    <span class="px-2 bg-white text-sm text-gray-500">New to Hflow?</span>
-                </div>
-            </div>
-
-            <!-- Registration CTA -->
-            <div class="px-6 pb-6">
-                <a 
-                    href="/register" 
-                    class="w-full block text-center bg-white border border-gray-300 text-gray-700 font-medium rounded-lg py-3 px-4 hover:bg-gray-50 transition duration-150"
-                >
-                    Create Wallet
-                </a>
-            </div>
-        </div>
-
-        <!-- Security Footer -->
-        <div class="mt-6 text-center">
-            <div class="flex items-center justify-center space-x-4">
-                <div class="flex items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-green-500 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                    </svg>
-                    <span class="text-xs text-gray-500">Bank-Level Security</span>
-                </div>
-                <div class="flex items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-green-500 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-                    </svg>
-                    <span class="text-xs text-gray-500">Powered by Hedera</span>
-                </div>
-            </div>
-        </div>
+  <div class="signup-card border border-gray-700 rounded-2xl shadow-xl overflow-hidden w-full max-w-md">
+    <!-- Header -->
+    <div class="bg-gradient-to-r from-oxford-blue to-midnight-navy p-6 text-center">
+      <a href="/" class="inline-block">
+        <span class="text-2xl font-bold bg-gradient-to-r from-electric-blue to-cyber-teal bg-clip-text text-transparent">HFLOW</span>
+      </a>
+      <h1 class="text-2xl font-bold text-white mt-4">Create Your Wallet</h1>
+      <p class="text-gray-300 mt-2">Join Africa's USSD crypto revolution</p>
     </div>
 
-    <!-- Flowbite JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
-    <!-- Login Logic -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const loginForm = document.getElementById('loginForm');
-            const loginButton = document.getElementById('loginButton');
-            const buttonText = document.getElementById('buttonText');
-            const loadingSpinner = document.getElementById('loadingSpinner');
-            const forgotPinLink = document.getElementById('forgotPin');
+    <!-- Signup Form -->
+    <div class="p-6">
+      <form>
+        <!-- Phone Number -->
+        <div class="mb-4">
+          <label for="phone" class="block text-sm font-medium text-gray-300 mb-2">Phone Number</label>
+          <div class="relative">
+            <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+              <span class="text-gray-400">+254</span>
+            </div>
+            <input 
+              type="tel" 
+              id="phone" 
+              name="phone"
+              placeholder="712 345 678" 
+              class="bg-gray-800 border border-gray-700 text-white text-sm rounded-lg focus:ring-electric-blue focus:border-electric-blue block w-full pl-16 p-2.5" 
+              required
+              pattern="[0-9]{9}"
+              title="Enter 9-digit Kenyan number (without +254)"
+            >
+          </div>
+        </div>
 
-            // Form submission handler
-            loginForm.addEventListener('submit', async function(e) {
-                e.preventDefault();
-                
-                // Get form values
-                const phone = '+254' + document.getElementById('phone').value;
-                const pin = document.getElementById('pin').value;
-                const rememberDevice = document.getElementById('rememberDevice').checked;
-                
-                // UI Loading state
-                loginButton.disabled = true;
-                buttonText.textContent = 'Authenticating...';
-                loadingSpinner.classList.remove('hidden');
-                
-                try {
-                    // Simulate API call (replace with actual fetch)
-                    const response = await mockLoginApi(phone, pin, rememberDevice);
-                    
-                    // On success - redirect to dashboard
-                    window.location.href = '/dashboard';
-                } catch (error) {
-                    // Show error toast
-                    showErrorToast(error.message);
-                    
-                    // Reset UI
-                    loginButton.disabled = false;
-                    buttonText.textContent = 'Login';
-                    loadingSpinner.classList.add('hidden');
-                }
-            });
+        <!-- PIN -->
+        <div class="mb-6">
+          <label for="pin" class="block text-sm font-medium text-gray-300 mb-2">Create 4-Digit PIN</label>
+          <input 
+            type="password" 
+            id="pin" 
+            name="pin"
+            maxlength="4"
+            inputmode="numeric"
+            class="bg-gray-800 border border-gray-700 text-white text-sm rounded-lg focus:ring-cyber-teal focus:border-cyber-teal block w-full p-2.5 text-center tracking-widest font-mono" 
+            required
+            pattern="[0-9]{4}"
+            title="4-digit numeric PIN"
+          >
+          <p class="mt-1 text-xs text-gray-400">This encrypts your Hedera keys. Never share it.</p>
+        </div>
 
-            // Forgot PIN flow
-            forgotPinLink.addEventListener('click', function(e) {
-                e.preventDefault();
-                const phone = document.getElementById('phone').value;
-                
-                if (!phone || phone.length !== 9) {
-                    showErrorToast('Please enter your phone number first');
-                    return;
-                }
-                
-                // Show PIN recovery options modal
-                // This would be implemented with Flowbite's modal component
-                alert(`PIN recovery initiated for +254${phone}. You will receive USSD instructions.`);
-            });
+        <!-- Terms -->
+        <div class="flex items-start mb-6">
+          <div class="flex items-center h-5">
+            <input 
+              id="terms" 
+              type="checkbox" 
+              class="w-4 h-4 bg-gray-800 border-gray-700 rounded focus:ring-electric-blue focus:ring-2" 
+              required
+            >
+          </div>
+          <label for="terms" class="ml-2 text-sm text-gray-300">
+            I agree to HFlow's <a href="#" class="text-electric-blue hover:underline">Terms</a> and <a href="#" class="text-cyber-teal hover:underline">Privacy Policy</a>
+          </label>
+        </div>
 
-            // Helper functions
-            function showErrorToast(message) {
-                // Implement with Flowbite toast or custom solution
-                alert(`Error: ${message}`);
-            }
+        <!-- Submit -->
+        <button 
+          type="submit" 
+          class="w-full bg-gradient-tech hover:opacity-90 text-oxford-blue font-bold py-3 px-4 rounded-lg mb-4 transition-all"
+        >
+          Create Wallet via USSD
+        </button>
 
-            // Mock API function (replace with actual fetch)
-            async function mockLoginApi(phone, pin, rememberDevice) {
-                return new Promise((resolve, reject) => {
-                    setTimeout(() => {
-                        // Simulate 80% success rate
-                        if (Math.random() > 0.2) {
-                            resolve({ status: 'success' });
-                        } else {
-                            reject(new Error('Invalid phone number or PIN'));
-                        }
-                    }, 1500);
-                });
-            }
-        });
-    </script>
+        <!-- Alternative -->
+        <div class="text-center">
+          <p class="text-sm text-gray-400">
+            Or dial <span class="font-mono text-electric-blue">*384*2005#</span> directly
+          </p>
+        </div>
+      </form>
+    </div>
+
+    <!-- Footer -->
+    <div class="bg-midnight-navy px-6 py-4 text-center border-t border-gray-800">
+      <p class="text-sm text-gray-400">
+        Already have a wallet? 
+        <a href="#" class="text-cyber-teal hover:underline font-medium">Sign in</a>
+      </p>
+    </div>
+  </div>
+
+  <!-- Flowbite JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
+  
+  <!-- Form Validation -->
+  <script>
+    document.querySelector('form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      // Simulate USSD registration flow
+      const phone = document.getElementById('phone').value;
+      const pin = document.getElementById('pin').value;
+      
+      alert(`USSD request sent to +254${phone}. Check your phone to complete registration.`);
+      
+      // In a real app, you'd call your backend API here
+      // fetch('/api/register', { method: 'POST', body: JSON.stringify({ phone, pin }) })
+    });
+  </script>
 </body>
 </html>
