@@ -1,4 +1,4 @@
-# 🌍 StarHash (HFlow) - USSD Hedera Wallet
+# 🌍HFlow - USSD Hedera Wallet
 
 **Send digital assets on any phone, no internet needed.**\
 Built on Hedera Hashgraph for **3-second, sub-cent transactions**.
