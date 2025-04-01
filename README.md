@@ -1,14 +1,13 @@
+
 # 🌍HFlow - USSD Hedera Wallet
+
+[![Hedera](https://img.shields.io/badge/Powered%20by-Hedera-000000)](https://hedera.com)
+[![License: MIT](https://img.shields.io/badge/License-AGL_3.0-yellow.svg)](LICENSE)
 
 **Send digital assets on any phone, no internet needed.**\
 Built on Hedera Hashgraph for **3-second, sub-cent transactions**.
 
-[![Hedera](https://img.shields.io/badge/Powered%20by-Hedera-000000)](https://hedera.com)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-
-<div align="center">
-  <img src="assets/ussd-demo.gif" width="300" alt="USSD Demo">
-</div>
+[![YouTube](https://i.ytimg.com/vi/LzYc63p0oWQ/maxresdefault.jpg)](https://www.youtube.com/watch?v=LzYc63p0oWQ)
 
 ## 🚀 Key Features
 
