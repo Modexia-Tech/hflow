@@ -85,9 +85,4 @@ flowchart TB
 
 **First-time?** Try `good first issue` tags.
 
-## 📜 License
 
-MIT © 2025 StarHash Team\
-_Not affiliated with Hedera or M-Pesa._
-
----
