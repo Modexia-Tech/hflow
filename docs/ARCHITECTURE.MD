@@ -18,12 +18,12 @@ flowchart TD
 
 - **Provider**: Africa's Talking/
 - **Role**:
-  - Handles USSD sessions via `*384*2005#` shortcode.
+  - Handles USSD sessions via `\*384\*2005#` shortcode.
   - Forwards payloads to Hflow backend.
 - **Flow**:
   ```mermaid
   sequenceDiagram
-      User->>+Africa's Talking: Dial \*384\*2005#
+      User->>+Africa's Talking: Dial *384*2005#
       Africa's Talking->>+Hflow: POST /ussd/start
       Hflow-->>-Africa's Talking: "CON Welcome..."
       Africa's Talking-->>-User: Display menu
