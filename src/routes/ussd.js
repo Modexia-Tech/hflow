@@ -6,12 +6,16 @@ const {
   updateUser,
 } = require("@services/database");
 const hederaService = require("@services/hedera");
-
+const AfricasTalking = require("africastalking");
 const {
   decryptPrivateKey,
   verifyPinPhone,
 } = require("@utils/encryption");
 
+const africastalking = AfricasTalking({
+  apiKey: process.env.AT_API_KEY,
+  username: "sandbox",
+});
 router.post("/", async (req, res) => {
   const { sessionId, serviceCode, phoneNumber, text } = {
     sessionId: "",
@@ -23,6 +27,7 @@ router.post("/", async (req, res) => {
 
   const user = await getUser(phoneNumber.replace("+", ""));
   let response = "";
+  let msgResult;
   const ussdPassedInput = text.split("*");
   switch (true) {
     case text === "":
@@ -76,6 +81,13 @@ What would you like us to help you with today?
         response = "END Failed to create account please try again later";
       }
 
+      msgResult = await africastalking.SMS.send({
+        to: phoneNumber,
+        message:
+          `Welcome to HFlow your account has been created successfully\nYour account id is ${accountId}`,
+        from: "HFlow",
+      });
+      console.log(msgResult);
       response =
         `END successfully created your account of id ${accountId}\nWelcome to HFLOW your number one solution to all your payment needs : )`;
       break;
@@ -91,6 +103,13 @@ What would you like us to help you with today?
         return res.status(403).send("END Invalid pin");
       }
       const balance = await hederaService.getBalance(user.hederaAccountId);
+
+      msgResult = await africastalking.SMS.send({
+        to: phoneNumber,
+        message: `Your balance is ${balance.hbars} HBAR`,
+        from: "HFlow",
+      });
+      console.log(msgResult);
       response = `END Your balance is ${balance.hbars} HBAR`;
       break;
 
@@ -150,6 +169,14 @@ What would you like us to help you with today?
         txId,
         status.toLowerCase(),
       );
+
+      msgResult = await africastalking.SMS.send({
+        to: phoneNumber,
+        message:
+          `Transaction successful of id: ${txId} to ${receiver.fullName}|${receiver.phone}.\n new balance: ${newBalance.hbars} HBAR`,
+        from: "HFlow",
+      });
+      console.log(msgResult);
       response =
         `END Transaction successful of id: ${txId} new balance: ${newBalance.hbars} HBAR`;
       break;
