@@ -1,10 +1,6 @@
 # API Documentation
 
-## Overview
-
-This document provides an overview of the API architecture for the `hflow`
-project. The `hflow` project focuses on digital currency transfer  by Hedera
-Hashgraph.
+---
 
 ## Table of Contents
 
