@@ -175,6 +175,11 @@ What would you like us to help you with today?
           } sent to ${receiver.fullName}.\n New balance: ${newBalance.hbars} HBAR`,
         from: "HFlow",
       });
+            msgResult = await africastalking.SMS.send({
+        to: receiver.phone,
+        message: `${txId}\n confirmed. You have received ${ussdPassedInput[2]} hbar from ${user.fullName}`,
+        from: "HFlow",
+      });
       response =
         `END Transaction successful of id: ${txId} new balance: ${newBalance.hbars} HBAR`;
       break;
