@@ -72,7 +72,7 @@ class HederaService {
       const response = await new AccountCreateTransaction()
         .setKey(newKey.publicKey)
         .setInitialBalance(Hbar.from(this.minBalance))
-        .setTransactionMemo(`HPesa wallet creation for ${phone}`)
+        .setTransactionMemo(`Hflow wallet creation for ${phone}`)
         .execute(this.client);
 
       txId = response.transactionId;
@@ -155,7 +155,7 @@ class HederaService {
     const tx = await new TransferTransaction()
       .addHbarTransfer(senderAccountId, Hbar.from(-amountHBAR))
       .addHbarTransfer(receiverAccountId, Hbar.from(amountHBAR))
-      .setTransactionMemo(`HPesa transfer to ${receiverId}`)
+      .setTransactionMemo(`Hflow transfer to ${receiverId}`)
       .freezeWith(this.client)
       .sign(privateKey);
 

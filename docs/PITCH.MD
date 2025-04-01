@@ -1,4 +1,4 @@
-# 🚀 HPesa: The "M-Pesa of Crypto"
+# 🚀 Hflow: The "M-Pesa of Crypto"
 
 _Bank Africa’s Unbanked—No Smartphone Needed_
 
@@ -11,7 +11,7 @@ _Bank Africa’s Unbanked—No Smartphone Needed_
 
 ### **🎯 Our Solution**
 
-HPesa lets users:
+Hflow lets users:
 
 1. **Buy/Send HBAR** via USSD (`*123#`).
 2. **Cash out to M-Pesa** at 1/10th the cost.
@@ -19,7 +19,7 @@ HPesa lets users:
 
 ```mermaid
 flowchart LR
-    A[Grandma] -->|*123#| B[HPesa]
+    A[Grandma] -->|*123#| B[Hflow]
     B --> C[Send HBAR to Nigeria]
     C --> D[Recipient cashes out via M-Pesa]
 ```
@@ -67,7 +67,7 @@ _"We’re the ‘Nokia of DeFi’—bringing crypto to the 4B people stuck in 20
 
 📅 **Next Milestone**: 100K users by Q3 2025.
 
-📧 **Contact**: invest@hpesa.com | [Demo](https://demo.hpesa.com)
+📧 **Contact**: invest@hflow.com | [Demo](https://demo.hflow.com)
 
 ---
 

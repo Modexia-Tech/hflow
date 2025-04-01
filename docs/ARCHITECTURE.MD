@@ -1,10 +1,10 @@
-# HPesa Architecture Overview
+# Hflow Architecture Overview
 
 A USSD-first Hedera wallet bridging digital currency transfer
 ```mermaid
 flowchart TD
     A[User] -->|USSD *123#| B[Africa's Talking]
-    B --> C[HPesa Backend]
+    B --> C[Hflow Backend]
     C --> D[Hedera Network]
     C --> E[SQLite/PostgreSQL]
       D --> G[Mirror Node]
@@ -19,13 +19,13 @@ flowchart TD
 - **Provider**: Africa's Talking/
 - **Role**:
   - Handles USSD sessions via `*123#` shortcode.
-  - Forwards payloads to HPesa backend.
+  - Forwards payloads to Hflow backend.
 - **Flow**:
   ```mermaid
   sequenceDiagram
       User->>+Africa's Talking: Dial *123#
-      Africa's Talking->>+HPesa: POST /ussd/start
-      HPesa-->>-Africa's Talking: "CON Welcome..."
+      Africa's Talking->>+Hflow: POST /ussd/start
+      Hflow-->>-Africa's Talking: "CON Welcome..."
       Africa's Talking-->>-User: Display menu
   ```
 
@@ -186,6 +186,6 @@ flowchart LR
 ---
 
 📄 **License**: Apache 2.0\
-📧 **Contact**: architects@hpesa.com
+📧 **Contact**: architects@hflow.com
 
 ---

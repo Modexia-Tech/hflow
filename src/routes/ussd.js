@@ -76,7 +76,7 @@ What would you like us to help you with today?
       }
 
       response =
-        `END successfully created your account of id ${accountId}\nWelcome to HPESA your number one solution to all your payment needs : )`;
+        `END successfully created your account of id ${accountId}\nWelcome to HFLOW your number one solution to all your payment needs : )`;
       break;
 
     /* Main Menu Option 3 */

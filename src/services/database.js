@@ -2,11 +2,11 @@ require("dotenv").config();
 const { Database } = require("@sqlitecloud/drivers");
 
 let db;
-if (!process.env.HPESA_DB) {
+if (!process.env.HFLOW_DB) {
   const sqlite3 = require("sqlite3");
   const path = require("path");
   db = new sqlite3.Database(
-    path.resolve(__dirname, "hpesa.db"),
+    path.resolve(__dirname, "hflow.db"),
     sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE,
     (err) => {
       if (err) console.error("[DB ERROR]: Database error:", err);
@@ -14,7 +14,7 @@ if (!process.env.HPESA_DB) {
     },
   );
 } else {
-  db = new Database(process.env.HPESA_DB);
+  db = new Database(process.env.HFLOW_DB);
 }
 
 db.on("error", (error) => {

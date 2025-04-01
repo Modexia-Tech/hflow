@@ -1,4 +1,4 @@
-# **AI Integration in HPesa**
+# **AI Integration in Hflow**
 
 _Smart fraud detection and personalized financial services via USSD_
 
@@ -90,7 +90,7 @@ flowchart LR
 
 📜 **License**: Apache 2.0\
 🤖 **Model Training**: `scripts/train_model.py`\
-📧 **Contact**: ai-team@hpesa.com
+📧 **Contact**: ai-team@hflow.com
 
 ---
 

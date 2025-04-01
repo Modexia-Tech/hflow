@@ -1,10 +1,10 @@
 # **Hedera Integration Guide**
 
-_How HPesa leverages Hedera Hashgraph for fast, low-cost transactions_
+_How Hflow leverages Hedera Hashgraph for fast, low-cost transactions_
 
 ```mermaid
 flowchart TD
-    A[USSD Request] --> B[HPesa Backend]
+    A[USSD Request] --> B[Hflow Backend]
     B --> C[Hedera SDK]
     C --> D[Mainnet/Testnet]
     D --> E[Mirror Node]
@@ -156,7 +156,7 @@ GET https://mainnet-public.mirrornode.hedera.com/api/v1/transactions/0.0.1234@17
 ---
 
 📜 **License**: Apache 2.0\
-📧 **Support**: hedra-support@hpesa.com
+📧 **Support**: hedra-support@hflow.com
 
 **TL;DR**:
 

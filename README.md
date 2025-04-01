@@ -30,8 +30,8 @@ Built on Hedera Hashgraph for **3-second, sub-cent transactions**.
 ### Installation
 
 ```bash
-git clone https://github.com/Modexia-Tech/hpesa.git
-cd hpesa/backend
+git clone https://github.com/Modexia-Tech/hflow.git
+cd hflow/backend
 npm install
 cp .env.example .env  # Add your keys
 ```

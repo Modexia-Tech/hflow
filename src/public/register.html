@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register | HPesa - Crypto Wallet for Africa</title>
+    <title>Register | Hflow - Crypto Wallet for Africa</title>
     <!-- Flowbite CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
     <!-- Custom Styles -->
     <style>
         :root {
-            --hpesa-primary: #4f46e5;
-            --hpesa-secondary: #8b5cf6;
+            --hflow-primary: #4f46e5;
+            --hflow-secondary: #8b5cf6;
         }
         
         body {
@@ -18,11 +18,11 @@
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
         }
         
-        .hpesa-gradient-bg {
-            background: linear-gradient(135deg, var(--hpesa-primary) 0%, var(--hpesa-secondary) 100%);
+        .hflow-gradient-bg {
+            background: linear-gradient(135deg, var(--hflow-primary) 0%, var(--hflow-secondary) 100%);
         }
         
-        .hpesa-shadow {
+        .hflow-shadow {
             box-shadow: 0 10px 25px -5px rgba(79, 70, 229, 0.1);
         }
         
@@ -33,7 +33,7 @@
         
         .progress-bar-fill {
             height: 100%;
-            background: linear-gradient(90deg, var(--hpesa-primary) 0%, var(--hpesa-secondary) 100%);
+            background: linear-gradient(90deg, var(--hflow-primary) 0%, var(--hflow-secondary) 100%);
             transition: width 0.3s ease;
         }
         
@@ -66,7 +66,7 @@
         </div>
 
         <!-- Registration Card -->
-        <div class="bg-white rounded-xl shadow-lg hpesa-shadow overflow-hidden">
+        <div class="bg-white rounded-xl shadow-lg hflow-shadow overflow-hidden">
             <!-- USSD Fallback -->
             <div class="mobile-ussd-banner hidden bg-blue-50 p-3 border-b border-blue-100">
                 <div class="flex items-center justify-center space-x-2">
@@ -159,7 +159,7 @@
                     </div>
                     <div class="ml-3">
                         <label for="termsAgreement" class="text-sm text-gray-700">
-                            I agree to HPesa's <a href="/terms" class="text-indigo-600 hover:text-indigo-500">Terms</a> and <a href="/privacy" class="text-indigo-600 hover:text-indigo-500">Privacy Policy</a>
+                            I agree to Hflow's <a href="/terms" class="text-indigo-600 hover:text-indigo-500">Terms</a> and <a href="/privacy" class="text-indigo-600 hover:text-indigo-500">Privacy Policy</a>
                         </label>
                     </div>
                 </div>
@@ -179,7 +179,7 @@
                 <!-- Submit Button -->
                 <button 
                     type="submit" 
-                    class="w-full hpesa-gradient-bg text-white font-medium rounded-lg py-3 px-4 hover:opacity-90 transition duration-150 flex justify-center items-center mt-4"
+                    class="w-full hflow-gradient-bg text-white font-medium rounded-lg py-3 px-4 hover:opacity-90 transition duration-150 flex justify-center items-center mt-4"
                     id="registerButton"
                 >
                     <span id="registerButtonText">Create Wallet</span>
@@ -270,7 +270,7 @@
                 registerButtonText.textContent = 'Creating Wallet...';
                 registerSpinner.classList.remove('hidden');
                 progressBar.classList.remove('password-strength-0', 'password-strength-1', 'password-strength-2', 'password-strength-3');
-                progressBar.classList.add('hpesa-gradient-bg');
+                progressBar.classList.add('hflow-gradient-bg');
                 
                 try {
                     // Simulate API call (replace with actual fetch)
@@ -286,7 +286,7 @@
                     registerButton.disabled = false;
                     registerButtonText.textContent = 'Create Wallet';
                     registerSpinner.classList.add('hidden');
-                    progressBar.classList.remove('hpesa-gradient-bg');
+                    progressBar.classList.remove('hflow-gradient-bg');
                     progressBar.classList.add('password-strength-0');
                 }
             });

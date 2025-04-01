@@ -2,8 +2,8 @@
 
 ## Overview
 
-This document provides an overview of the API architecture for the `hpesa`
-project. The `hpesa` project focuses on digital currency transfer  by Hedera
+This document provides an overview of the API architecture for the `hflow`
+project. The `hflow` project focuses on digital currency transfer  by Hedera
 Hashgraph.
 
 ## Table of Contents
@@ -32,7 +32,7 @@ Hashgraph.
 
 ## Introduction
 
-The `hpesa` API allows developers to integrate mobile digital currency transfer functionalities
+The `hflow` API allows developers to integrate mobile digital currency transfer functionalities
 into their applications. The API is designed to be RESTful and provides
 endpoints for managing users, accounts, transactions, and notifications.
 
