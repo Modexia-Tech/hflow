@@ -185,9 +185,10 @@ class HederaService {
   }
 
   async fundWallet(accountId, amountHBAR) {
+    const receiverAccountId = AccountId.fromString(accountId);
     const tx = await new TransferTransaction()
       .addHbarTransfer(this.client.operatorAccountId, Hbar.from(-amountHBAR))
-      .addHbarTransfer(accountId, Hbar.from(amountHBAR))
+      .addHbarTransfer(receiverAccountId, Hbar.from(amountHBAR))
       .execute(this.client);
 
     const receipt = await tx.getReceipt(this.client);
