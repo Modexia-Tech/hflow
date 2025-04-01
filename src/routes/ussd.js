@@ -180,13 +180,12 @@ What would you like us to help you with today?
       break;
     case text === "4":
       const transactions = await getUserTransactions(user.phone);
-      response = "END Your transactions:\n";
+      response = "END You will receive a message of your transactions shortly";
       let transactionsMsg = "";
       transactions.forEach((transaction) => {
         transactionsMsg +=
           `TransactionID: ${transaction.txHash}\nTo: ${transaction.receiverPhone}\nAmount: ${transaction.amount}\timestamp: ${transaction.timestamp}\n\n`;
       });
-      response += transactionsMsg;
       msgResult = await africastalking.SMS.send({
         to: phoneNumber,
         message: `Your transactions:\n${transactionsMsg}`,
