@@ -49,14 +49,14 @@ Use Africas Talking [simulator](https://developers.africastalking.com/simulator)
 Simulate dialing `*384*2005#` with:
 
 ```bash
-curl -X POST http://localhost:3000/ussd -d "phone=+254712345678&text=1*10*0.0.4567"
+curl -X POST http://localhost:5000/ussd -d "phone=+254712345678&text=1*10*0.0.4567"
 ```
 
 ## 🌐 Architecture
 
 ```mermaid
 flowchart TB
-    User -->|USSD *123#| Backend
+    User -->|USSD *384*2005#| Backend
     Backend -->|Hedera SDK| Hedera
     Backend --> DB[(SQLite)]
     Web --> Backend
