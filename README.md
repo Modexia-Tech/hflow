@@ -30,7 +30,7 @@ Built on Hedera Hashgraph for **3-second, sub-cent transactions**.
 
 ```bash
 git clone https://github.com/Modexia-Tech/hflow.git
-cd hflow/backend
+cd hflow
 npm install
 cp .env.example .env  # Add your keys
 ```
