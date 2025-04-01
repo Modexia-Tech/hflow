@@ -4,6 +4,7 @@ const {
   registerUser,
   addTransaction,
   updateUser,
+  getUserTransactions,
 } = require("@services/database");
 const hederaService = require("@services/hedera");
 const AfricasTalking = require("africastalking");
@@ -87,7 +88,6 @@ What would you like us to help you with today?
           `Welcome to HFlow your account has been created successfully\nYour account id is ${accountId}`,
         from: "HFlow",
       });
-      console.log(msgResult);
       response =
         `END successfully created your account of id ${accountId}\nWelcome to HFLOW your number one solution to all your payment needs : )`;
       break;
@@ -109,7 +109,6 @@ What would you like us to help you with today?
         message: `Your balance is ${balance.hbars} HBAR`,
         from: "HFlow",
       });
-      console.log(msgResult);
       response = `END Your balance is ${balance.hbars} HBAR`;
       break;
 
@@ -172,14 +171,29 @@ What would you like us to help you with today?
 
       msgResult = await africastalking.SMS.send({
         to: phoneNumber,
-        message:
-          `Transaction successful of id: ${txId} to ${receiver.fullName}|${receiver.phone}.\n new balance: ${newBalance.hbars} HBAR`,
+        message: `${txId}\n confirmed. ${ussdPassedInput[2]
+          } sent to ${receiver.fullName}.\n New balance: ${newBalance.hbars} HBAR`,
         from: "HFlow",
       });
-      console.log(msgResult);
       response =
         `END Transaction successful of id: ${txId} new balance: ${newBalance.hbars} HBAR`;
       break;
+    case text === "4":
+      const transactions = await getUserTransactions(user.phone);
+      response = "END Your transactions:\n";
+      let transactionsMsg = "";
+      transactions.forEach((transaction) => {
+        transactionsMsg +=
+          `TransactionID: ${transaction.txHash}\nTo: ${transaction.receiverPhone}\nAmount: ${transaction.amount}\timestamp: ${transaction.timestamp}\n\n`;
+      });
+      response += transactionsMsg;
+      msgResult = await africastalking.SMS.send({
+        to: phoneNumber,
+        message: `Your transactions:\n${transactionsMsg}`,
+        from: "HFlow",
+      });
+      break;
+
     default:
       response = "END Invalid choice please try again";
   }
