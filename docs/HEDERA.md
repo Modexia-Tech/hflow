@@ -50,9 +50,9 @@ async function sendHbar(senderId, senderKey, receiverId, amount) {
 }
 ```
 
-### **2.3 Smart Contracts**
+### **2.3 Smart Contracts (Coming Soon)**
 
-- **Use Case**: Escrow for M-Pesa cash-outs.
+- **Use Case**: Escrow for cash-outs.
 - **Solidity-like Example**:
   ```solidity
   contract Escrow {
@@ -131,7 +131,8 @@ GET https://mainnet-public.mirrornode.hedera.com/api/v1/transactions/0.0.1234@17
 
 1. **Key Management**:
    - Never log private keys.
-   - Use `zeroize` lib to wipe keys from memory after signing.
+   - 
+
 2. **Error Handling**:
    ```javascript
    try {
@@ -140,7 +141,8 @@ GET https://mainnet-public.mirrornode.hedera.com/api/v1/transactions/0.0.1234@17
      console.error("Hedera TX failed:", err.status);
    }
    ```
-3. **Gas Optimization**:
+
+3. **Gas Optimization (Coming Soon)**:
    - Bundle TXs where possible (e.g., batch payments).
 
 ---
@@ -152,14 +154,3 @@ GET https://mainnet-public.mirrornode.hedera.com/api/v1/transactions/0.0.1234@17
 | `INSUFFICIENT_FEE`   | Increase fee to $0.0005       |
 | `INVALID_ACCOUNT_ID` | Verify ID format (`0.0.1234`) |
 | `BUSY`               | Retry with 1s delay           |
-
----
-
-📜 **License**: Apache 2.0\
-📧 **Support**: hedra-support@hflow.com
-
-**TL;DR**:
-
-- **3-second TXs** → Perfect for USSD.
-- **$0.0001 fees** → Cheaper than M-Pesa.
-- **Enterprise-ready** → Built for scale.
