@@ -131,7 +131,9 @@ const getUser = async (phone) => {
         `SELECT * FROM users WHERE phone = ?`,
         [phone],
         (err, row) => {
-          if (err) reject(new Error(err));
+          if (err) {
+            reject(new Error("Failed to get user"));
+          }
           resolve(row || null);
         },
       );
