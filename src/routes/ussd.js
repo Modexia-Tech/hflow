@@ -144,14 +144,14 @@ What would you like us to help you with today?
         );
 
       const transactionId = await addTransaction(
-        req.body.senderPhone,
-        req.body.receiverPhone,
-        req.body.amount,
+        user.phone,
+        receiver.phone,
+        Number(ussdPassedInput[2]),
         txId,
         status.toLowerCase(),
       );
       response =
-        `END Transaction successful of id: ${txId} new balance: ${newBalance} HBAR`;
+        `END Transaction successful of id: ${txId} new balance: ${newBalance.hbars} HBAR`;
       break;
     default:
       response = "END Invalid choice please try again";
