@@ -1,543 +1,407 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hflow FAQ | USSD Crypto Wallet</title>
-    <!-- Flowbite CSS -->
-    <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css"
-      rel="stylesheet"
-    />
-    <!-- Font Awesome -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-    >
-    <style>
-      .faq-item {
-        transition: all 0.3s ease;
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FAQ | HFlow - USSD Hedera Wallet</title>
+  <!-- Tailwind CSS + Flowbite CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'oxford-blue': '#050D2A',
+            'electric-blue': '#00A3FF',
+            'cyber-teal': '#00F5D4',
+            'neon-cyan': '#0FF0FC',
+            'midnight-navy': '#0A1435',
+          },
+          backgroundImage: {
+            'gradient-tech': 'linear-gradient(45deg, #00A3FF 0%, #00F5D4 100%)',
+          }
+        }
       }
-      .faq-item:hover {
-        border-color: #6366f1;
-      }
-      .faq-question i {
-        transition: transform 0.3s ease;
-      }
-      html {
-        scroll-behavior: smooth;
-      }
-    </style>
-  </head>
-  <body class="bg-gray-50">
-    <!-- Navigation -->
-    <nav
-      class="bg-white border-gray-200 fixed w-full z-20 top-0 start-0 border-b"
-    >
-      <div
-        class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4"
-      >
-        <a
-          href="index.html"
-          class="flex items-center space-x-3 rtl:space-x-reverse"
-        >
-          <span
-            class="self-center text-2xl font-bold whitespace-nowrap text-indigo-600"
-          >HFLOW</span>
-        </a>
-        <div class="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
-          <a
-            href="index.html#get-started"
-            class="text-white bg-indigo-600 hover:bg-indigo-700 focus:ring-4 focus:outline-none focus:ring-indigo-300 font-medium rounded-lg text-sm px-4 py-2 text-center"
-          >Get Started</a>
-          <button
-            data-collapse-toggle="navbar-sticky"
-            type="button"
-            class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
-            aria-controls="navbar-sticky"
-            aria-expanded="false"
-          >
-            <span class="sr-only">Open main menu</span>
-            <i class="fas fa-bars"></i>
-          </button>
+    }
+  </script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
+  <!-- Animate.css for smooth animations -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+  <style>
+    body {
+      background-color: #050D2A;
+      color: #E0E5EC;
+    }
+    .glow-hover:hover {
+      box-shadow: 0 0 15px rgba(0, 243, 255, 0.3);
+    }
+    .accordion-content {
+      transition: all 0.3s ease-out;
+    }
+  </style>
+</head>
+<body class="min-h-screen">
+  <!-- Navbar -->
+  <nav class="bg-midnight-navy border-b border-gray-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between h-16 items-center">
+        <div class="flex items-center">
+          <a href="index.html" class="text-2xl font-bold bg-gradient-to-r from-electric-blue to-cyber-teal bg-clip-text text-transparent">HFLOW</a>
         </div>
-        <div
-          class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1"
-          id="navbar-sticky"
-        >
-          <ul
-            class="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white"
-          >
-            <li>
-              <a
-                href="index.html"
-                class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-indigo-600 md:p-0"
-              >Home</a>
-            </li>
-            <li>
-              <a
-                href="how-it-works.html"
-                class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-indigo-600 md:p-0"
-              >How It Works</a>
-            </li>
-            <li>
-              <a
-                href="faq.html"
-                class="block py-2 px-3 text-white bg-indigo-600 rounded md:bg-transparent md:text-indigo-600 md:p-0"
-                aria-current="page"
-              >FAQ</a>
-            </li>
-            <li>
-              <a
-                href="index.html#contact"
-                class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-indigo-600 md:p-0"
-              >Contact</a>
-            </li>
+        <div class="hidden md:block">
+          <div class="ml-10 flex items-center space-x-4">
+            <a href="index.html" class="hover:text-cyber-teal px-3 py-2">Home</a>
+            <a href="signup.html" class="hover:text-cyber-teal px-3 py-2">Sign Up</a>
+            <a href="faq.html" class="text-electric-blue px-3 py-2">FAQ</a>
+            <a href="*384*2005#" class="ml-4 bg-gradient-tech hover:opacity-90 text-oxford-blue font-bold py-2 px-6 rounded-full">
+              Dial *384*2005#
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="bg-gradient-to-b from-oxford-blue to-midnight-navy py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h1 class="text-4xl md:text-5xl font-bold mb-6">
+        <span class="bg-gradient-to-r from-electric-blue to-cyber-teal bg-clip-text text-transparent">Frequently Asked</span> Questions
+      </h1>
+      <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+        Everything you need to know about sending HBAR via USSD on your kabambe.
+      </p>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section class="py-16 bg-oxford-blue">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- USSD Questions -->
+      <div class="mb-16">
+        <h2 class="text-2xl font-bold mb-8 flex items-center">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 mr-2 text-electric-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+          </svg>
+          <span>USSD Wallet Questions</span>
+        </h2>
+        
+        <div class="space-y-4">
+          <!-- Question 1 -->
+          <div class="border border-gray-700 rounded-xl overflow-hidden glow-hover transition-all">
+            <button class="accordion-toggle w-full flex justify-between items-center p-6 text-left">
+              <span class="text-lg font-medium">How do I create a wallet without internet?</span>
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-electric-blue transform transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
+            <div class="accordion-content hidden px-6 pb-6 pt-0">
+              <p class="text-gray-300">
+                Simply dial <code class="bg-gray-800 px-2 py-1 rounded text-cyber-teal">*384*2005#</code> on any mobile phone (even feature phones). 
+                Follow the prompts to set up your 4-digit PIN, and your Hedera wallet will be created automatically. 
+                No app download or internet connection required!
+              </p>
+            </div>
+          </div>
+
+          <!-- Question 2 -->
+          <div class="border border-gray-700 rounded-xl overflow-hidden glow-hover transition-all">
+            <button class="accordion-toggle w-full flex justify-between items-center p-6 text-left">
+              <span class="text-lg font-medium">Is my money safe with USSD?</span>
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-electric-blue transform transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
+            <div class="accordion-content hidden px-6 pb-6 pt-0">
+              <p class="text-gray-300 mb-4">
+                <span class="text-cyber-teal font-medium">Yes!</span> Hflow uses military-grade security:
+              </p>
+              <ul class="list-disc pl-5 space-y-2 text-gray-300">
+                <li>Your private keys are <strong>encrypted with your PIN</strong> (AES-256)</li>
+                <li>AI fraud detection monitors all transactions</li>
+                <li>Non-custodial - you control your HBAR</li>
+                <li>All transactions recorded on Hedera's immutable ledger</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Question 3 -->
+          <div class="border border-gray-700 rounded-xl overflow-hidden glow-hover transition-all">
+            <button class="accordion-toggle w-full flex justify-between items-center p-6 text-left">
+              <span class="text-lg font-medium">What if I forget my PIN?</span>
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-electric-blue transform transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
+            <div class="accordion-content hidden px-6 pb-6 pt-0">
+              <p class="text-gray-300">
+                For security reasons, PINs cannot be recovered. However, you can:
+              </p>
+              <ol class="list-decimal pl-5 mt-2 space-y-2 text-gray-300">
+                <li>Visit an authorized Hflow agent with your registered phone and ID</li>
+                <li>Complete biometric verification</li>
+                <li>Set up a new wallet (your old HBAR balance will be transferred)</li>
+              </ol>
+              <p class="mt-4 text-sm text-gray-400">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                This process takes <strong>3-5 business days</strong> for security checks.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Hedera Questions -->
+      <div class="mb-16">
+        <h2 class="text-2xl font-bold mb-8 flex items-center">
+          <img src="https://hedera.com/hh-logo.svg" alt="Hedera" class="h-8 mr-2">
+          <span>Hedera Network Questions</span>
+        </h2>
+        
+        <div class="space-y-4">
+          <!-- Question 1 -->
+          <div class="border border-gray-700 rounded-xl overflow-hidden glow-hover transition-all">
+            <button class="accordion-toggle w-full flex justify-between items-center p-6 text-left">
+              <span class="text-lg font-medium">Why does Hflow use Hedera instead of Bitcoin?</span>
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-electric-blue transform transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
+            <div class="accordion-content hidden px-6 pb-6 pt-0">
+              <div class="overflow-x-auto">
+                <table class="min-w-full bg-midnight-navy rounded-lg">
+                  <thead>
+                    <tr class="bg-gray-800">
+                      <th class="px-4 py-2 text-left">Metric</th>
+                      <th class="px-4 py-2 text-left text-electric-blue">Hedera</th>
+                      <th class="px-4 py-2 text-left">Bitcoin</th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-gray-700">
+                    <tr>
+                      <td class="px-4 py-2">Transaction Speed</td>
+                      <td class="px-4 py-2 text-cyber-teal">3 seconds</td>
+                      <td class="px-4 py-2">10+ minutes</td>
+                    </tr>
+                    <tr>
+                      <td class="px-4 py-2">Average Fee</td>
+                      <td class="px-4 py-2 text-cyber-teal">$0.0001</td>
+                      <td class="px-4 py-2">$0.50+</td>
+                    </tr>
+                    <tr>
+                      <td class="px-4 py-2">Carbon Footprint</td>
+                      <td class="px-4 py-2 text-cyber-teal">Negative</td>
+                      <td class="px-4 py-2">High</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <p class="mt-4 text-gray-300">
+                Hedera's enterprise-grade network is perfect for Africa's needs - fast, cheap, and green.
+              </p>
+            </div>
+          </div>
+
+          <!-- Question 2 -->
+          <div class="border border-gray-700 rounded-xl overflow-hidden glow-hover transition-all">
+            <button class="accordion-toggle w-full flex justify-between items-center p-6 text-left">
+              <span class="text-lg font-medium">How can I verify my transactions?</span>
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-electric-blue transform transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
+            <div class="accordion-content hidden px-6 pb-6 pt-0">
+              <p class="text-gray-300 mb-4">
+                All transactions are publicly verifiable on Hedera's mirror nodes:
+              </p>
+              <div class="bg-gray-800 p-4 rounded-lg mb-4">
+                <p class="font-mono text-sm text-cyber-teal break-all">
+                  https://hashscan.io/mainnet/transaction/0.0.1234@1713634567.123
+                </p>
+              </div>
+              <p class="text-gray-300">
+                After any transfer, you'll receive a SMS with your transaction ID. 
+                You can also check your last 5 transactions by dialing <code class="bg-gray-800 px-2 py-1 rounded text-electric-blue">*384*2005#</code> and selecting "Transaction History".
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Fees & Limits -->
+      <div>
+        <h2 class="text-2xl font-bold mb-8 flex items-center">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 mr-2 text-neon-cyan" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <span>Fees & Limits</span>
+        </h2>
+        
+        <div class="space-y-4">
+          <!-- Question 1 -->
+          <div class="border border-gray-700 rounded-xl overflow-hidden glow-hover transition-all">
+            <button class="accordion-toggle w-full flex justify-between items-center p-6 text-left">
+              <span class="text-lg font-medium">What are the transaction fees?</span>
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-electric-blue transform transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
+            <div class="accordion-content hidden px-6 pb-6 pt-0">
+              <ul class="space-y-3 text-gray-300">
+                <li class="flex items-start">
+                  <span class="text-electric-blue mr-2">•</span>
+                  <span><strong>Sending HBAR</strong>: 0.1% (min $0.01) + Hedera network fee ($0.0001)</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-cyber-teal mr-2">•</span>
+                  <span><strong>Cashing out to M-Pesa</strong>: 1.5% (max $5)</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="text-neon-cyan mr-2">•</span>
+                  <span><strong>Cross-border (Nigeria → Kenya)</strong>: 2% (vs. 8% with traditional services)</span>
+                </li>
+              </ul>
+              <div class="mt-4 p-3 bg-midnight-navy rounded-lg border-l-4 border-electric-blue">
+                <p class="text-sm text-gray-300">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  Fees are dynamically calculated. Dial <code class="bg-gray-800 px-1 rounded">*384*2005#</code> and select "Estimate Fees" for real-time quotes.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Question 2 -->
+          <div class="border border-gray-700 rounded-xl overflow-hidden glow-hover transition-all">
+            <button class="accordion-toggle w-full flex justify-between items-center p-6 text-left">
+              <span class="text-lg font-medium">Are there daily limits?</span>
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-electric-blue transform transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
+            <div class="accordion-content hidden px-6 pb-6 pt-0">
+              <p class="text-gray-300 mb-4">
+                To comply with Kenyan regulations, these limits apply:
+              </p>
+              <div class="grid md:grid-cols-2 gap-4 mb-4">
+                <div class="bg-midnight-navy p-4 rounded-lg border border-gray-700">
+                  <h3 class="font-bold text-electric-blue mb-2">Unverified Users</h3>
+                  <ul class="text-sm text-gray-300 space-y-1">
+                    <li>Max send: $50/day</li>
+                    <li>Max receive: $200/day</li>
+                    <li>Wallet balance: $500 max</li>
+                  </ul>
+                </div>
+                <div class="bg-midnight-navy p-4 rounded-lg border border-gray-700">
+                  <h3 class="font-bold text-cyber-teal mb-2">Verified (KYC)</h3>
+                  <ul class="text-sm text-gray-300 space-y-1">
+                    <li>Max send: $5,000/day</li>
+                    <li>Max receive: Unlimited</li>
+                    <li>Wallet balance: $50,000 max</li>
+                  </ul>
+                </div>
+              </div>
+              <p class="text-sm text-gray-400">
+                Visit any Hflow agent with your ID to increase limits.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="py-16 bg-gradient-tech">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h2 class="text-3xl font-bold text-oxford-blue mb-6">Still have questions?</h2>
+      <p class="text-oxford-blue text-xl mb-8">Our support team is available 24/7 via USSD or WhatsApp.</p>
+      <div class="flex flex-col sm:flex-row justify-center gap-4">
+        <a href="*384*2005#" class="bg-oxford-blue hover:bg-midnight-navy text-electric-blue font-bold py-3 px-8 rounded-full text-lg transition-colors">
+          Dial *384*2005#
+        </a>
+        <a href="#" class="bg-white hover:bg-gray-100 text-oxford-blue font-bold py-3 px-8 rounded-full text-lg transition-colors">
+          WhatsApp Support
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-midnight-navy py-12 border-t border-gray-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+        <div>
+          <h3 class="text-lg font-bold mb-4 bg-gradient-to-r from-electric-blue to-cyber-teal bg-clip-text text-transparent">HFLOW</h3>
+          <p class="text-gray-400">Banking Africa's unbanked via USSD and Hedera.</p>
+        </div>
+        <div>
+          <h3 class="text-lg font-bold mb-4 text-gray-300">Quick Links</h3>
+          <ul class="space-y-2">
+            <li><a href="index.html" class="text-gray-400 hover:text-cyber-teal">Home</a></li>
+            <li><a href="signup.html" class="text-gray-400 hover:text-cyber-teal">Create Wallet</a></li>
+            <li><a href="faq.html" class="text-gray-400 hover:text-electric-blue">FAQ</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="text-lg font-bold mb-4 text-gray-300">Legal</h3>
+          <ul class="space-y-2">
+            <li><a href="#" class="text-gray-400 hover:text-cyber-teal">Terms</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-cyber-teal">Privacy</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-cyber-teal">Licenses</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="text-lg font-bold mb-4 text-gray-300">Contact</h3>
+          <ul class="space-y-2">
+            <li class="text-gray-400">Nairobi, Kenya</li>
+            <li class="text-gray-400">support@hflow.africa</li>
+            <li class="text-gray-400">+254 700 123 456</li>
           </ul>
         </div>
       </div>
-    </nav>
-
-    <!-- Hero Section -->
-    <section
-      class="pt-32 pb-16 px-4 mx-auto max-w-screen-xl text-center lg:py-24"
-    >
-      <h1
-        class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl"
-      >
-        Frequently Asked Questions
-      </h1>
-      <p
-        class="mb-8 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 lg:px-48"
-      >
-        Find answers to common questions about Hflow - the USSD crypto wallet
-        for feature phones.
-      </p>
-      <div
-        class="flex flex-col space-y-4 sm:flex-row sm:justify-center sm:space-y-0 sm:space-x-4"
-      >
-        <a
-          href="#general"
-          class="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg bg-indigo-600 hover:bg-indigo-700 focus:ring-4 focus:ring-indigo-300"
-        >
-          General Questions
-        </a>
-        <a
-          href="#technical"
-          class="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-gray-900 rounded-lg border border-gray-300 hover:bg-gray-100 focus:ring-4 focus:ring-gray-100"
-        >
-          Technical Questions
-        </a>
+      <div class="mt-12 pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center">
+        <p class="text-gray-500 text-sm">© 2023 Hflow. All rights reserved.</p>
+        <div class="flex space-x-6 mt-4 md:mt-0">
+          <a href="#" class="text-gray-400 hover:text-cyber-teal">
+            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clip-rule="evenodd"></path></svg>
+          </a>
+          <a href="#" class="text-gray-400 hover:text-cyber-teal">
+            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84"></path></svg>
+          </a>
+          <a href="#" class="text-gray-400 hover:text-cyber-teal">
+            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd"></path></svg>
+          </a>
+        </div>
       </div>
-    </section>
-
-    <!-- FAQ Sections -->
-    <div class="max-w-screen-xl mx-auto px-4 pb-16">
-      <!-- General Questions -->
-      <section id="general" class="mb-16">
-        <h2 class="mb-8 text-2xl font-bold text-gray-900">General Questions</h2>
-        <div class="grid gap-4">
-          <!-- FAQ Item 1 -->
-          <div class="faq-item border border-gray-200 rounded-lg p-6">
-            <button
-              class="faq-question flex justify-between items-center w-full text-left font-medium text-gray-900"
-            >
-              <span>Do I need a smartphone to use Hflow?</span>
-              <i class="fas fa-chevron-down"></i>
-            </button>
-            <div class="faq-answer hidden mt-4 text-gray-500">
-              <p>
-                No! Hflow works on any mobile phone with USSD capability, even
-                basic feature phones without internet access. You can send,
-                receive, and store cryptocurrency using just your phone's dial
-                pad.
-              </p>
-            </div>
-          </div>
-
-          <!-- FAQ Item 2 -->
-          <div class="faq-item border border-gray-200 rounded-lg p-6">
-            <button
-              class="faq-question flex justify-between items-center w-full text-left font-medium text-gray-900"
-            >
-              <span>Which cryptocurrencies does Hflow support?</span>
-              <i class="fas fa-chevron-down"></i>
-            </button>
-            <div class="faq-answer hidden mt-4 text-gray-500">
-              <p>Currently we support:</p>
-              <ul class="list-disc pl-5 mt-2 space-y-1">
-                <li>HBAR (Hedera Hashgraph)</li>
-                <li>Bitcoin (BTC)</li>
-                <li>Ethereum (ETH)</li>
-                <li>USDC (USD Coin)</li>
-              </ul>
-              <p class="mt-2">
-                More currencies will be added based on user demand.
-              </p>
-            </div>
-          </div>
-
-          <!-- FAQ Item 3 -->
-          <div class="faq-item border border-gray-200 rounded-lg p-6">
-            <button
-              class="faq-question flex justify-between items-center w-full text-left font-medium text-gray-900"
-            >
-              <span>How much does Hflow cost?</span>
-              <i class="fas fa-chevron-down"></i>
-            </button>
-            <div class="faq-answer hidden mt-4 text-gray-500">
-              <p>
-                Creating a wallet is completely free. We charge small fees for
-                transactions:
-              </p>
-              <ul class="list-disc pl-5 mt-2 space-y-1">
-                <li>HBAR transfers: 0.1% (minimum $0.0001)</li>
-                <li>Cross-chain transfers: 1%</li>
-                <li>M-Pesa cash-out: 1.5%</li>
-              </ul>
-              <p class="mt-2">
-                These fees are significantly lower than traditional mobile money
-                services.
-              </p>
-            </div>
-          </div>
-
-          <!-- FAQ Item 4 -->
-          <div class="faq-item border border-gray-200 rounded-lg p-6">
-            <button
-              class="faq-question flex justify-between items-center w-full text-left font-medium text-gray-900"
-            >
-              <span>Is my money safe with Hflow?</span>
-              <i class="fas fa-chevron-down"></i>
-            </button>
-            <div class="faq-answer hidden mt-4 text-gray-500">
-              <p>Absolutely. We use multiple layers of security:</p>
-              <ul class="list-disc pl-5 mt-2 space-y-1">
-                <li>Bank-level AES-256 encryption for all private keys</li>
-                <li>PIN protection for all transactions</li>
-                <li>Regular security audits</li>
-                <li>Non-custodial option available (you control your keys)</li>
-              </ul>
-              <p class="mt-2">
-                Your funds are protected with the same technology used by
-                financial institutions.
-              </p>
-            </div>
-          </div>
-
-          <!-- FAQ Item 5 -->
-          <div class="faq-item border border-gray-200 rounded-lg p-6">
-            <button
-              class="faq-question flex justify-between items-center w-full text-left font-medium text-gray-900"
-            >
-              <span>What countries do you operate in?</span>
-              <i class="fas fa-chevron-down"></i>
-            </button>
-            <div class="faq-answer hidden mt-4 text-gray-500">
-              <p>Currently available in:</p>
-              <ul class="list-disc pl-5 mt-2 space-y-1">
-                <li>Kenya</li>
-                <li>Nigeria</li>
-                <li>South Africa</li>
-                <li>Ghana</li>
-              </ul>
-              <p class="mt-2">
-                We're expanding to more African countries throughout 2024.
-                Contact us if you'd like Hflow in your country.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Technical Questions -->
-      <section id="technical">
-        <h2 class="mb-8 text-2xl font-bold text-gray-900">
-          Technical Questions
-        </h2>
-        <div class="grid gap-4">
-          <!-- FAQ Item 6 -->
-          <div class="faq-item border border-gray-200 rounded-lg p-6">
-            <button
-              class="faq-question flex justify-between items-center w-full text-left font-medium text-gray-900"
-            >
-              <span>How do I recover my account if I lose my phone?</span>
-              <i class="fas fa-chevron-down"></i>
-            </button>
-            <div class="faq-answer hidden mt-4 text-gray-500">
-              <p>We provide multiple recovery options:</p>
-              <ol class="list-decimal pl-5 mt-2 space-y-2">
-                <li>
-                  <strong>Secret Recovery Phrase</strong>: During registration,
-                  you'll receive a 12-word phrase that can restore your wallet
-                  on any device
-                </li>
-                <li>
-                  <strong>Phone Number Verification</strong>: You can recover
-                  using your registered phone number and ID verification
-                </li>
-                <li>
-                  <strong>Agent Assistance</strong>: Visit any Hflow agent with
-                  your ID to recover your account
-                </li>
-              </ol>
-              <p class="mt-2">
-                We recommend writing down your recovery phrase and keeping it in
-                a safe place.
-              </p>
-            </div>
-          </div>
-
-          <!-- FAQ Item 7 -->
-          <div class="faq-item border border-gray-200 rounded-lg p-6">
-            <button
-              class="faq-question flex justify-between items-center w-full text-left font-medium text-gray-900"
-            >
-              <span>How long do transactions take?</span>
-              <i class="fas fa-chevron-down"></i>
-            </button>
-            <div class="faq-answer hidden mt-4 text-gray-500">
-              <p>Transaction times vary by type:</p>
-              <ul class="list-disc pl-5 mt-2 space-y-1">
-                <li>
-                  <strong>HBAR transfers</strong>: 3-5 seconds (Hedera network
-                  speed)
-                </li>
-                <li>
-                  <strong>Cross-chain transfers</strong>: 2-5 minutes (depends
-                  on blockchain congestion)
-                </li>
-                <li><strong>M-Pesa cash-out</strong>: Instant to 5 minutes</li>
-              </ul>
-              <p class="mt-2">
-                All transactions are confirmed via SMS once completed.
-              </p>
-            </div>
-          </div>
-
-          <!-- FAQ Item 8 -->
-          <div class="faq-item border border-gray-200 rounded-lg p-6">
-            <button
-              class="faq-question flex justify-between items-center w-full text-left font-medium text-gray-900"
-            >
-              <span>What's the minimum/maximum transaction amount?</span>
-              <i class="fas fa-chevron-down"></i>
-            </button>
-            <div class="faq-answer hidden mt-4 text-gray-500">
-              <p>Our transaction limits are:</p>
-              <ul class="list-disc pl-5 mt-2 space-y-1">
-                <li>
-                  <strong>Minimum</strong>: 10 HBAR (≈$0.10) or equivalent
-                </li>
-                <li>
-                  <strong>Maximum (unverified users)</strong>: $100 equivalent
-                  per day
-                </li>
-                <li>
-                  <strong>Maximum (verified users)</strong>: $10,000 equivalent
-                  per day
-                </li>
-              </ul>
-              <p class="mt-2">
-                Higher limits available for enterprise customers.
-              </p>
-            </div>
-          </div>
-
-          <!-- FAQ Item 9 -->
-          <div class="faq-item border border-gray-200 rounded-lg p-6">
-            <button
-              class="faq-question flex justify-between items-center w-full text-left font-medium text-gray-900"
-            >
-              <span>How do you handle exchange rates?</span>
-              <i class="fas fa-chevron-down"></i>
-            </button>
-            <div class="faq-answer hidden mt-4 text-gray-500">
-              <p>We use a combination of:</p>
-              <ul class="list-disc pl-5 mt-2 space-y-1">
-                <li>Real-time market data from multiple exchanges</li>
-                <li>Hedera's native price oracle</li>
-                <li>Local currency feeds from central banks</li>
-              </ul>
-              <p class="mt-2">
-                Exchange rates are locked in when you initiate a transaction and
-                confirmed before completion. You'll always see the exact amount
-                you're sending/receiving before confirming.
-              </p>
-            </div>
-          </div>
-
-          <!-- FAQ Item 10 -->
-          <div class="faq-item border border-gray-200 rounded-lg p-6">
-            <button
-              class="faq-question flex justify-between items-center w-full text-left font-medium text-gray-900"
-            >
-              <span>Can I use Hflow for business transactions?</span>
-              <i class="fas fa-chevron-down"></i>
-            </button>
-            <div class="faq-answer hidden mt-4 text-gray-500">
-              <p>Yes! We offer business accounts with additional features:</p>
-              <ul class="list-disc pl-5 mt-2 space-y-1">
-                <li>Higher transaction limits</li>
-                <li>Batch payments</li>
-                <li>Accounting integrations</li>
-                <li>Dedicated support</li>
-                <li>Custom USSD shortcodes</li>
-              </ul>
-              <p class="mt-2">
-                Contact our business team at <a
-                  href="mailto:business@hflow.com"
-                  class="text-indigo-600 hover:underline"
-                >business@hflow.com</a> to get started.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
     </div>
+  </footer>
 
-    <!-- CTA Section -->
-    <section class="py-16 px-4 bg-indigo-600 text-white">
-      <div class="max-w-screen-xl mx-auto text-center">
-        <h2 class="mb-4 text-3xl font-extrabold tracking-tight">
-          Still have questions?
-        </h2>
-        <p class="mb-8 text-lg font-normal sm:px-16 lg:px-48">
-          Our support team is available 24/7 to help you with any questions
-          about Hflow.
-        </p>
-        <div
-          class="flex flex-col space-y-4 sm:flex-row sm:justify-center sm:space-y-0 sm:space-x-4"
-        >
-          <a
-            href="index.html#contact"
-            class="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-indigo-600 rounded-lg bg-white hover:bg-gray-100 focus:ring-4 focus:ring-gray-100"
-          >
-            Contact Support
-            <i class="fas fa-headset ml-2"></i>
-          </a>
-          <a
-            href="how-it-works.html"
-            class="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg border border-white hover:bg-indigo-700 focus:ring-4 focus:ring-indigo-800"
-          >
-            <i class="fas fa-play-circle mr-2"></i>
-            Watch Demo
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="bg-white py-8 px-4">
-      <div class="max-w-screen-xl mx-auto">
-        <div class="md:flex md:justify-between">
-          <div class="mb-6 md:mb-0">
-            <a href="index.html" class="flex items-center">
-              <span
-                class="self-center text-2xl font-bold whitespace-nowrap text-indigo-600"
-              >HFLOW</span>
-            </a>
-          </div>
-          <div class="grid grid-cols-2 gap-8 sm:grid-cols-3">
-            <div>
-              <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase">
-                Resources
-              </h2>
-              <ul class="text-gray-500 font-medium">
-                <li class="mb-4">
-                  <a href="how-it-works.html" class="hover:underline"
-                  >How It Works</a>
-                </li>
-                <li class="mb-4">
-                  <a href="faq.html" class="hover:underline">FAQ</a>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase">
-                Company
-              </h2>
-              <ul class="text-gray-500 font-medium">
-                <li class="mb-4">
-                  <a href="#" class="hover:underline">About</a>
-                </li>
-                <li class="mb-4">
-                  <a href="#" class="hover:underline">Careers</a>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase">
-                Legal
-              </h2>
-              <ul class="text-gray-500 font-medium">
-                <li class="mb-4">
-                  <a href="#" class="hover:underline">Privacy Policy</a>
-                </li>
-                <li class="mb-4">
-                  <a href="#" class="hover:underline">Terms & Conditions</a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <hr class="my-6 border-gray-200 sm:mx-auto lg:my-8">
-        <div class="sm:flex sm:items-center sm:justify-between">
-          <span class="text-sm text-gray-500 sm:text-center">© 2023 <a
-              href="index.html"
-              class="hover:underline"
-            >HFLOW™</a>. All Rights Reserved.
-          </span>
-          <div class="flex mt-4 sm:justify-center sm:mt-0 space-x-5">
-            <a href="#" class="text-gray-500 hover:text-gray-900">
-              <i class="fab fa-twitter"></i>
-              <span class="sr-only">Twitter</span>
-            </a>
-            <a href="#" class="text-gray-500 hover:text-gray-900">
-              <i class="fab fa-facebook-f"></i>
-              <span class="sr-only">Facebook</span>
-            </a>
-            <a href="#" class="text-gray-500 hover:text-gray-900">
-              <i class="fab fa-instagram"></i>
-              <span class="sr-only">Instagram</span>
-            </a>
-          </div>
-        </div>
-      </div>
-    </footer>
-
-    <!-- Flowbite JS -->
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"
-    ></script>
-    <script>
-      // FAQ toggle functionality
-      document.querySelectorAll(".faq-question").forEach((question) => {
-        question.addEventListener("click", () => {
-          const answer = question.nextElementSibling;
-          const isExpanded =
-            question.getAttribute("aria-expanded") === "true";
-
-          // Toggle answer visibility
-          if (isExpanded) {
-            answer.classList.add("hidden");
-            question.setAttribute("aria-expanded", "false");
-            question.querySelector("i").classList.remove(
-              "fa-chevron-up",
-            );
-            question.querySelector("i").classList.add(
-              "fa-chevron-down",
-            );
-          } else {
-            answer.classList.remove("hidden");
-            question.setAttribute("aria-expanded", "true");
-            question.querySelector("i").classList.remove(
-              "fa-chevron-down",
-            );
-            question.querySelector("i").classList.add("fa-chevron-up");
-          }
-        });
+  <!-- Flowbite JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
+  
+  <!-- Accordion Script -->
+  <script>
+    document.querySelectorAll('.accordion-toggle').forEach(button => {
+      button.addEventListener('click', () => {
+        const content = button.nextElementSibling;
+        const icon = button.querySelector('svg');
+        
+        // Toggle content
+        content.classList.toggle('hidden');
+        content.classList.toggle('animate__fadeIn');
+        
+        // Rotate icon
+        icon.classList.toggle('rotate-180');
+        
+        // Accessibility
+        const isExpanded = button.getAttribute('aria-expanded') === 'true';
+        button.setAttribute('aria-expanded', !isExpanded);
       });
-    </script>
-  </body>
+    });
+  </script>
+</body>
 </html>
