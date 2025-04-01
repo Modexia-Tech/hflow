@@ -1,462 +1,443 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>HFlow API Playground</title>
-  <!-- Tailwind CSS + Flowbite CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            'oxford-blue': '#050D2A',
-            'electric-blue': '#00A3FF',
-            'cyber-teal': '#00F5D4',
-            'neon-cyan': '#0FF0FC',
-            'midnight-navy': '#0A1435',
-          },
-          backgroundImage: {
-            'gradient-tech': 'linear-gradient(45deg, #00A3FF 0%, #00F5D4 100%)',
-          }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HFlow API Playground</title>
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@2.3.0/dist/flowbite.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/flowbite@2.3.0/dist/flowbite.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --oxford-blue: #050D2A;
+            --electric-blue: #00A3FF;
+            --cyber-teal: #00F5D4;
+            --neon-cyan: #0FF0FC;
+            --midnight-navy: #0A1435;
+            --error-pink: #FF006E;
         }
-      }
-    }
-  </script>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
-  <style>
-    body {
-      font-family: 'Inter', sans-serif;
-      background-color: #050D2A;
-      color: #E0E5EC;
-    }
-    .api-card {
-      transition: all 0.3s ease;
-      border-left: 4px solid transparent;
-    }
-    .api-card:hover {
-      border-left-color: #00A3FF;
-    }
-    .response-area {
-      font-family: monospace;
-      min-height: 200px;
-    }
-    .tab-active {
-      border-bottom: 3px solid #00A3FF;
-    }
-  </style>
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-</head>
-<body class="min-h-screen">
-  <!-- Navbar -->
-  <nav class="bg-midnight-navy border-b border-gray-800">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex justify-between h-16 items-center">
-        <div class="flex items-center">
-          <span class="text-2xl font-bold bg-gradient-to-r from-electric-blue to-cyber-teal bg-clip-text text-transparent">HFLOW API PLAYGROUND</span>
-        </div>
-        <div class="hidden md:block">
-          <div class="ml-10 flex items-center space-x-4">
-            <a href="index.html" class="hover:text-cyber-teal px-3 py-2">Back to App</a>
-            <a href="*384*2005#" class="ml-4 bg-gradient-tech hover:opacity-90 text-oxford-blue font-bold py-2 px-6 rounded-full">
-              Dial *384*2005#
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </nav>
-
-  <!-- Main Content -->
-  <main class="py-12">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center mb-12">
-        <h1 class="text-3xl md:text-4xl font-bold mb-4">HFlow API Playground</h1>
-        <p class="text-xl text-gray-300 max-w-3xl mx-auto">
-          Test and interact with HFlow's backend API endpoints
-        </p>
-      </div>
-
-      <!-- Tabs -->
-      <div class="flex border-b border-gray-700 mb-8">
-        <button class="tab-button px-6 py-3 font-medium text-electric-blue tab-active" data-tab="user">User API</button>
-        <button class="tab-button px-6 py-3 font-medium text-gray-400" data-tab="transaction">Transaction API</button>
-        <button class="tab-button px-6 py-3 font-medium text-gray-400" data-tab="admin">Admin API</button>
-      </div>
-
-      <!-- User API Section -->
-      <div id="user-tab" class="tab-content">
-        <!-- Register User -->
-        <div class="api-card bg-midnight-navy rounded-lg p-6 mb-8">
-          <div class="flex items-center mb-4">
-            <div class="w-10 h-10 bg-gradient-tech rounded-full flex items-center justify-center mr-4 text-oxford-blue font-bold">POST</div>
-            <h3 class="text-xl font-bold">/api/user/register</h3>
-            <span class="ml-auto bg-green-900 text-green-400 text-xs px-2 py-1 rounded">Public</span>
-          </div>
-          <p class="text-gray-400 mb-6">Register a new user with phone number and PIN</p>
-          
-          <div class="grid md:grid-cols-2 gap-6">
-            <div>
-              <h4 class="font-medium mb-2 text-gray-300">Request Body</h4>
-              <textarea id="register-input" class="w-full bg-gray-800 border border-gray-700 text-white text-sm rounded-lg p-4 h-48">
-{
-  "phone": "+254712345678",
-  "fullName": "John Doe",
-  "pin": "1234"
-}</textarea>
-            </div>
-            <div>
-              <h4 class="font-medium mb-2 text-gray-300">Response</h4>
-              <div id="register-response" class="response-area w-full bg-gray-900 border border-gray-700 text-gray-300 text-sm rounded-lg p-4 overflow-auto"></div>
-            </div>
-          </div>
-          <button onclick="testEndpoint('register')" class="mt-4 bg-gradient-tech hover:opacity-90 text-oxford-blue font-bold py-2 px-6 rounded-lg">
-            Test Endpoint
-          </button>
-        </div>
-
-        <!-- Get User -->
-        <div class="api-card bg-midnight-navy rounded-lg p-6 mb-8">
-          <div class="flex items-center mb-4">
-            <div class="w-10 h-10 bg-blue-900 rounded-full flex items-center justify-center mr-4 text-blue-400 font-bold">GET</div>
-            <h3 class="text-xl font-bold">/api/user/{phone}</h3>
-            <span class="ml-auto bg-yellow-900 text-yellow-400 text-xs px-2 py-1 rounded">Protected</span>
-          </div>
-          <p class="text-gray-400 mb-6">Retrieve user details by phone number</p>
-          
-          <div class="grid md:grid-cols-2 gap-6">
-            <div>
-              <h4 class="font-medium mb-2 text-gray-300">Parameters</h4>
-              <div class="bg-gray-800 border border-gray-700 rounded-lg p-4">
-                <div class="mb-3">
-                  <label class="block text-sm text-gray-400 mb-1">Phone Number</label>
-                  <input id="get-user-phone" type="text" class="w-full bg-gray-700 border border-gray-600 rounded p-2 text-white" value="+254712345678">
-                </div>
-              </div>
-            </div>
-            <div>
-              <h4 class="font-medium mb-2 text-gray-300">Response</h4>
-              <div id="get-user-response" class="response-area w-full bg-gray-900 border border-gray-700 text-gray-300 text-sm rounded-lg p-4 overflow-auto"></div>
-            </div>
-          </div>
-          <button onclick="testEndpoint('get-user')" class="mt-4 bg-gradient-tech hover:opacity-90 text-oxford-blue font-bold py-2 px-6 rounded-lg">
-            Test Endpoint
-          </button>
-        </div>
-      </div>
-
-      <!-- Transaction API Section (hidden by default) -->
-      <div id="transaction-tab" class="tab-content hidden">
-        <!-- Create Transaction -->
-        <div class="api-card bg-midnight-navy rounded-lg p-6 mb-8">
-          <div class="flex items-center mb-4">
-            <div class="w-10 h-10 bg-gradient-tech rounded-full flex items-center justify-center mr-4 text-oxford-blue font-bold">POST</div>
-            <h3 class="text-xl font-bold">/api/transaction/new</h3>
-            <span class="ml-auto bg-yellow-900 text-yellow-400 text-xs px-2 py-1 rounded">Protected</span>
-          </div>
-          <p class="text-gray-400 mb-6">Create a new HBAR transaction between users</p>
-          
-          <div class="grid md:grid-cols-2 gap-6">
-            <div>
-              <h4 class="font-medium mb-2 text-gray-300">Request Body</h4>
-              <textarea id="transaction-input" class="w-full bg-gray-800 border border-gray-700 text-white text-sm rounded-lg p-4 h-48">
-{
-  "senderPhone": "+254712345678",
-  "receiverPhone": "+254798765432",
-  "amount": 10,
-  "pin": "1234"
-}</textarea>
-            </div>
-            <div>
-              <h4 class="font-medium mb-2 text-gray-300">Response</h4>
-              <div id="transaction-response" class="response-area w-full bg-gray-900 border border-gray-700 text-gray-300 text-sm rounded-lg p-4 overflow-auto"></div>
-            </div>
-          </div>
-          <button onclick="testEndpoint('transaction')" class="mt-4 bg-gradient-tech hover:opacity-90 text-oxford-blue font-bold py-2 px-6 rounded-lg">
-            Test Endpoint
-          </button>
-        </div>
-
-        <!-- Get Transactions -->
-        <div class="api-card bg-midnight-navy rounded-lg p-6">
-          <div class="flex items-center mb-4">
-            <div class="w-10 h-10 bg-blue-900 rounded-full flex items-center justify-center mr-4 text-blue-400 font-bold">GET</div>
-            <h3 class="text-xl font-bold">/api/transaction/{phone}</h3>
-            <span class="ml-auto bg-yellow-900 text-yellow-400 text-xs px-2 py-1 rounded">Protected</span>
-          </div>
-          <p class="text-gray-400 mb-6">Get transaction history for a user</p>
-          
-          <div class="grid md:grid-cols-2 gap-6">
-            <div>
-              <h4 class="font-medium mb-2 text-gray-300">Parameters</h4>
-              <div class="bg-gray-800 border border-gray-700 rounded-lg p-4">
-                <div class="mb-3">
-                  <label class="block text-sm text-gray-400 mb-1">Phone Number</label>
-                  <input id="get-transactions-phone" type="text" class="w-full bg-gray-700 border border-gray-600 rounded p-2 text-white" value="+254712345678">
-                </div>
-                <div class="mb-3">
-                  <label class="block text-sm text-gray-400 mb-1">Limit</label>
-                  <input id="get-transactions-limit" type="number" class="w-full bg-gray-700 border border-gray-600 rounded p-2 text-white" value="5">
-                </div>
-              </div>
-            </div>
-            <div>
-              <h4 class="font-medium mb-2 text-gray-300">Response</h4>
-              <div id="get-transactions-response" class="response-area w-full bg-gray-900 border border-gray-700 text-gray-300 text-sm rounded-lg p-4 overflow-auto"></div>
-            </div>
-          </div>
-          <button onclick="testEndpoint('get-transactions')" class="mt-4 bg-gradient-tech hover:opacity-90 text-oxford-blue font-bold py-2 px-6 rounded-lg">
-            Test Endpoint
-          </button>
-        </div>
-      </div>
-
-      <!-- Admin API Section (hidden by default) -->
-      <div id="admin-tab" class="tab-content hidden">
-        <!-- Admin Login -->
-        <div class="api-card bg-midnight-navy rounded-lg p-6 mb-8">
-          <div class="flex items-center mb-4">
-            <div class="w-10 h-10 bg-gradient-tech rounded-full flex items-center justify-center mr-4 text-oxford-blue font-bold">POST</div>
-            <h3 class="text-xl font-bold">/api/admin/login</h3>
-            <span class="ml-auto bg-green-900 text-green-400 text-xs px-2 py-1 rounded">Public</span>
-          </div>
-          <p class="text-gray-400 mb-6">Authenticate as an admin user</p>
-          
-          <div class="grid md:grid-cols-2 gap-6">
-            <div>
-              <h4 class="font-medium mb-2 text-gray-300">Request Body</h4>
-              <textarea id="admin-login-input" class="w-full bg-gray-800 border border-gray-700 text-white text-sm rounded-lg p-4 h-48">
-{
-  "email": "admin@hflow.africa",
-  "password": "securepassword"
-}</textarea>
-            </div>
-            <div>
-              <h4 class="font-medium mb-2 text-gray-300">Response</h4>
-              <div id="admin-login-response" class="response-area w-full bg-gray-900 border border-gray-700 text-gray-300 text-sm rounded-lg p-4 overflow-auto"></div>
-            </div>
-          </div>
-          <button onclick="testEndpoint('admin-login')" class="mt-4 bg-gradient-tech hover:opacity-90 text-oxford-blue font-bold py-2 px-6 rounded-lg">
-            Test Endpoint
-          </button>
-        </div>
-
-        <!-- Get All Users -->
-        <div class="api-card bg-midnight-navy rounded-lg p-6">
-          <div class="flex items-center mb-4">
-            <div class="w-10 h-10 bg-blue-900 rounded-full flex items-center justify-center mr-4 text-blue-400 font-bold">GET</div>
-            <h3 class="text-xl font-bold">/api/admin/users</h3>
-            <span class="ml-auto bg-red-900 text-red-400 text-xs px-2 py-1 rounded">Admin Only</span>
-          </div>
-          <p class="text-gray-400 mb-6">List all registered users (admin only)</p>
-          
-          <div class="grid md:grid-cols-2 gap-6">
-            <div>
-              <h4 class="font-medium mb-2 text-gray-300">Parameters</h4>
-              <div class="bg-gray-800 border border-gray-700 rounded-lg p-4">
-                <div class="mb-3">
-                  <label class="block text-sm text-gray-400 mb-1">Limit</label>
-                  <input id="get-all-users-limit" type="number" class="w-full bg-gray-700 border border-gray-600 rounded p-2 text-white" value="5">
-                </div>
-                <div class="mb-3">
-                  <label class="block text-sm text-gray-400 mb-1">Auth Token</label>
-                  <input id="get-all-users-token" type="text" class="w-full bg-gray-700 border border-gray-600 rounded p-2 text-white" placeholder="JWT from login">
-                </div>
-              </div>
-            </div>
-            <div>
-              <h4 class="font-medium mb-2 text-gray-300">Response</h4>
-              <div id="get-all-users-response" class="response-area w-full bg-gray-900 border border-gray-700 text-gray-300 text-sm rounded-lg p-4 overflow-auto"></div>
-            </div>
-          </div>
-          <button onclick="testEndpoint('get-all-users')" class="mt-4 bg-gradient-tech hover:opacity-90 text-oxford-blue font-bold py-2 px-6 rounded-lg">
-            Test Endpoint
-          </button>
-        </div>
-      </div>
-    </div>
-  </main>
-
-  <!-- Footer -->
-  <footer class="bg-midnight-navy py-8 border-t border-gray-800">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-      <p class="text-gray-500 text-sm">
-        © 2023 Hflow API Playground. For development purposes only.
-      </p>
-    </div>
-  </footer>
-
-  <!-- Flowbite JS -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
-  
-  <!-- API Testing Script -->
-  <script>
-    // Tab switching
-    document.querySelectorAll('.tab-button').forEach(button => {
-      button.addEventListener('click', () => {
-        // Update tab buttons
-        document.querySelectorAll('.tab-button').forEach(btn => {
-          btn.classList.remove('text-electric-blue', 'tab-active');
-          btn.classList.add('text-gray-400');
-        });
-        button.classList.add('text-electric-blue', 'tab-active');
-        button.classList.remove('text-gray-400');
         
-        // Update tab content
-        document.querySelectorAll('.tab-content').forEach(content => {
-          content.classList.add('hidden');
-        });
-        document.getElementById(`${button.dataset.tab}-tab`).classList.remove('hidden');
-      });
-    });
-
-    // Mock API responses based on your database.js
-    async function testEndpoint(endpoint) {
-      const responseArea = document.getElementById(`${endpoint}-response`);
-      responseArea.innerHTML = 'Testing endpoint...';
-      
-      // Simulate API delay
-      await new Promise(resolve => setTimeout(resolve, 800));
-      
-      switch(endpoint) {
-        case 'register':
-          responseArea.innerHTML = `{
-  "success": true,
-  "data": {
-    "phone": "+254712345678",
-    "hederaAccountId": "0.0.123456",
-    "publicKey": "302a300506032b...",
-    "message": "User registered successfully"
-  }
-}`;
-          break;
-          
-        case 'get-user':
-          const phone = document.getElementById('get-user-phone').value;
-          responseArea.innerHTML = `{
-  "success": true,
-  "data": {
-    "phone": "${phone}",
-    "fullName": "John Doe",
-    "hederaAccountId": "0.0.123456",
-    "publicKey": "302a300506032b...",
-    "createdAt": "${new Date().toISOString()}"
-  }
-}`;
-          break;
-          
-        case 'transaction':
-          responseArea.innerHTML = `{
-  "success": true,
-  "data": {
-    "txHash": "0.0.123456@1234567890.000000000",
-    "sender": "+254712345678",
-    "receiver": "+254798765432",
-    "amount": 10,
-    "fee": 0.0001,
-    "hashScanUrl": "https://hashscan.io/testnet/transaction/0.0.123456@1234567890.000000000",
-    "message": "Transaction completed successfully"
-  }
-}`;
-          break;
-          
-        case 'get-transactions':
-          const txPhone = document.getElementById('get-transactions-phone').value;
-          const limit = document.getElementById('get-transactions-limit').value;
-          responseArea.innerHTML = `{
-  "success": true,
-  "data": [
-    {
-      "id": 1,
-      "senderPhone": "${txPhone}",
-      "receiverPhone": "+254798765432",
-      "amount": 10,
-      "txHash": "0.0.123456@1234567890.000000000",
-      "status": "success",
-      "timestamp": "${new Date().toISOString()}"
-    },
-    {
-      "id": 2,
-      "senderPhone": "+254798765432",
-      "receiverPhone": "${txPhone}",
-      "amount": 5,
-      "txHash": "0.0.123457@1234567891.000000000",
-      "status": "success",
-      "timestamp": "${new Date(Date.now() - 86400000).toISOString()}"
-    }
-  ],
-  "count": 2,
-  "limit": ${limit}
-}`;
-          break;
-          
-        case 'admin-login':
-          responseArea.innerHTML = `{
-  "success": true,
-  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
-  "expiresIn": 3600,
-  "admin": {
-    "email": "admin@hflow.africa",
-    "fullName": "Admin User"
-  }
-}`;
-          break;
-          
-        case 'get-all-users':
-          const userLimit = document.getElementById('get-all-users-limit').value;
-          responseArea.innerHTML = `{
-  "success": true,
-  "data": [
-    {
-      "phone": "+254712345678",
-      "fullName": "John Doe",
-      "hederaAccountId": "0.0.123456",
-      "createdAt": "${new Date().toISOString()}"
-    },
-    {
-      "phone": "+254798765432",
-      "fullName": "Jane Smith",
-      "hederaAccountId": "0.0.123457",
-      "createdAt": "${new Date(Date.now() - 86400000).toISOString()}"
-    }
-  ],
-  "count": 2,
-  "limit": ${userLimit}
-}`;
-          break;
-      }
-      
-      // Pretty print JSON
-      responseArea.innerHTML = syntaxHighlight(JSON.parse(responseArea.innerHTML));
-    }
-    
-    // JSON syntax highlighting
-    function syntaxHighlight(json) {
-      if (typeof json != 'string') {
-        json = JSON.stringify(json, null, 2);
-      }
-      json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-      return json.replace(
-        /("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g,
-        function (match) {
-          let cls = 'text-gray-300';
-          if (/^"/.test(match)) {
-            if (/:$/.test(match)) {
-              cls = 'text-electric-blue';
-            } else {
-              cls = 'text-cyber-teal';
-            }
-          } else if (/true|false/.test(match)) {
-            cls = 'text-neon-cyan';
-          } else if (/null/.test(match)) {
-            cls = 'text-purple-400';
-          }
-          return '<span class="' + cls + '">' + match + '</span>';
+        body {
+            background-color: var(--oxford-blue);
+            color: white;
+            font-family: 'Inter', sans-serif;
         }
-      );
-    }
-  </script>
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, var(--electric-blue), var(--cyber-teal));
+        }
+        
+        .api-card {
+            background-color: var(--midnight-navy);
+            border-left: 4px solid var(--electric-blue);
+            transition: all 0.3s ease;
+        }
+        
+        .api-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 163, 255, 0.2);
+        }
+        
+        .btn-primary {
+            background-color: var(--electric-blue);
+            border: none;
+        }
+        
+        .btn-primary:hover {
+            background-color: #0088cc;
+        }
+        
+        .response-area {
+            background-color: #0A1435;
+            border: 1px solid var(--electric-blue);
+            color: var(--cyber-teal);
+        }
+        
+        .tab-active {
+            border-bottom: 3px solid var(--cyber-teal);
+            color: var(--cyber-teal) !important;
+        }
+        
+        .glow {
+            text-shadow: 0 0 10px rgba(15, 240, 252, 0.7);
+        }
+    </style>
+</head>
+<body>
+    <div class="container mx-auto px-4 py-8">
+        <!-- Header -->
+        <header class="mb-12 text-center">
+            <h1 class="text-4xl font-bold mb-2 glow">HFlow <span class="gradient-text">API</span> Playground</h1>
+            <p class="text-xl text-gray-300">Test your USSD and Hedera integrations in real-time</p>
+        </header>
+
+        <!-- API Tabs -->
+        <div class="mb-8">
+            <ul class="flex flex-wrap -mb-px" id="apiTabs" role="tablist">
+                <li class="mr-2" role="presentation">
+                    <button class="inline-block p-4 border-b-2 rounded-t-lg" id="user-tab" data-tabs-target="#user" type="button" role="tab" aria-controls="user" aria-selected="false">User API</button>
+                </li>
+                <li class="mr-2" role="presentation">
+                    <button class="inline-block p-4 border-b-2 rounded-t-lg" id="transaction-tab" data-tabs-target="#transaction" type="button" role="tab" aria-controls="transaction" aria-selected="false">Transaction API</button>
+                </li>
+                <li class="mr-2" role="presentation">
+                    <button class="inline-block p-4 border-b-2 rounded-t-lg" id="ussd-tab" data-tabs-target="#ussd" type="button" role="tab" aria-controls="ussd" aria-selected="false">USSD Simulator</button>
+                </li>
+            </ul>
+        </div>
+
+        <!-- API Content -->
+        <div id="apiTabContent">
+            <!-- User API -->
+            <div class="hidden p-4 rounded-lg bg-gray-800" id="user" role="tabpanel" aria-labelledby="user-tab">
+                <div class="grid md:grid-cols-2 gap-6">
+                    <!-- Register User -->
+                    <div class="api-card p-6 rounded-lg shadow">
+                        <h3 class="text-xl font-semibold mb-4 text-electric-blue">Register User</h3>
+                        <form id="registerForm">
+                            <div class="mb-4">
+                                <label class="block mb-2">Phone Number</label>
+                                <input type="text" name="phone" class="w-full p-2 rounded bg-gray-700 border border-gray-600" placeholder="+254712345678" required>
+                            </div>
+                            <div class="mb-4">
+                                <label class="block mb-2">Full Name</label>
+                                <input type="text" name="fullName" class="w-full p-2 rounded bg-gray-700 border border-gray-600" placeholder="John Doe" required>
+                            </div>
+                            <div class="mb-4">
+                                <label class="block mb-2">PIN</label>
+                                <input type="password" name="pin" class="w-full p-2 rounded bg-gray-700 border border-gray-600" placeholder="4-digit PIN" required>
+                            </div>
+                            <button type="submit" class="btn-primary px-4 py-2 rounded">Register</button>
+                        </form>
+                    </div>
+
+                    <!-- Login User -->
+                    <div class="api-card p-6 rounded-lg shadow">
+                        <h3 class="text-xl font-semibold mb-4 text-electric-blue">User Login</h3>
+                        <form id="loginForm">
+                            <div class="mb-4">
+                                <label class="block mb-2">Phone Number</label>
+                                <input type="text" name="phone" class="w-full p-2 rounded bg-gray-700 border border-gray-600" placeholder="+254712345678" required>
+                            </div>
+                            <div class="mb-4">
+                                <label class="block mb-2">PIN</label>
+                                <input type="password" name="pin" class="w-full p-2 rounded bg-gray-700 border border-gray-600" placeholder="4-digit PIN" required>
+                            </div>
+                            <button type="submit" class="btn-primary px-4 py-2 rounded">Login</button>
+                        </form>
+                        <div id="tokenDisplay" class="mt-4 hidden">
+                            <label class="block mb-2">Your Token:</label>
+                            <div class="p-2 bg-gray-900 rounded break-all" id="jwtToken"></div>
+                        </div>
+                    </div>
+
+                    <!-- Account Info -->
+                    <div class="api-card p-6 rounded-lg shadow">
+                        <h3 class="text-xl font-semibold mb-4 text-electric-blue">Account Info</h3>
+                        <form id="accountInfoForm">
+                            <div class="mb-4">
+                                <label class="block mb-2">Token</label>
+                                <input type="text" name="token" class="w-full p-2 rounded bg-gray-700 border border-gray-600" placeholder="JWT Token" required>
+                            </div>
+                            <button type="submit" class="btn-primary px-4 py-2 rounded">Get Info</button>
+                        </form>
+                        <div class="response-area mt-4 p-4 rounded hidden" id="accountInfoResponse"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Transaction API -->
+            <div class="hidden p-4 rounded-lg bg-gray-800" id="transaction" role="tabpanel" aria-labelledby="transaction-tab">
+                <div class="grid md:grid-cols-2 gap-6">
+                    <!-- Send HBAR -->
+                    <div class="api-card p-6 rounded-lg shadow">
+                        <h3 class="text-xl font-semibold mb-4 text-electric-blue">Send HBAR</h3>
+                        <form id="sendHbarForm">
+                            <div class="mb-4">
+                                <label class="block mb-2">Token</label>
+                                <input type="text" name="token" class="w-full p-2 rounded bg-gray-700 border border-gray-600" placeholder="JWT Token" required>
+                            </div>
+                            <div class="mb-4">
+                                <label class="block mb-2">Receiver Phone</label>
+                                <input type="text" name="receiverPhone" class="w-full p-2 rounded bg-gray-700 border border-gray-600" placeholder="+254712345678" required>
+                            </div>
+                            <div class="mb-4">
+                                <label class="block mb-2">Amount (HBAR)</label>
+                                <input type="number" name="amount" class="w-full p-2 rounded bg-gray-700 border border-gray-600" placeholder="10" required>
+                            </div>
+                            <div class="mb-4">
+                                <label class="block mb-2">PIN</label>
+                                <input type="password" name="pin" class="w-full p-2 rounded bg-gray-700 border border-gray-600" placeholder="4-digit PIN" required>
+                            </div>
+                            <button type="submit" class="btn-primary px-4 py-2 rounded">Send HBAR</button>
+                        </form>
+                        <div class="response-area mt-4 p-4 rounded hidden" id="sendHbarResponse"></div>
+                    </div>
+
+                    <!-- Transaction History -->
+                    <div class="api-card p-6 rounded-lg shadow">
+                        <h3 class="text-xl font-semibold mb-4 text-electric-blue">Transaction History</h3>
+                        <form id="txHistoryForm">
+                            <div class="mb-4">
+                                <label class="block mb-2">Token</label>
+                                <input type="text" name="token" class="w-full p-2 rounded bg-gray-700 border border-gray-600" placeholder="JWT Token" required>
+                            </div>
+                            <button type="submit" class="btn-primary px-4 py-2 rounded">Get History</button>
+                        </form>
+                        <div class="response-area mt-4 p-4 rounded hidden" id="txHistoryResponse"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- USSD Simulator -->
+            <div class="hidden p-4 rounded-lg bg-gray-800" id="ussd" role="tabpanel" aria-labelledby="ussd-tab">
+                <div class="grid md:grid-cols-2 gap-6">
+                    <!-- USSD Simulator -->
+                    <div class="api-card p-6 rounded-lg shadow">
+                        <h3 class="text-xl font-semibold mb-4 text-electric-blue">USSD Simulator</h3>
+                        <div class="bg-black p-4 rounded mb-4 h-64 overflow-y-auto" id="ussdConsole">
+                            <div class="text-green-400">Welcome to HFlow USSD Simulator</div>
+                            <div class="text-green-400">Dial *384*2005# to begin</div>
+                        </div>
+                        <div class="flex">
+                            <input type="text" id="ussdInput" class="flex-grow p-2 rounded-l bg-gray-700 border border-gray-600" placeholder="Enter USSD code">
+                            <button id="sendUssd" class="btn-primary px-4 py-2 rounded-r">Send</button>
+                        </div>
+                    </div>
+
+                    <!-- USSD API Reference -->
+                    <div class="api-card p-6 rounded-lg shadow">
+                        <h3 class="text-xl font-semibold mb-4 text-electric-blue">USSD API Endpoint</h3>
+                        <div class="mb-4 p-4 bg-gray-900 rounded">
+                            <code>POST /ussd</code>
+                            <div class="mt-2 text-sm text-gray-400">Parameters:</div>
+                            <ul class="mt-1 text-sm">
+                                <li><span class="text-cyan-400">sessionId</span>: Unique session ID</li>
+                                <li><span class="text-cyan-400">serviceCode</span>: USSD code (*384*2005#)</li>
+                                <li><span class="text-cyan-400">phoneNumber</span>: User's phone</li>
+                                <li><span class="text-cyan-400">text</span>: USSD input</li>
+                            </ul>
+                        </div>
+                        <button id="copyCurl" class="btn-primary px-4 py-2 rounded">Copy cURL</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Base URL - change this to your API endpoint
+        const API_BASE_URL = 'http://localhost:5000';
+        
+        // Tab functionality
+        const tabs = document.querySelectorAll('[data-tabs-target]');
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const target = document.querySelector(tab.dataset.tabsTarget);
+                document.querySelectorAll('[role="tabpanel"]').forEach(panel => {
+                    panel.classList.add('hidden');
+                });
+                target.classList.remove('hidden');
+                
+                // Update active tab styling
+                document.querySelectorAll('[role="presentation"] button').forEach(btn => {
+                    btn.classList.remove('tab-active', 'border-cyan-400', 'text-cyan-400');
+                });
+                tab.classList.add('tab-active', 'border-cyan-400', 'text-cyan-400');
+            });
+        });
+
+        // Activate first tab by default
+        document.getElementById('user-tab').click();
+
+        // Register User
+        document.getElementById('registerForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData.entries());
+            
+            try {
+                const response = await fetch(`${API_BASE_URL}/user/new`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                const result = await response.json();
+                if (response.ok) {
+                    alert(`User registered! Account ID: ${result.accountId}`);
+                } else {
+                    alert(`Error: ${result.error}`);
+                }
+            } catch (error) {
+                alert(`Error: ${error.message}`);
+            }
+        });
+
+        // Login User
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData.entries());
+            
+            try {
+                const response = await fetch(`${API_BASE_URL}/user/login`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                const result = await response.json();
+                if (response.ok) {
+                    document.getElementById('jwtToken').textContent = result.token;
+                    document.getElementById('tokenDisplay').classList.remove('hidden');
+                } else {
+                    alert(`Error: ${result.error}`);
+                }
+            } catch (error) {
+                alert(`Error: ${error.message}`);
+            }
+        });
+
+        // Account Info
+        document.getElementById('accountInfoForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const token = formData.get('token');
+            
+            try {
+                const response = await fetch(`${API_BASE_URL}/user/accountInfo`, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': token
+                    }
+                });
+                
+                const result = await response.json();
+                const responseDiv = document.getElementById('accountInfoResponse');
+                responseDiv.textContent = JSON.stringify(result, null, 2);
+                responseDiv.classList.remove('hidden');
+                
+                if (!response.ok) {
+                    responseDiv.classList.add('text-red-400');
+                } else {
+                    responseDiv.classList.remove('text-red-400');
+                }
+            } catch (error) {
+                alert(`Error: ${error.message}`);
+            }
+        });
+
+        // Send HBAR
+        document.getElementById('sendHbarForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData.entries());
+            
+            try {
+                const response = await fetch(`${API_BASE_URL}/transaction/new`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': data.token
+                    },
+                    body: JSON.stringify({
+                        receiverPhone: data.receiverPhone,
+                        amount: parseFloat(data.amount),
+                        pin: data.pin
+                    })
+                });
+                
+                const result = await response.json();
+                const responseDiv = document.getElementById('sendHbarResponse');
+                responseDiv.textContent = JSON.stringify(result, null, 2);
+                responseDiv.classList.remove('hidden');
+                
+                if (!response.ok) {
+                    responseDiv.classList.add('text-red-400');
+                } else {
+                    responseDiv.classList.remove('text-red-400');
+                }
+            } catch (error) {
+                alert(`Error: ${error.message}`);
+            }
+        });
+
+        // Transaction History
+        document.getElementById('txHistoryForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const token = formData.get('token');
+            
+            try {
+                const response = await fetch(`${API_BASE_URL}/user/transactions`, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': token
+                    }
+                });
+                
+                const result = await response.json();
+                const responseDiv = document.getElementById('txHistoryResponse');
+                responseDiv.textContent = JSON.stringify(result, null, 2);
+                responseDiv.classList.remove('hidden');
+                
+                if (!response.ok) {
+                    responseDiv.classList.add('text-red-400');
+                } else {
+                    responseDiv.classList.remove('text-red-400');
+                }
+            } catch (error) {
+                alert(`Error: ${error.message}`);
+            }
+        });
+
+        // USSD Simulator
+        document.getElementById('sendUssd').addEventListener('click', async () => {
+            const input = document.getElementById('ussdInput').value;
+            if (!input) return;
+            
+            const ussdConsole = document.getElementById('ussdConsole');
+            ussdConsole.innerHTML += `<div class="text-yellow-400">> ${input}</div>`;
+            
+            try {
+                // Simulate USSD flow
+                const response = await fetch(`${API_BASE_URL}/ussd`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: new URLSearchParams({
+                        sessionId: 'simulated_' + Date.now(),
+                        serviceCode: '*384*2005#',
+                        phoneNumber: '+254712345678',
+                        text: input
+                    })
+                });
+                
+                const result = await response.text();
+                ussdConsole.innerHTML += `<div class="text-green-400">${result}</div>`;
+                ussdConsole.scrollTop = ussdConsole.scrollHeight;
+            } catch (error) {
+                ussdConsole.innerHTML += `<div class="text-red-400">Error: ${error.message}</div>`;
+            }
+            
+            document.getElementById('ussdInput').value = '';
+        });
+
+        // Copy cURL
+        document.getElementById('copyCurl').addEventListener('click', () => {
+            const curlCommand = `curl -X POST ${API_BASE_URL}/ussd \\
+-H "Content-Type: application/x-www-form-urlencoded" \\
+-d "sessionId=test123&serviceCode=*384*2005#&phoneNumber=+254712345678&text=1*10*0.0.4567"`;
+            
+            navigator.clipboard.writeText(curlCommand).then(() => {
+                alert('cURL command copied to clipboard!');
+            });
+        });
+    </script>
 </body>
 </html>
