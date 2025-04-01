@@ -1,451 +1,462 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hflow API Playground</title>
-    <!-- Flowbite CSS -->
-    <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css"
-      rel="stylesheet"
-    />
-    <!-- Highlight.js for code formatting -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/github.min.css"
-    >
-    <style>
-      .tab-content {
-        display: none;
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HFlow API Playground</title>
+  <!-- Tailwind CSS + Flowbite CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'oxford-blue': '#050D2A',
+            'electric-blue': '#00A3FF',
+            'cyber-teal': '#00F5D4',
+            'neon-cyan': '#0FF0FC',
+            'midnight-navy': '#0A1435',
+          },
+          backgroundImage: {
+            'gradient-tech': 'linear-gradient(45deg, #00A3FF 0%, #00F5D4 100%)',
+          }
+        }
       }
-      .tab-content.active {
-        display: block;
-      }
-      .nav-tab {
-        cursor: pointer;
-      }
-      .nav-tab.active {
-        border-bottom: 2px solid #6366f1;
-        color: #6366f1;
-      }
-      .response-area {
-        min-height: 200px;
-      }
-      .playground-container {
-        height: calc(100vh - 80px);
-      }
-      .hljs {
-        background: #f8fafc !important;
-        border-radius: 0.5rem;
-      }
-    </style>
-  </head>
-  <body class="bg-gray-50">
-    <!-- Navigation -->
-    <nav
-      class="bg-white border-gray-200 fixed w-full z-20 top-0 start-0 border-b"
-    >
-      <div
-        class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4"
-      >
-        <a href="#" class="flex items-center space-x-3 rtl:space-x-reverse">
-          <span
-            class="self-center text-2xl font-bold whitespace-nowrap text-indigo-600"
-          >HFLOW API Playground</span>
-        </a>
-        <div class="flex items-center space-x-4">
-          <button
-            id="runBtn"
-            class="text-white bg-indigo-600 hover:bg-indigo-700 focus:ring-4 focus:outline-none focus:ring-indigo-300 font-medium rounded-lg text-sm px-4 py-2 text-center"
-          >
-            Run <i class="fas fa-play ml-1"></i>
-          </button>
-          <button
-            id="resetBtn"
-            class="text-gray-700 bg-white border border-gray-300 hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 font-medium rounded-lg text-sm px-4 py-2 text-center"
-          >
-            Reset <i class="fas fa-redo ml-1"></i>
-          </button>
+    }
+  </script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #050D2A;
+      color: #E0E5EC;
+    }
+    .api-card {
+      transition: all 0.3s ease;
+      border-left: 4px solid transparent;
+    }
+    .api-card:hover {
+      border-left-color: #00A3FF;
+    }
+    .response-area {
+      font-family: monospace;
+      min-height: 200px;
+    }
+    .tab-active {
+      border-bottom: 3px solid #00A3FF;
+    }
+  </style>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="min-h-screen">
+  <!-- Navbar -->
+  <nav class="bg-midnight-navy border-b border-gray-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between h-16 items-center">
+        <div class="flex items-center">
+          <span class="text-2xl font-bold bg-gradient-to-r from-electric-blue to-cyber-teal bg-clip-text text-transparent">HFLOW API PLAYGROUND</span>
         </div>
-      </div>
-    </nav>
-
-    <!-- Main Playground Area -->
-    <div class="playground-container pt-20 flex flex-col md:flex-row">
-      <!-- Left Panel - Request Configuration -->
-      <div class="w-full md:w-1/2 p-6 overflow-y-auto">
-        <div class="mb-6">
-          <h2 class="text-xl font-bold text-gray-900 mb-4">API Endpoint</h2>
-          <div class="flex">
-            <select
-              id="methodSelect"
-              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-l-lg focus:ring-indigo-500 focus:border-indigo-500 p-2.5"
-            >
-              <option value="GET">GET</option>
-              <option value="POST">POST</option>
-              <option value="PUT">PUT</option>
-              <option value="DELETE">DELETE</option>
-            </select>
-            <input
-              type="text"
-              id="endpointInput"
-              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-r-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5"
-              value="/api/v1/transactions"
-              placeholder="Enter endpoint"
-            >
+        <div class="hidden md:block">
+          <div class="ml-10 flex items-center space-x-4">
+            <a href="index.html" class="hover:text-cyber-teal px-3 py-2">Back to App</a>
+            <a href="*384*2005#" class="ml-4 bg-gradient-tech hover:opacity-90 text-oxford-blue font-bold py-2 px-6 rounded-full">
+              Dial *384*2005#
+            </a>
           </div>
-        </div>
-
-        <!-- Tabs Navigation -->
-        <ul class="flex border-b border-gray-200 mb-4">
-          <li class="nav-tab mr-2 active" data-tab="params">
-            <span class="inline-block p-2 font-medium">Params</span>
-          </li>
-          <li class="nav-tab mr-2" data-tab="headers">
-            <span class="inline-block p-2 font-medium">Headers</span>
-          </li>
-          <li class="nav-tab" data-tab="body">
-            <span class="inline-block p-2 font-medium">Body</span>
-          </li>
-        </ul>
-
-        <!-- Params Tab -->
-        <div id="params" class="tab-content active">
-          <div class="space-y-4" id="paramsContainer">
-            <div class="flex items-center space-x-4 param-row">
-              <input
-                type="text"
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-1/3 p-2.5"
-                placeholder="Key"
-              >
-              <input
-                type="text"
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-1/3 p-2.5"
-                placeholder="Value"
-              >
-              <button class="remove-param text-red-600 hover:text-red-800">
-                <i class="fas fa-times"></i>
-              </button>
-            </div>
-          </div>
-          <button
-            id="addParamBtn"
-            class="mt-4 text-indigo-600 hover:text-indigo-800 text-sm font-medium"
-          >
-            <i class="fas fa-plus mr-1"></i> Add Parameter
-          </button>
-        </div>
-
-        <!-- Headers Tab -->
-        <div id="headers" class="tab-content">
-          <div class="space-y-4" id="headersContainer">
-            <div class="flex items-center space-x-4 header-row">
-              <input
-                type="text"
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-1/3 p-2.5"
-                placeholder="Header"
-                value="Authorization"
-              >
-              <input
-                type="text"
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-1/3 p-2.5"
-                placeholder="Value"
-                value="Bearer YOUR_TOKEN"
-              >
-              <button class="remove-header text-red-600 hover:text-red-800">
-                <i class="fas fa-times"></i>
-              </button>
-            </div>
-            <div class="flex items-center space-x-4 header-row">
-              <input
-                type="text"
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-1/3 p-2.5"
-                placeholder="Header"
-                value="Content-Type"
-              >
-              <input
-                type="text"
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-1/3 p-2.5"
-                placeholder="Value"
-                value="application/json"
-              >
-              <button class="remove-header text-red-600 hover:text-red-800">
-                <i class="fas fa-times"></i>
-              </button>
-            </div>
-          </div>
-          <button
-            id="addHeaderBtn"
-            class="mt-4 text-indigo-600 hover:text-indigo-800 text-sm font-medium"
-          >
-            <i class="fas fa-plus mr-1"></i> Add Header
-          </button>
-        </div>
-
-        <!-- Body Tab -->
-        <div id="body" class="tab-content">
-          <div class="mb-2 flex justify-between">
-            <label class="block text-sm font-medium text-gray-900"
-            >Request Body (JSON)</label>
-            <button
-              id="formatJsonBtn"
-              class="text-indigo-600 hover:text-indigo-800 text-sm font-medium"
-            >
-              <i class="fas fa-align-left mr-1"></i> Format
-            </button>
-          </div>
-          <textarea
-            id="requestBody"
-            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5 h-64 font-mono"
-            placeholder='{
-  "amount": 100,
-  "recipient": "0.0.1234"
-}'
-          >
-{
-  "amount": 100,
-  "recipient": "0.0.1234"
-}</textarea>
-        </div>
-      </div>
-
-      <!-- Right Panel - Response -->
-      <div class="w-full md:w-1/2 bg-gray-100 p-6 overflow-y-auto">
-        <h2 class="text-xl font-bold text-gray-900 mb-4">Response</h2>
-
-        <!-- Response Status -->
-        <div class="flex items-center mb-4">
-          <div
-            id="responseStatus"
-            class="px-3 py-1 text-xs font-medium rounded-full bg-gray-200 text-gray-800 mr-2"
-          >
-            Not executed
-          </div>
-          <div id="responseTime" class="text-sm text-gray-500">
-            -
-          </div>
-        </div>
-
-        <!-- Response Tabs -->
-        <ul class="flex border-b border-gray-300 mb-4">
-          <li class="response-tab mr-2 active" data-response-tab="body">
-            <span class="inline-block p-2 font-medium">Body</span>
-          </li>
-          <li class="response-tab mr-2" data-response-tab="headers">
-            <span class="inline-block p-2 font-medium">Headers</span>
-          </li>
-        </ul>
-
-        <!-- Response Body -->
-        <div
-          id="responseBody"
-          class="tab-content active response-area bg-white p-4 rounded-lg"
-        >
-          <pre
-          >
-<code class="language-json">{
-  "status": "Response will appear here",
-  "data": {}
-}</code></pre
-          >
-        </div>
-
-        <!-- Response Headers -->
-        <div
-          id="responseHeaders"
-          class="tab-content response-area bg-white p-4 rounded-lg"
-        >
-          <pre
-          >
-<code class="language-json">{
-  "headers": "Will appear here"
-}</code></pre
-          >
         </div>
       </div>
     </div>
+  </nav>
 
-    <!-- Flowbite JS -->
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"
-    ></script>
-    <!-- Highlight.js -->
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"
-    ></script>
-    <!-- Font Awesome -->
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js"
-    ></script>
-    <!-- jQuery (for easy DOM manipulation) -->
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
-    ></script>
+  <!-- Main Content -->
+  <main class="py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <h1 class="text-3xl md:text-4xl font-bold mb-4">HFlow API Playground</h1>
+        <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+          Test and interact with HFlow's backend API endpoints
+        </p>
+      </div>
 
-    <script>
-      $(document).ready(function () {
-        // Initialize syntax highlighting
-        hljs.highlightAll();
+      <!-- Tabs -->
+      <div class="flex border-b border-gray-700 mb-8">
+        <button class="tab-button px-6 py-3 font-medium text-electric-blue tab-active" data-tab="user">User API</button>
+        <button class="tab-button px-6 py-3 font-medium text-gray-400" data-tab="transaction">Transaction API</button>
+        <button class="tab-button px-6 py-3 font-medium text-gray-400" data-tab="admin">Admin API</button>
+      </div>
 
-        // Tab switching
-        $(".nav-tab").click(function () {
-          $(".nav-tab").removeClass("active");
-          $(this).addClass("active");
-          $(".tab-content").removeClass("active");
-          $("#" + $(this).data("tab")).addClass("active");
+      <!-- User API Section -->
+      <div id="user-tab" class="tab-content">
+        <!-- Register User -->
+        <div class="api-card bg-midnight-navy rounded-lg p-6 mb-8">
+          <div class="flex items-center mb-4">
+            <div class="w-10 h-10 bg-gradient-tech rounded-full flex items-center justify-center mr-4 text-oxford-blue font-bold">POST</div>
+            <h3 class="text-xl font-bold">/api/user/register</h3>
+            <span class="ml-auto bg-green-900 text-green-400 text-xs px-2 py-1 rounded">Public</span>
+          </div>
+          <p class="text-gray-400 mb-6">Register a new user with phone number and PIN</p>
+          
+          <div class="grid md:grid-cols-2 gap-6">
+            <div>
+              <h4 class="font-medium mb-2 text-gray-300">Request Body</h4>
+              <textarea id="register-input" class="w-full bg-gray-800 border border-gray-700 text-white text-sm rounded-lg p-4 h-48">
+{
+  "phone": "+254712345678",
+  "fullName": "John Doe",
+  "pin": "1234"
+}</textarea>
+            </div>
+            <div>
+              <h4 class="font-medium mb-2 text-gray-300">Response</h4>
+              <div id="register-response" class="response-area w-full bg-gray-900 border border-gray-700 text-gray-300 text-sm rounded-lg p-4 overflow-auto"></div>
+            </div>
+          </div>
+          <button onclick="testEndpoint('register')" class="mt-4 bg-gradient-tech hover:opacity-90 text-oxford-blue font-bold py-2 px-6 rounded-lg">
+            Test Endpoint
+          </button>
+        </div>
+
+        <!-- Get User -->
+        <div class="api-card bg-midnight-navy rounded-lg p-6 mb-8">
+          <div class="flex items-center mb-4">
+            <div class="w-10 h-10 bg-blue-900 rounded-full flex items-center justify-center mr-4 text-blue-400 font-bold">GET</div>
+            <h3 class="text-xl font-bold">/api/user/{phone}</h3>
+            <span class="ml-auto bg-yellow-900 text-yellow-400 text-xs px-2 py-1 rounded">Protected</span>
+          </div>
+          <p class="text-gray-400 mb-6">Retrieve user details by phone number</p>
+          
+          <div class="grid md:grid-cols-2 gap-6">
+            <div>
+              <h4 class="font-medium mb-2 text-gray-300">Parameters</h4>
+              <div class="bg-gray-800 border border-gray-700 rounded-lg p-4">
+                <div class="mb-3">
+                  <label class="block text-sm text-gray-400 mb-1">Phone Number</label>
+                  <input id="get-user-phone" type="text" class="w-full bg-gray-700 border border-gray-600 rounded p-2 text-white" value="+254712345678">
+                </div>
+              </div>
+            </div>
+            <div>
+              <h4 class="font-medium mb-2 text-gray-300">Response</h4>
+              <div id="get-user-response" class="response-area w-full bg-gray-900 border border-gray-700 text-gray-300 text-sm rounded-lg p-4 overflow-auto"></div>
+            </div>
+          </div>
+          <button onclick="testEndpoint('get-user')" class="mt-4 bg-gradient-tech hover:opacity-90 text-oxford-blue font-bold py-2 px-6 rounded-lg">
+            Test Endpoint
+          </button>
+        </div>
+      </div>
+
+      <!-- Transaction API Section (hidden by default) -->
+      <div id="transaction-tab" class="tab-content hidden">
+        <!-- Create Transaction -->
+        <div class="api-card bg-midnight-navy rounded-lg p-6 mb-8">
+          <div class="flex items-center mb-4">
+            <div class="w-10 h-10 bg-gradient-tech rounded-full flex items-center justify-center mr-4 text-oxford-blue font-bold">POST</div>
+            <h3 class="text-xl font-bold">/api/transaction/new</h3>
+            <span class="ml-auto bg-yellow-900 text-yellow-400 text-xs px-2 py-1 rounded">Protected</span>
+          </div>
+          <p class="text-gray-400 mb-6">Create a new HBAR transaction between users</p>
+          
+          <div class="grid md:grid-cols-2 gap-6">
+            <div>
+              <h4 class="font-medium mb-2 text-gray-300">Request Body</h4>
+              <textarea id="transaction-input" class="w-full bg-gray-800 border border-gray-700 text-white text-sm rounded-lg p-4 h-48">
+{
+  "senderPhone": "+254712345678",
+  "receiverPhone": "+254798765432",
+  "amount": 10,
+  "pin": "1234"
+}</textarea>
+            </div>
+            <div>
+              <h4 class="font-medium mb-2 text-gray-300">Response</h4>
+              <div id="transaction-response" class="response-area w-full bg-gray-900 border border-gray-700 text-gray-300 text-sm rounded-lg p-4 overflow-auto"></div>
+            </div>
+          </div>
+          <button onclick="testEndpoint('transaction')" class="mt-4 bg-gradient-tech hover:opacity-90 text-oxford-blue font-bold py-2 px-6 rounded-lg">
+            Test Endpoint
+          </button>
+        </div>
+
+        <!-- Get Transactions -->
+        <div class="api-card bg-midnight-navy rounded-lg p-6">
+          <div class="flex items-center mb-4">
+            <div class="w-10 h-10 bg-blue-900 rounded-full flex items-center justify-center mr-4 text-blue-400 font-bold">GET</div>
+            <h3 class="text-xl font-bold">/api/transaction/{phone}</h3>
+            <span class="ml-auto bg-yellow-900 text-yellow-400 text-xs px-2 py-1 rounded">Protected</span>
+          </div>
+          <p class="text-gray-400 mb-6">Get transaction history for a user</p>
+          
+          <div class="grid md:grid-cols-2 gap-6">
+            <div>
+              <h4 class="font-medium mb-2 text-gray-300">Parameters</h4>
+              <div class="bg-gray-800 border border-gray-700 rounded-lg p-4">
+                <div class="mb-3">
+                  <label class="block text-sm text-gray-400 mb-1">Phone Number</label>
+                  <input id="get-transactions-phone" type="text" class="w-full bg-gray-700 border border-gray-600 rounded p-2 text-white" value="+254712345678">
+                </div>
+                <div class="mb-3">
+                  <label class="block text-sm text-gray-400 mb-1">Limit</label>
+                  <input id="get-transactions-limit" type="number" class="w-full bg-gray-700 border border-gray-600 rounded p-2 text-white" value="5">
+                </div>
+              </div>
+            </div>
+            <div>
+              <h4 class="font-medium mb-2 text-gray-300">Response</h4>
+              <div id="get-transactions-response" class="response-area w-full bg-gray-900 border border-gray-700 text-gray-300 text-sm rounded-lg p-4 overflow-auto"></div>
+            </div>
+          </div>
+          <button onclick="testEndpoint('get-transactions')" class="mt-4 bg-gradient-tech hover:opacity-90 text-oxford-blue font-bold py-2 px-6 rounded-lg">
+            Test Endpoint
+          </button>
+        </div>
+      </div>
+
+      <!-- Admin API Section (hidden by default) -->
+      <div id="admin-tab" class="tab-content hidden">
+        <!-- Admin Login -->
+        <div class="api-card bg-midnight-navy rounded-lg p-6 mb-8">
+          <div class="flex items-center mb-4">
+            <div class="w-10 h-10 bg-gradient-tech rounded-full flex items-center justify-center mr-4 text-oxford-blue font-bold">POST</div>
+            <h3 class="text-xl font-bold">/api/admin/login</h3>
+            <span class="ml-auto bg-green-900 text-green-400 text-xs px-2 py-1 rounded">Public</span>
+          </div>
+          <p class="text-gray-400 mb-6">Authenticate as an admin user</p>
+          
+          <div class="grid md:grid-cols-2 gap-6">
+            <div>
+              <h4 class="font-medium mb-2 text-gray-300">Request Body</h4>
+              <textarea id="admin-login-input" class="w-full bg-gray-800 border border-gray-700 text-white text-sm rounded-lg p-4 h-48">
+{
+  "email": "admin@hflow.africa",
+  "password": "securepassword"
+}</textarea>
+            </div>
+            <div>
+              <h4 class="font-medium mb-2 text-gray-300">Response</h4>
+              <div id="admin-login-response" class="response-area w-full bg-gray-900 border border-gray-700 text-gray-300 text-sm rounded-lg p-4 overflow-auto"></div>
+            </div>
+          </div>
+          <button onclick="testEndpoint('admin-login')" class="mt-4 bg-gradient-tech hover:opacity-90 text-oxford-blue font-bold py-2 px-6 rounded-lg">
+            Test Endpoint
+          </button>
+        </div>
+
+        <!-- Get All Users -->
+        <div class="api-card bg-midnight-navy rounded-lg p-6">
+          <div class="flex items-center mb-4">
+            <div class="w-10 h-10 bg-blue-900 rounded-full flex items-center justify-center mr-4 text-blue-400 font-bold">GET</div>
+            <h3 class="text-xl font-bold">/api/admin/users</h3>
+            <span class="ml-auto bg-red-900 text-red-400 text-xs px-2 py-1 rounded">Admin Only</span>
+          </div>
+          <p class="text-gray-400 mb-6">List all registered users (admin only)</p>
+          
+          <div class="grid md:grid-cols-2 gap-6">
+            <div>
+              <h4 class="font-medium mb-2 text-gray-300">Parameters</h4>
+              <div class="bg-gray-800 border border-gray-700 rounded-lg p-4">
+                <div class="mb-3">
+                  <label class="block text-sm text-gray-400 mb-1">Limit</label>
+                  <input id="get-all-users-limit" type="number" class="w-full bg-gray-700 border border-gray-600 rounded p-2 text-white" value="5">
+                </div>
+                <div class="mb-3">
+                  <label class="block text-sm text-gray-400 mb-1">Auth Token</label>
+                  <input id="get-all-users-token" type="text" class="w-full bg-gray-700 border border-gray-600 rounded p-2 text-white" placeholder="JWT from login">
+                </div>
+              </div>
+            </div>
+            <div>
+              <h4 class="font-medium mb-2 text-gray-300">Response</h4>
+              <div id="get-all-users-response" class="response-area w-full bg-gray-900 border border-gray-700 text-gray-300 text-sm rounded-lg p-4 overflow-auto"></div>
+            </div>
+          </div>
+          <button onclick="testEndpoint('get-all-users')" class="mt-4 bg-gradient-tech hover:opacity-90 text-oxford-blue font-bold py-2 px-6 rounded-lg">
+            Test Endpoint
+          </button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-midnight-navy py-8 border-t border-gray-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <p class="text-gray-500 text-sm">
+        © 2023 Hflow API Playground. For development purposes only.
+      </p>
+    </div>
+  </footer>
+
+  <!-- Flowbite JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
+  
+  <!-- API Testing Script -->
+  <script>
+    // Tab switching
+    document.querySelectorAll('.tab-button').forEach(button => {
+      button.addEventListener('click', () => {
+        // Update tab buttons
+        document.querySelectorAll('.tab-button').forEach(btn => {
+          btn.classList.remove('text-electric-blue', 'tab-active');
+          btn.classList.add('text-gray-400');
         });
-
-        // Response tab switching
-        $(".response-tab").click(function () {
-          $(".response-tab").removeClass("active");
-          $(this).addClass("active");
-          $(".tab-content.response-area").removeClass("active");
-          $("#" + $(this).data("response-tab")).addClass("active");
+        button.classList.add('text-electric-blue', 'tab-active');
+        button.classList.remove('text-gray-400');
+        
+        // Update tab content
+        document.querySelectorAll('.tab-content').forEach(content => {
+          content.classList.add('hidden');
         });
-
-        // Add parameter row
-        $("#addParamBtn").click(function () {
-          $("#paramsContainer").append(`
-                    <div class="flex items-center space-x-4 param-row">
-                        <input type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-1/3 p-2.5" placeholder="Key">
-                        <input type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-1/3 p-2.5" placeholder="Value">
-                        <button class="remove-param text-red-600 hover:text-red-800">
-                            <i class="fas fa-times"></i>
-                        </button>
-                    </div>
-                `);
-        });
-
-        // Add header row
-        $("#addHeaderBtn").click(function () {
-          $("#headersContainer").append(`
-                    <div class="flex items-center space-x-4 header-row">
-                        <input type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-1/3 p-2.5" placeholder="Header">
-                        <input type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-1/3 p-2.5" placeholder="Value">
-                        <button class="remove-header text-red-600 hover:text-red-800">
-                            <i class="fas fa-times"></i>
-                        </button>
-                    </div>
-                `);
-        });
-
-        // Remove parameter row
-        $(document).on("click", ".remove-param", function () {
-          $(this).closest(".param-row").remove();
-        });
-
-        // Remove header row
-        $(document).on("click", ".remove-header", function () {
-          $(this).closest(".header-row").remove();
-        });
-
-        // Format JSON button
-        $("#formatJsonBtn").click(function () {
-          try {
-            const json = JSON.parse($("#requestBody").val());
-            $("#requestBody").val(JSON.stringify(json, null, 2));
-          } catch (e) {
-            alert("Invalid JSON: " + e.message);
-          }
-        });
-
-        // Run button - just UI for now
-        $("#runBtn").click(function () {
-          // Visual feedback
-          $("#responseStatus").text("Executing...").removeClass(
-            "bg-red-100 text-red-800 bg-green-100 text-green-800",
-          ).addClass("bg-yellow-100 text-yellow-800");
-
-          // Simulate API call delay
-          setTimeout(function () {
-            // This is where you'd hook up real API calls
-            $("#responseStatus").text("200 OK").removeClass(
-              "bg-yellow-100 text-yellow-800 bg-red-100 text-red-800",
-            ).addClass("bg-green-100 text-green-800");
-            $("#responseTime").text("125ms");
-
-            // Update response body with sample data
-            $("#responseBody pre code").text(JSON.stringify(
-              {
-                status: "success",
-                data: {
-                  transactionId: "0.0.1234@1713634567.123",
-                  amount: 100,
-                  recipient: "0.0.1234",
-                  timestamp: new Date().toISOString(),
-                  fee: 0.0001,
-                },
-              },
-              null,
-              2,
-            ));
-
-            // Update response headers with sample data
-            $("#responseHeaders pre code").text(JSON.stringify(
-              {
-                "content-type": "application/json",
-                "date": new Date().toGMTString(),
-                "x-request-id": "a1b2c3d4e5f6",
-              },
-              null,
-              2,
-            ));
-
-            // Re-highlight syntax
-            hljs.highlightAll();
-          }, 800);
-        });
-
-        // Reset button
-        $("#resetBtn").click(function () {
-          // Reset form
-          $("#endpointInput").val("/api/v1/transactions");
-          $("#methodSelect").val("GET");
-          $("#paramsContainer").html(`
-                    <div class="flex items-center space-x-4 param-row">
-                        <input type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-1/3 p-2.5" placeholder="Key">
-                        <input type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-1/3 p-2.5" placeholder="Value">
-                        <button class="remove-param text-red-600 hover:text-red-800">
-                            <i class="fas fa-times"></i>
-                        </button>
-                    </div>
-                `);
-          $("#headersContainer").html(`
-                    <div class="flex items-center space-x-4 header-row">
-                        <input type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-1/3 p-2.5" placeholder="Header" value="Authorization">
-                        <input type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-1/3 p-2.5" placeholder="Value" value="Bearer YOUR_TOKEN">
-                        <button class="remove-header text-red-600 hover:text-red-800">
-                            <i class="fas fa-times"></i>
-                        </button>
-                    </div>
-                    <div class="flex items-center space-x-4 header-row">
-                        <input type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-1/3 p-2.5" placeholder="Header" value="Content-Type">
-                        <input type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-1/3 p-2.5" placeholder="Value" value="application/json">
-                        <button class="remove-header text-red-600 hover:text-red-800">
-                            <i class="fas fa-times"></i>
-                        </button>
-                    </div>
-                `);
-          $("#requestBody").val(
-            '{\n  "amount": 100,\n  "recipient": "0.0.1234"\n}',
-          );
-
-          // Reset response
-          $("#responseStatus").text("Not executed").removeClass(
-            "bg-yellow-100 text-yellow-800 bg-green-100 text-green-800 bg-red-100 text-red-800",
-          ).addClass("bg-gray-200 text-gray-800");
-          $("#responseTime").text("-");
-          $("#responseBody pre code").text(
-            '{\n  "status": "Response will appear here",\n  "data": {}\n}',
-          );
-          $("#responseHeaders pre code").text(
-            '{\n  "headers": "Will appear here"\n}',
-          );
-
-          // Re-highlight syntax
-          hljs.highlightAll();
-        });
+        document.getElementById(`${button.dataset.tab}-tab`).classList.remove('hidden');
       });
-    </script>
-  </body>
+    });
+
+    // Mock API responses based on your database.js
+    async function testEndpoint(endpoint) {
+      const responseArea = document.getElementById(`${endpoint}-response`);
+      responseArea.innerHTML = 'Testing endpoint...';
+      
+      // Simulate API delay
+      await new Promise(resolve => setTimeout(resolve, 800));
+      
+      switch(endpoint) {
+        case 'register':
+          responseArea.innerHTML = `{
+  "success": true,
+  "data": {
+    "phone": "+254712345678",
+    "hederaAccountId": "0.0.123456",
+    "publicKey": "302a300506032b...",
+    "message": "User registered successfully"
+  }
+}`;
+          break;
+          
+        case 'get-user':
+          const phone = document.getElementById('get-user-phone').value;
+          responseArea.innerHTML = `{
+  "success": true,
+  "data": {
+    "phone": "${phone}",
+    "fullName": "John Doe",
+    "hederaAccountId": "0.0.123456",
+    "publicKey": "302a300506032b...",
+    "createdAt": "${new Date().toISOString()}"
+  }
+}`;
+          break;
+          
+        case 'transaction':
+          responseArea.innerHTML = `{
+  "success": true,
+  "data": {
+    "txHash": "0.0.123456@1234567890.000000000",
+    "sender": "+254712345678",
+    "receiver": "+254798765432",
+    "amount": 10,
+    "fee": 0.0001,
+    "hashScanUrl": "https://hashscan.io/testnet/transaction/0.0.123456@1234567890.000000000",
+    "message": "Transaction completed successfully"
+  }
+}`;
+          break;
+          
+        case 'get-transactions':
+          const txPhone = document.getElementById('get-transactions-phone').value;
+          const limit = document.getElementById('get-transactions-limit').value;
+          responseArea.innerHTML = `{
+  "success": true,
+  "data": [
+    {
+      "id": 1,
+      "senderPhone": "${txPhone}",
+      "receiverPhone": "+254798765432",
+      "amount": 10,
+      "txHash": "0.0.123456@1234567890.000000000",
+      "status": "success",
+      "timestamp": "${new Date().toISOString()}"
+    },
+    {
+      "id": 2,
+      "senderPhone": "+254798765432",
+      "receiverPhone": "${txPhone}",
+      "amount": 5,
+      "txHash": "0.0.123457@1234567891.000000000",
+      "status": "success",
+      "timestamp": "${new Date(Date.now() - 86400000).toISOString()}"
+    }
+  ],
+  "count": 2,
+  "limit": ${limit}
+}`;
+          break;
+          
+        case 'admin-login':
+          responseArea.innerHTML = `{
+  "success": true,
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+  "expiresIn": 3600,
+  "admin": {
+    "email": "admin@hflow.africa",
+    "fullName": "Admin User"
+  }
+}`;
+          break;
+          
+        case 'get-all-users':
+          const userLimit = document.getElementById('get-all-users-limit').value;
+          responseArea.innerHTML = `{
+  "success": true,
+  "data": [
+    {
+      "phone": "+254712345678",
+      "fullName": "John Doe",
+      "hederaAccountId": "0.0.123456",
+      "createdAt": "${new Date().toISOString()}"
+    },
+    {
+      "phone": "+254798765432",
+      "fullName": "Jane Smith",
+      "hederaAccountId": "0.0.123457",
+      "createdAt": "${new Date(Date.now() - 86400000).toISOString()}"
+    }
+  ],
+  "count": 2,
+  "limit": ${userLimit}
+}`;
+          break;
+      }
+      
+      // Pretty print JSON
+      responseArea.innerHTML = syntaxHighlight(JSON.parse(responseArea.innerHTML));
+    }
+    
+    // JSON syntax highlighting
+    function syntaxHighlight(json) {
+      if (typeof json != 'string') {
+        json = JSON.stringify(json, null, 2);
+      }
+      json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      return json.replace(
+        /("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g,
+        function (match) {
+          let cls = 'text-gray-300';
+          if (/^"/.test(match)) {
+            if (/:$/.test(match)) {
+              cls = 'text-electric-blue';
+            } else {
+              cls = 'text-cyber-teal';
+            }
+          } else if (/true|false/.test(match)) {
+            cls = 'text-neon-cyan';
+          } else if (/null/.test(match)) {
+            cls = 'text-purple-400';
+          }
+          return '<span class="' + cls + '">' + match + '</span>';
+        }
+      );
+    }
+  </script>
+</body>
 </html>
