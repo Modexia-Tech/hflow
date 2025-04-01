@@ -12,17 +12,9 @@
     - [User Management](#user-management)
       - [Register a New User](#register-a-new-user)
       - [Get User Details](#get-user-details)
-    - [Accounts](#accounts)
-      - [Get Account Balance](#get-account-balance)
     - [Transactions](#transactions)
       - [Create a Transaction](#create-a-transaction)
-    - [Notifications](#notifications)
-      - [Get Notifications](#get-notifications)
-  - [Error Handling](#error-handling)
   - [Rate Limiting](#rate-limiting)
-  - [Versioning](#versioning)
-  - [Changelog](#changelog)
-  - [Contact Information](#contact-information)
 
 ## Introduction
 
