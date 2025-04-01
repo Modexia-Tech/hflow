@@ -3,7 +3,7 @@
 A USSD-first Hedera wallet bridging digital currency transfer
 ```mermaid
 flowchart TD
-    A[User] -->|USSD *123#| B[Africa's Talking]
+    A[User] -->|USSD \*384\*2005#| B[Africa's Talking]
     B --> C[Hflow Backend]
     C --> D[Hedera Network]
     C --> E[SQLite/PostgreSQL]
@@ -18,7 +18,7 @@ flowchart TD
 
 - **Provider**: Africa's Talking/
 - **Role**:
-  - Handles USSD sessions via `\*384\*2005#` shortcode.
+  - Handles USSD sessions via `*384*2005#` shortcode.
   - Forwards payloads to Hflow backend.
 - **Flow**:
   ```mermaid
