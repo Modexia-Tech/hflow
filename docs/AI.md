@@ -1,4 +1,4 @@
-# **AI Integration in Hflow**
+# **AI Integration in Hflow (WIP)**
 
 _Smart fraud detection and personalized financial services via USSD_
 
@@ -56,7 +56,8 @@ class FraudDetector:
 // routes/ussd.js
 const fraudDetector = require("../ai/fraud_detector");
 
-router.post("/send-hbar", async (req, res) => {
+// send hbar
+router.post("/", async (req, res) => {
   const tx = req.body;
   if (fraudDetector.predict(tx)) {
     res.send("END Fraud suspected. Visit agent.");
@@ -87,15 +88,3 @@ flowchart LR
 - **Compliance**: Logs all predictions on Hedera for audits.
 
 ---
-
-📜 **License**: Apache 2.0\
-🤖 **Model Training**: `scripts/train_model.py`\
-📧 **Contact**: ai-team@hflow.com
-
----
-
-**TL;DR**:
-
-- AI blocks fraud .
-- Runs cheaply ($20/month on AWS SageMaker).
-- Built for **offline-first** users.
